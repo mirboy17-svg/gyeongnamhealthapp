@@ -40,7 +40,7 @@
                     <i class="fas fa-cloud-upload-alt text-4xl text-amber-500 transform -rotate-3"></i>
                 </div>
                 <h1 class="text-3xl font-bold text-slate-800 tracking-tight">산업보건 자료실</h1>
-                <p class="text-sm text-slate-500 mt-3 font-medium">경남지역본부 대용량 안전보건 허브</p>
+                <p class="text-sm text-slate-500 mt-3 font-medium">대한산업보건협회 경남지역본부</p>
             </div>
             
             <div class="space-y-6">
@@ -130,9 +130,9 @@
             
             <!-- 상단 헤더 & 통계 요약 -->
             <header class="bg-white px-8 py-6 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center flex-shrink-0 z-10 shadow-[0_2px_10px_rgb(0,0,0,0.02)] gap-4">
-                <div>
-                    <h2 class="text-2xl font-bold text-slate-800 tracking-tight" id="currentCategoryTitle">경남지역본부 안내</h2>
-                    <p class="text-sm text-slate-500 mt-1" id="headerSubtitle">대한산업보건협회 경남지역본부에 오신 것을 환영합니다.</p>
+                <div class="flex-1 pr-4">
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight break-keep" id="currentCategoryTitle">경남지역본부 맞춤형 통합 산업보건 Hub</h2>
+                    <p class="text-sm text-slate-500 mt-1.5 font-medium" id="headerSubtitle">Partnering for a Safer Workplace</p>
                 </div>
                 
                 <div class="flex gap-3">
@@ -354,8 +354,17 @@
                     </section>
                 </div>
 
-                <footer class="mt-12 text-center text-xs text-slate-400 pb-4">
-                    &copy; 2026 HealthHub 산업보건 자료 관리 시스템. Vercel Cloud Edition
+                <footer class="mt-12 text-center pb-8 border-t border-slate-200 pt-6">
+                    <p class="text-xs text-slate-500 font-medium mb-3">&copy; 2026 HealthHub 산업보건 자료 관리 시스템.</p>
+                    <div class="text-[11px] text-slate-400 space-y-1.5">
+                        <p class="font-bold text-slate-500">시스템 오류 및 사용 문의</p>
+                        <p>대한산업보건협회 경남지역본부 환경위생국 <span class="mx-1 opacity-50">|</span> 산업위생관리기술사 정재용</p>
+                        <p class="flex items-center justify-center gap-3">
+                            <span><i class="fas fa-phone-alt opacity-70 mr-1"></i> 010-9963-1357 / 055-295-2461</span>
+                            <span class="opacity-50">|</span>
+                            <span><i class="fas fa-envelope opacity-70 mr-1"></i> aniag000@kiha21.or.kr</span>
+                        </p>
+                    </div>
                 </footer>
             </div>
         </main>
@@ -727,8 +736,8 @@
                 introSection.classList.remove('hidden');
                 fileListSection.classList.add('hidden');
                 
-                document.getElementById('currentCategoryTitle').innerText = '경남지역본부 안내';
-                document.getElementById('headerSubtitle').innerText = '대한산업보건협회 경남지역본부에 오신 것을 환영합니다.';
+                document.getElementById('currentCategoryTitle').innerText = '경남지역본부 맞춤형 통합 산업보건 Hub';
+                document.getElementById('headerSubtitle').innerText = 'Partnering for a Safer Workplace';
             } else {
                 // 자료 테이블 화면 표시
                 introSection.classList.add('hidden');
