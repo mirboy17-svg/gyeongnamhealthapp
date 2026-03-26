@@ -157,8 +157,14 @@
                     <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-10 text-white shadow-xl relative overflow-hidden">
                         <div class="relative z-10">
                             <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-xs font-bold tracking-wider mb-4 border border-amber-500/30">Korean Industrial Health Association</span>
-                            <h2 class="text-3xl sm:text-4xl font-bold mb-4 leading-tight">귀사의 안전한 내일,<br><span class="text-amber-400">대한산업보건협회 경남지역본부</span>가 함께합니다.</h2>
-                            <p class="text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">산업보건은 단순한 점검을 넘어 기업의 지속 가능한 성장을 위한 필수 가치입니다.<br>본 홈페이지는 <b>"대한산업보건협회 경남지역본부" 고객사업장 전용 서비스</b>로, 사업장별 맞춤형 자료를 공유 및 제공합니다.<br><br>언제 어디서든 간편하게 보건 관리 현황을 점검하고, 협회 전문가와 긴밀하게 소통하십시오. 귀사의 든든한 보건 파트너로서 최적의 솔루션을 약속드립니다.</p>
+                            <h2 class="text-3xl sm:text-4xl font-bold mb-6 leading-tight">일터를 넘어 국민의 삶 속으로,<br><span class="text-amber-400">대한산업보건협회 경남지역본부</span>가 함께합니다.</h2>
+                            
+                            <!-- ★ AI 스마트 파트너 슬로건 (가운데 정렬 하이라이트) -->
+                            <div class="text-center bg-white/5 border border-white/10 rounded-xl py-3.5 px-6 mb-6 max-w-2xl backdrop-blur-sm">
+                                <p class="text-amber-400 text-base sm:text-lg font-bold tracking-wide">" AI로 똑똑하게 공유하는 스마트 안전 파트너 "</p>
+                            </div>
+
+                            <p class="text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">본 홈페이지는 <b>"대한산업보건협회 경남지역본부" 고객사업장 전용 서비스</b>로, 사업장별 맞춤형 자료를 공유 및 제공합니다.<br><br>언제 어디서든 간편하게 보건 관리 현황을 점검하고, 협회 전문가와 긴밀하게 소통하십시오. 귀사의 든든한 보건 파트너로서 최적의 솔루션을 약속드립니다.</p>
                         </div>
                         <i class="fas fa-shield-virus absolute -right-10 -bottom-10 text-[180px] text-white/5 transform rotate-12"></i>
                     </div>
@@ -167,33 +173,49 @@
                     <div class="bg-white rounded-2xl shadow-[0_2px_15px_rgb(0,0,0,0.03)] border border-slate-200 p-8">
                         <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center"><i class="fas fa-briefcase-medical text-amber-500 mr-2"></i>주요 사업안내</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-200 hover:shadow-md transition-all group">
+                            
+                            <!-- 1. 작업환경측정 -->
+                            <div onclick="openBizModal('workEnv')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
                                 <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                                     <i class="fas fa-microscope text-xl"></i>
                                 </div>
-                                <h4 class="font-bold text-slate-800 mb-2">작업환경측정</h4>
+                                <h4 class="font-bold text-slate-800 mb-2 flex items-center justify-between">
+                                    작업환경측정 <i class="fas fa-external-link-alt text-xs text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </h4>
                                 <p class="text-xs text-slate-500 leading-relaxed">유해인자 노출수준을 정밀하게 평가하고 쾌적한 작업환경 조성을 위한 개선대책을 제시합니다.</p>
                             </div>
-                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-200 hover:shadow-md transition-all group">
+
+                            <!-- 2. 근골격계 부담작업 조사 -->
+                            <div onclick="openBizModal('msk')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
+                                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-people-carry text-xl"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-800 mb-2 flex items-center justify-between">
+                                    근골격계 부담작업 조사 <i class="fas fa-external-link-alt text-xs text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </h4>
+                                <p class="text-xs text-slate-500 leading-relaxed">작업 시 인체에 과도한 부담을 주는 유해요인을 조사하여 근골격계질환을 예방합니다.</p>
+                            </div>
+
+                            <!-- 3. 보건관리대행 -->
+                            <div onclick="openBizModal('healthMgmt')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
                                 <div class="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                                     <i class="fas fa-user-nurse text-xl"></i>
                                 </div>
-                                <h4 class="font-bold text-slate-800 mb-2">보건관리대행</h4>
+                                <h4 class="font-bold text-slate-800 mb-2 flex items-center justify-between">
+                                    보건관리대행 <i class="fas fa-external-link-alt text-xs text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </h4>
                                 <p class="text-xs text-slate-500 leading-relaxed">전문인력이 사업장을 주기적으로 방문하여 사업장 맞춤형 근로자 건강관리 서비스를 제공합니다.</p>
                             </div>
-                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-200 hover:shadow-md transition-all group">
+
+                            <!-- 4. 근로자 건강진단 -->
+                            <div onclick="openBizModal('healthCheck')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
                                 <div class="w-12 h-12 bg-red-100 text-red-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                                     <i class="fas fa-stethoscope text-xl"></i>
                                 </div>
-                                <h4 class="font-bold text-slate-800 mb-2">근로자 건강진단</h4>
+                                <h4 class="font-bold text-slate-800 mb-2 flex items-center justify-between">
+                                    근로자 건강진단 <i class="fas fa-external-link-alt text-xs text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </h4>
                                 <p class="text-xs text-slate-500 leading-relaxed">일반, 특수, 배치전 등 근로자 맞춤형 건강진단과 유소견자에 대한 철저한 사후관리를 실시합니다.</p>
-                            </div>
-                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-200 hover:shadow-md transition-all group">
-                                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                    <i class="fas fa-chalkboard-teacher text-xl"></i>
-                                </div>
-                                <h4 class="font-bold text-slate-800 mb-2">안전보건교육</h4>
-                                <p class="text-xs text-slate-500 leading-relaxed">근로자 정기교육, 관리감독자 교육 등 법정 의무교육과 직무능력 향상을 위한 전문교육을 지원합니다.</p>
                             </div>
                         </div>
                     </div>
@@ -204,7 +226,7 @@
                         <div class="flex flex-col lg:flex-row gap-8">
                             <!-- 구글 맵 (실제 주소 기반 지도 표시) -->
                             <div class="flex-1 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 h-72 relative">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3261.644111301072!2d128.599661!3d35.215286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356f333333333333!2z64yA7ZWc7IKw7JeF67O06rG07ZOR7ZqMIOqyp-uCqOyngOyXreyInOuzuQ!5e0!3m2!1sko!2skr!4v1600000000000!5m2!1sko!2skr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <iframe src="https://maps.google.com/maps?q=경남 창원시 마산회원구 자유무역2길 38&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                             
                             <!-- 연락처 정보 -->
@@ -215,7 +237,7 @@
                                     </div>
                                     <div>
                                         <p class="font-bold text-slate-800 text-sm mb-1">주소</p>
-                                        <p class="text-sm text-slate-500 leading-relaxed">경남 창원시 마산회원구 봉암북7길 21<br><span class="text-xs text-slate-400">(자유무역지역 3공구 아파트형표준공장 8동 1층)</span></p>
+                                        <p class="text-sm text-slate-500 leading-relaxed">경남 창원시 마산회원구 자유무역2길 38</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
@@ -370,6 +392,31 @@
         </main>
     </div>
 
+    <!-- 사업안내 상세 모달 (동적 팝업창) -->
+    <div id="bizModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden z-[70] fade-in opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden border border-slate-200 transform scale-95 transition-transform duration-300" id="bizModalContentContainer">
+            <!-- 헤더 -->
+            <div class="flex justify-between items-center p-6 border-b border-slate-100 bg-slate-50 flex-shrink-0">
+                <h2 class="text-xl font-bold text-slate-800 flex items-center" id="modalTitleText">
+                    <!-- Title injected by JS -->
+                </h2>
+                <button onclick="closeBizModal()" class="text-slate-400 hover:text-slate-600 transition focus:outline-none">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- 상세 내용 (Scrollable) -->
+            <div id="modalBodyContent" class="p-6 overflow-y-auto custom-scrollbar flex-1 bg-white space-y-7">
+                <!-- Content injected by JS -->
+            </div>
+            
+            <!-- 푸터 버튼 -->
+            <div class="p-4 border-t border-slate-100 bg-slate-50 text-right flex-shrink-0">
+                <button onclick="closeBizModal()" class="px-6 py-2.5 bg-slate-800 text-white rounded-lg text-sm font-bold hover:bg-slate-700 transition-colors shadow-md">확인 및 닫기</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 토스트 알림 -->
     <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl transform translate-y-24 opacity-0 transition-all duration-400 z-[110] flex items-center gap-3 border border-slate-700">
         <div id="toastIcon" class="text-green-400 text-lg"><i class="fas fa-check-circle"></i></div>
@@ -384,7 +431,7 @@
         import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
         // =====================================================================
-        // 고객님의 Firebase 프로젝트 연동 정보 (절대 덮어쓰지 않음)
+        // 고객님의 Firebase 프로젝트 연동 정보
         // =====================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyDZYFxUJVJT7_DKJHtleAgVv0Uv-lvITaY",
@@ -411,6 +458,235 @@
         let currentFilterMain = 'intro'; 
         let currentFilterSub = null;
         let isLocalMode = false;
+        let expandedCategories = new Set(); // 하위폴더 펼침 상태 관리
+
+        // --- [동적 모달 데이터 객체] ---
+        const bizModalData = {
+            workEnv: {
+                title: "작업환경측정 안내",
+                icon: "fa-microscope text-blue-600",
+                content: `
+                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl">
+                        <h4 class="font-bold text-blue-800 mb-2 text-[15px]">실시 근거</h4>
+                        <ul class="list-disc list-inside text-[13px] text-blue-700 space-y-1.5 ml-1 font-medium">
+                            <li>산업안전보건법 제125조 (작업환경측정)</li>
+                            <li>산업안전보건법 시행규칙 제186조 ~ 제190조</li>
+                            <li>고용노동부 고시 (작업환경측정 및 지정측정기관 평가 등에 관한 고시)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]">
+                            <i class="fas fa-check-circle text-amber-500 mr-2"></i>측정 대상
+                        </h4>
+                        <p class="text-[13px] text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            소음, 분진, 고열, 금속류, 유기화합물 등 <b>산업안전보건법 시행규칙 별표 21의 작업환경측정 대상 유해인자(190종)</b>에 노출되는 근로자가 있는 옥내외 작업장
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]">
+                            <i class="fas fa-clock text-amber-500 mr-2"></i>측정 주기
+                        </h4>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-1 rounded text-xs w-fit">신규/변경</span>
+                                <p>작업장 또는 작업공정이 신규로 가동되거나 변경되는 경우, 그 날로부터 <b>30일 이내</b> 실시</p>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 pt-2 border-t border-slate-200/60">
+                                <span class="bg-amber-100 text-amber-700 font-bold px-2 py-1 rounded text-xs w-fit mt-0.5">정기 측정</span>
+                                <div class="flex-1">
+                                    <p class="font-bold text-slate-800">반기에 1회 이상 실시</p>
+                                    <ul class="list-disc list-inside ml-1 text-slate-500 text-[12px] mt-1.5 space-y-1">
+                                        <li>발암성 물질 노출기준 초과 등 특정 요건 해당 시: <b>3개월에 1회 이상</b></li>
+                                        <li>최근 1년간 노출기준 미만 등 특정 요건 해당 시: <b>1년에 1회 이상</b></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-red-600 mb-2 flex items-center text-[15px]">
+                            <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>위반 시 과태료 (산업안전보건법 제175조)
+                        </h4>
+                        <div class="bg-red-50 p-4 rounded-xl border border-red-100 text-[13px] text-red-800 space-y-3">
+                            <div class="flex items-start gap-2.5">
+                                <i class="fas fa-times-circle mt-1 opacity-60 text-red-500"></i>
+                                <div>
+                                    <p class="font-bold">작업환경측정을 하지 않은 경우</p>
+                                    <p class="text-red-600/80 text-xs mt-0.5">1,000만원 이하의 과태료 (위반 횟수, 대상 근로자 수에 따라 차등 부과)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2.5">
+                                <i class="fas fa-times-circle mt-1 opacity-60 text-red-500"></i>
+                                <div>
+                                    <p class="font-bold">측정 결과를 보고하지 않거나 거짓으로 보고한 경우</p>
+                                    <p class="text-red-600/80 text-xs mt-0.5">300만원 이하의 과태료</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            msk: {
+                title: "근골격계 부담작업 유해요인조사",
+                icon: "fa-people-carry text-orange-600",
+                content: `
+                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl">
+                        <h4 class="font-bold text-blue-800 mb-2 text-[15px]">조사 대상</h4>
+                        <ul class="list-disc list-inside text-[13px] text-blue-700 space-y-1.5 ml-1 font-medium">
+                            <li>산업안전보건법 제39조(보건조치) 및 안전보건기준에 관한 규칙 제12장</li>
+                            <li>단순반복작업, 인체에 과도한 부담을 주는 작업 등 <b>근골격계 부담작업(11개 호)</b>에 종사하는 근로자가 있는 사업장</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-clock text-amber-500 mr-2"></i>조사 주기</h4>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-1 rounded text-xs w-fit">정기 조사</span>
+                                <p>신설 사업장은 <b>1년 이내</b> 최초 실시, 이후 <b>매 3년마다</b> 주기적 실시</p>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 pt-2 border-t border-slate-200/60">
+                                <span class="bg-amber-100 text-amber-700 font-bold px-2 py-1 rounded text-xs w-fit mt-0.5">수시 조사</span>
+                                <div class="flex-1">
+                                    <ul class="list-disc list-inside ml-1 text-slate-500 text-[12px] space-y-1">
+                                        <li>근골격계질환으로 요양결정을 받은 자가 발생한 경우</li>
+                                        <li>새로운 작업·설비를 도입한 경우 또는 작업환경을 변경한 경우</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-red-600 mb-2 flex items-center text-[15px]"><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>위반 시 벌칙 (산업안전보건법 제167조)</h4>
+                        <div class="bg-red-50 p-4 rounded-xl border border-red-100 text-[13px] text-red-800">
+                            <div class="flex items-start gap-2.5">
+                                <i class="fas fa-times-circle mt-1 opacity-60 text-red-500"></i>
+                                <div>
+                                    <p class="font-bold">보건조치(유해요인조사 등)를 하지 않은 경우</p>
+                                    <p class="text-red-600/80 text-xs mt-0.5">5년 이하의 징역 또는 5,000만원 이하의 벌금</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            healthMgmt: {
+                title: "보건관리대행(위탁) 안내",
+                icon: "fa-user-nurse text-green-600",
+                content: `
+                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl">
+                        <h4 class="font-bold text-blue-800 mb-2 text-[15px]">관련 법규</h4>
+                        <ul class="list-disc list-inside text-[13px] text-blue-700 space-y-1.5 ml-1 font-medium">
+                            <li>산업안전보건법 제15조 및 제17조 (보건관리자)</li>
+                            <li>사업주는 보건관리자를 선임하거나, 보건관리 전문기관에 보건관리 업무를 위탁할 수 있습니다.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-building text-amber-500 mr-2"></i>대상 사업장</h4>
+                        <p class="text-[13px] text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            상시근로자 <b>50인 이상 300인 미만</b>을 사용하는 사업장 (제조업, 건설업, 서비스업 등 산업안전보건법 시행령 기준 적용)
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-clipboard-list text-amber-500 mr-2"></i>주요 위탁 업무</h4>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600">
+                            <ul class="list-disc list-inside space-y-2">
+                                <li>사업장 순회점검 및 작업환경관리 (보호구 관리, 유해위험요인 지도)</li>
+                                <li>근로자 건강관리 (건강상담, 질병 유소견자 사후관리, 뇌심혈관/직무스트레스 예방 등)</li>
+                                <li>산업보건교육 지원 및 산업안전보건위원회 참석 지원</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-handshake text-green-500 mr-2"></i>계약 방법</h4>
+                        <p class="text-[13px] text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            사업장과 대한산업보건협회(전문기관) 간 <b>보건관리 위탁계약</b> 체결 후, 14일 이내 관할 고용노동부 지청에 <b>보건관리자 선임 보고</b> 제출
+                        </p>
+                    </div>
+                `
+            },
+            healthCheck: {
+                title: "근로자 특수건강진단 안내",
+                icon: "fa-stethoscope text-red-600",
+                content: `
+                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl">
+                        <h4 class="font-bold text-blue-800 mb-2 text-[15px]">실시 근거</h4>
+                        <ul class="list-disc list-inside text-[13px] text-blue-700 space-y-1.5 ml-1 font-medium">
+                            <li>산업안전보건법 제130조 (특수건강진단 등)</li>
+                            <li>유해인자에 노출되는 업무에 종사하는 근로자의 직업성 질환을 조기 발견하기 위해 실시합니다.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-notes-medical text-amber-500 mr-2"></i>주요 건강진단 종류</h4>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-1 rounded text-xs w-20 text-center">특수</span>
+                                <p class="flex-1">별표22의 유해인자(화학물질, 분진, 소음 등 179종) 노출 업무 종사자 대상 정기 실시</p>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 pt-2 border-t border-slate-200/60">
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-1 rounded text-xs w-20 text-center">배치전</span>
+                                <p class="flex-1">특수건강진단 대상 업무에 <b>신규 배치 예정</b>인 근로자 대상 적합성 평가</p>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 pt-2 border-t border-slate-200/60">
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-1 rounded text-xs w-20 text-center">수시</span>
+                                <p class="flex-1">직업성 천식, 피부염 등 질환 의심 증상 발생 시 사업주가 신속히 실시</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-moon text-indigo-500 mr-2"></i>야간작업자 특수건강진단</h4>
+                        <p class="text-[13px] text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <b>야간작업(2종) 대상자:</b><br>
+                            ① 6개월간 밤 12시~새벽 5시를 포함하여 8시간 이상 작업 월 4회 이상<br>
+                            ② 6개월간 밤 10시~새벽 6시 사이 작업시간이 월 평균 60시간 이상인 자
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-red-600 mb-2 flex items-center text-[15px]"><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>위반 시 과태료 (산업안전보건법 제175조)</h4>
+                        <div class="bg-red-50 p-4 rounded-xl border border-red-100 text-[13px] text-red-800">
+                            <div class="flex items-start gap-2.5">
+                                <i class="fas fa-times-circle mt-1 opacity-60 text-red-500"></i>
+                                <div>
+                                    <p class="font-bold">건강진단을 실시하지 않은 경우</p>
+                                    <p class="text-red-600/80 text-xs mt-0.5">1,000만원 이하의 과태료 (사업주), 근로자 의무 위반 시 300만원 이하 (근로자)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // --- [모달 제어 함수 (Global)] ---
+        window.openBizModal = function(type) {
+            const data = bizModalData[type];
+            if(!data) return;
+            
+            // 모달 타이틀과 본문 내용을 데이터에 맞게 동적 삽입
+            document.getElementById('modalTitleText').innerHTML = `<i class="fas ${data.icon} mr-2"></i>${data.title}`;
+            document.getElementById('modalBodyContent').innerHTML = data.content;
+
+            const modal = document.getElementById('bizModal');
+            const content = document.getElementById('bizModalContentContainer');
+            
+            modal.classList.remove('hidden');
+            // 약간의 딜레이를 주어 부드러운 애니메이션 효과 적용
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+            }, 10);
+        };
+
+        window.closeBizModal = function() {
+            const modal = document.getElementById('bizModal');
+            const content = document.getElementById('bizModalContentContainer');
+            
+            modal.classList.add('opacity-0');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        };
 
         // --- [로컬 데모 모드 전환 함수] ---
         function enableLocalMode(reason) {
@@ -427,7 +703,8 @@
                 { id: 'cat2', name: "2. 특별관리물질 취급고지및일지", timestamp: 2 },
                 { id: 'cat3', name: "3. CMR물질 유해성 정보", timestamp: 3 },
                 { id: 'cat4', name: "4. 초과공정개선보고서", timestamp: 4 },
-                { id: 'cat5', name: "5. 프로그램(청력, 밀폐, 호흡기)", timestamp: 5 }
+                { id: 'cat5', name: "5. 프로그램(청력, 밀폐, 호흡기)", timestamp: 5 },
+                { id: 'cat6', name: "6. 안전보건표지", timestamp: 6 }
             ];
             
             files = [
@@ -500,7 +777,7 @@
                     if (categories.length === 0) {
                         const defaultCats = [
                             "1. 정기안전보건교육자료", "2. 특별관리물질 취급고지및일지", 
-                            "3. CMR물질 유해성 정보", "4. 초과공정개선보고서", "5. 프로그램(청력, 밀폐, 호흡기)"
+                            "3. CMR물질 유해성 정보", "4. 초과공정개선보고서", "5. 프로그램(청력, 밀폐, 호흡기)", "6. 안전보건표지"
                         ];
                         defaultCats.forEach(async (name, idx) => {
                             try {
@@ -723,10 +1000,30 @@
             });
         }
 
+        // ★ 대분류 클릭 시: 하위폴더 펼침/접기 토글 및 필터 적용
+        window.clickMainCategory = function(catName) {
+            // 이미 해당 대분류를 보고 있을 때 한 번 더 누르면 하위 폴더 접기/펼치기
+            if (currentFilterMain === catName && currentFilterSub === null) {
+                if (expandedCategories.has(catName)) {
+                    expandedCategories.delete(catName);
+                } else {
+                    expandedCategories.add(catName);
+                }
+            } else {
+                // 다른 대분류 클릭 시 무조건 펼치기
+                expandedCategories.add(catName);
+            }
+            filterByCategory(catName);
+        }
+
         // ★ 필터 변경 시: 소개 화면(intro)과 자료 테이블 화면을 전환
         window.filterByCategory = function(mainCat, subCat = null) {
             currentFilterMain = mainCat;
             currentFilterSub = subCat;
+            
+            if (subCat) {
+                expandedCategories.add(mainCat); // 하위폴더 직접 선택 시 대분류 펼침 유지
+            }
             
             const introSection = document.getElementById('introSection');
             const fileListSection = document.getElementById('fileListSection');
@@ -746,7 +1043,19 @@
                 let titleText = mainCat === 'all' ? '전체 자료 보기' : mainCat;
                 if (subCat) titleText += ` > ${subCat}`;
                 document.getElementById('currentCategoryTitle').innerText = titleText;
-                document.getElementById('headerSubtitle').innerText = '업데이트된 안전보건 자료를 다운로드 하세요.';
+                
+                // ★ 선택된 카테고리에 따른 맞춤형 서브타이틀(법적 근거) 적용
+                let subtitleText = '업데이트된 안전보건 자료를 다운로드 하세요.';
+                if (mainCat !== 'all') {
+                    if (mainCat.includes('안전보건교육')) subtitleText = '산업안전보건법 제29조 관련';
+                    else if (mainCat.includes('특별관리물질')) subtitleText = '산업안전보건기준에 관한 규칙 제439조~440조 관련';
+                    else if (mainCat.includes('CMR물질')) subtitleText = '고용노동부고시 제2020-48호 관련';
+                    else if (mainCat.includes('초과공정개선')) subtitleText = '산업안전보건법 시행규칙 제188조 관련';
+                    else if (mainCat.includes('프로그램')) subtitleText = '산업안전보건기준에 관한 규칙 제517조, 616조, 619조 관련';
+                    else if (mainCat.includes('안전보건표지')) subtitleText = '산업안전보건법 제37조 관련';
+                    else if (mainCat.includes('전파사항') || mainCat.includes('고용노동부') || mainCat.includes('안전보건공단')) subtitleText = '안전보건 전파사항을 통한 산업재해를 적극 예방하여 주시기 바랍니다.';
+                }
+                document.getElementById('headerSubtitle').innerText = subtitleText;
                 
                 renderTable();
             }
@@ -771,18 +1080,25 @@
                 const isActiveMain = currentFilterMain === cat.name && currentFilterSub === null;
                 const activeClassMain = isActiveMain ? 'bg-amber-500 text-white shadow-md' : 'text-slate-400 hover:bg-white/5 hover:text-slate-200';
                 
+                // 해당 대분류에 속하는 유니크한 하위 폴더(subCat)들을 추출
+                const subCats = [...new Set(files.filter(f => f.mainCat === cat.name && f.subCat).map(f => f.subCat))].sort();
+                const hasSubCats = subCats.length > 0;
+                const isExpanded = expandedCategories.has(cat.name);
+                
+                // 우측 화살표 아이콘 (하위폴더가 있을 때만 표시, 펼쳐짐 여부에 따라 방향 변경)
+                let chevronHtml = hasSubCats ? `<i class="fas fa-chevron-${isExpanded ? 'down' : 'right'} ml-auto text-[10px] opacity-50 transition-transform"></i>` : '';
+
                 html += `<div class="mb-1">
-                            <a href="#" onclick="filterByCategory('${cat.name}')" class="${activeClassMain} block px-4 py-2.5 rounded-xl transition-all text-[13px] font-medium flex items-center truncate" title="${cat.name}">
-                                <i class="far fa-folder w-5 text-center mr-2 opacity-70"></i> <span class="truncate">${cat.name}</span>
+                            <a href="#" onclick="clickMainCategory('${cat.name}')" class="${activeClassMain} block px-4 py-2.5 rounded-xl transition-all text-[13px] font-medium flex items-center" title="${cat.name}">
+                                <i class="far fa-folder w-5 text-center mr-2 opacity-70"></i> 
+                                <span class="truncate flex-1">${cat.name}</span>
+                                ${chevronHtml}
                             </a>
                 `;
 
-                // 해당 대분류에 속하는 유니크한 하위 폴더(subCat)들을 추출
-                const subCats = [...new Set(files.filter(f => f.mainCat === cat.name && f.subCat).map(f => f.subCat))].sort();
-                
-                // 트리의 자식 노드 렌더링
-                if (subCats.length > 0) {
-                    html += `<div class="ml-6 mt-1 mb-2 space-y-1 border-l-2 border-white/10 pl-2">`;
+                // 트리의 자식 노드 렌더링 (펼쳐진 상태일 때만 표시)
+                if (hasSubCats && isExpanded) {
+                    html += `<div class="ml-6 mt-1 mb-2 space-y-1 border-l-2 border-white/10 pl-2 fade-in">`;
                     subCats.forEach(sub => {
                         const isActiveSub = currentFilterMain === cat.name && currentFilterSub === sub;
                         // 하위 폴더가 활성화되면 배경색을 다르게 주어 뎁스(Depth) 구분
