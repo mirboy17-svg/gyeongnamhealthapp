@@ -282,7 +282,7 @@
                             <!-- 1. 카테고리 관리 섹션 -->
                             <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[380px]">
                                 <h3 class="text-lg font-bold text-slate-800 flex items-center mb-5">
-                                    <i class="fas fa-folder-tree text-amber-500 mr-2"></i> 대분류 관리
+                                    <i class="fas fa-folder-tree text-amber-500 mr-2"></i> 대분류 순서 및 관리
                                 </h3>
                                 <div class="flex gap-2 mb-4">
                                     <input type="text" id="newCategoryInput" placeholder="새 분류명 입력..." class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition">
@@ -302,11 +302,13 @@
                                 <div class="grid grid-cols-2 gap-4 mb-4">
                                     <div>
                                         <label class="block text-xs font-bold text-slate-500 mb-1.5">메인 카테고리</label>
-                                        <select id="uploadMainCat" class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:ring-2 focus:ring-amber-500 outline-none cursor-pointer"></select>
+                                        <select id="uploadMainCat" onchange="updateUploadSubCategoryList()" class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:ring-2 focus:ring-amber-500 outline-none cursor-pointer"></select>
                                     </div>
+                                    <!-- ★ 자동완성(Datalist)이 포함된 하위폴더 입력칸 -->
                                     <div>
-                                        <label class="block text-xs font-bold text-slate-500 mb-1.5">하위 폴더/태그 (선택)</label>
-                                        <input type="text" id="uploadSubCat" placeholder="예: 2026년 3월, 벤젠 등" class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                                        <label class="block text-xs font-bold text-slate-500 mb-1.5">하위 폴더/태그 (선택 또는 신규입력)</label>
+                                        <input type="text" id="uploadSubCat" list="existingSubCats" placeholder="기존 폴더 선택 또는 새 이름 입력..." class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                                        <datalist id="existingSubCats"></datalist>
                                     </div>
                                 </div>
                                 
@@ -454,7 +456,6 @@
         let currentUser = null; 
         let categories = []; 
         let files = []; 
-        // 앱의 첫 시작 화면은 'intro' (경남지역본부 소개) 입니다.
         let currentFilterMain = 'intro'; 
         let currentFilterSub = null;
         let isLocalMode = false;
@@ -699,12 +700,12 @@
             document.getElementById('cloudStatusText').classList.add("text-yellow-400");
             
             categories = [
-                { id: 'cat1', name: "1. 정기안전보건교육자료", timestamp: 1 },
-                { id: 'cat2', name: "2. 특별관리물질 취급고지및일지", timestamp: 2 },
-                { id: 'cat3', name: "3. CMR물질 유해성 정보", timestamp: 3 },
-                { id: 'cat4', name: "4. 초과공정개선보고서", timestamp: 4 },
-                { id: 'cat5', name: "5. 프로그램(청력, 밀폐, 호흡기)", timestamp: 5 },
-                { id: 'cat6', name: "6. 안전보건표지", timestamp: 6 }
+                { id: 'cat1', name: "1. 정기안전보건교육자료", timestamp: 10 },
+                { id: 'cat2', name: "2. 특별관리물질 취급고지및일지", timestamp: 20 },
+                { id: 'cat3', name: "3. CMR물질 유해성 정보", timestamp: 30 },
+                { id: 'cat4', name: "4. 초과공정개선보고서", timestamp: 40 },
+                { id: 'cat5', name: "5. 프로그램(청력, 밀폐, 호흡기)", timestamp: 50 },
+                { id: 'cat6', name: "6. 안전보건표지", timestamp: 60 }
             ];
             
             files = [
@@ -761,7 +762,8 @@
                     files = [];
                     snapshot.forEach(doc => { files.push({ id: doc.id, ...doc.data() }); });
                     updateDashboardStats();
-                    renderSidebarCategories(); // 파일 추가/삭제 시 사이드바 트리구조 실시간 갱신
+                    updateUploadSubCategoryList(); // 파일 변경시 자동완성 리스트도 갱신
+                    renderSidebarCategories();
                     renderTable();
                 }, (error) => {
                     console.error("파일 데이터 읽기 에러:", error);
@@ -781,7 +783,7 @@
                         ];
                         defaultCats.forEach(async (name, idx) => {
                             try {
-                                await addDoc(catRef, { name: name, timestamp: Date.now() + idx });
+                                await addDoc(catRef, { name: name, timestamp: (idx + 1) * 10 });
                             } catch (err) {}
                         });
                     } else {
@@ -924,8 +926,10 @@
             const name = document.getElementById('newCategoryInput').value.trim();
             if(!name) return showToast('카테고리명을 입력해주세요.', 'error');
             
+            const newTimestamp = categories.length > 0 ? categories[categories.length - 1].timestamp + 10 : 10;
+            
             if (isLocalMode) {
-                categories.push({ id: Date.now().toString(), name: name, timestamp: Date.now() });
+                categories.push({ id: Date.now().toString(), name: name, timestamp: newTimestamp });
                 updateAllCategoryViews();
                 showToast('카테고리가 생성되었습니다. (로컬)');
                 document.getElementById('newCategoryInput').value = '';
@@ -934,7 +938,7 @@
 
             showLoader('추가 중...');
             try {
-                await addDoc(collection(db, 'health_categories'), { name: name, timestamp: Date.now() });
+                await addDoc(collection(db, 'health_categories'), { name: name, timestamp: newTimestamp });
                 showToast('카테고리가 생성되었습니다.');
             } catch(error) { 
                 showToast('권한 문제로 오류가 발생했습니다.', 'error'); 
@@ -984,6 +988,42 @@
             }
         }
 
+        // ★ [대분류 순서 변경 로직]
+        window.moveCategoryUp = async function(id) {
+            const index = categories.findIndex(c => c.id === id);
+            if (index > 0) swapCategoryOrder(index, index - 1);
+        };
+
+        window.moveCategoryDown = async function(id) {
+            const index = categories.findIndex(c => c.id === id);
+            if (index !== -1 && index < categories.length - 1) swapCategoryOrder(index, index + 1);
+        };
+
+        async function swapCategoryOrder(idx1, idx2) {
+            // 로컬 배열 내에서 스왑 처리
+            const temp = categories[idx1];
+            categories[idx1] = categories[idx2];
+            categories[idx2] = temp;
+            
+            // 모든 카테고리에 충돌 없는 새 순서(Timestamp) 부여
+            categories.forEach((c, i) => c.timestamp = (i + 1) * 10);
+            
+            if (isLocalMode) {
+                updateAllCategoryViews();
+                return;
+            }
+            
+            showLoader('순서 변경 중...');
+            try {
+                await Promise.all(categories.map(c => 
+                    updateDoc(doc(db, 'health_categories', c.id), { timestamp: c.timestamp })
+                ));
+            } catch(error) {
+                showToast('순서 변경 중 오류가 발생했습니다.', 'error');
+            }
+            hideLoader();
+        }
+
         function renderAdminCategoryManager() {
             const list = document.getElementById('adminCategoryList');
             list.innerHTML = '';
@@ -991,29 +1031,16 @@
                 list.innerHTML += `
                     <li class="p-3 bg-white border border-slate-100 rounded-lg mb-2 flex justify-between items-center hover:border-amber-200 transition-colors shadow-sm">
                         <span class="font-bold text-slate-700 truncate pr-2"><i class="far fa-folder text-slate-400 mr-2"></i>${cat.name}</span>
-                        <div class="flex gap-1.5 flex-shrink-0">
-                            <button onclick="editCategory('${cat.id}', '${cat.name}')" class="w-7 h-7 flex items-center justify-center bg-slate-100 text-slate-500 rounded hover:bg-slate-200 hover:text-slate-700 transition"><i class="fas fa-pen text-xs"></i></button>
-                            <button onclick="deleteCategory('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-red-50 text-red-500 rounded hover:bg-red-100 hover:text-red-700 transition"><i class="fas fa-trash text-xs"></i></button>
+                        <div class="flex gap-1 flex-shrink-0">
+                            <!-- ★ 순서 변경용 위/아래 버튼 추가 -->
+                            <button onclick="moveCategoryUp('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-slate-50 text-slate-400 rounded hover:bg-slate-200 hover:text-slate-700 transition" title="위로"><i class="fas fa-arrow-up text-xs"></i></button>
+                            <button onclick="moveCategoryDown('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-slate-50 text-slate-400 rounded hover:bg-slate-200 hover:text-slate-700 transition" title="아래로"><i class="fas fa-arrow-down text-xs"></i></button>
+                            <button onclick="editCategory('${cat.id}', '${cat.name}')" class="w-7 h-7 flex items-center justify-center bg-slate-100 text-slate-500 rounded hover:bg-slate-200 hover:text-slate-700 transition" title="이름 수정"><i class="fas fa-pen text-xs"></i></button>
+                            <button onclick="deleteCategory('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-red-50 text-red-500 rounded hover:bg-red-100 hover:text-red-700 transition" title="삭제"><i class="fas fa-trash text-xs"></i></button>
                         </div>
                     </li>
                 `;
             });
-        }
-
-        // ★ 대분류 클릭 시: 하위폴더 펼침/접기 토글 및 필터 적용
-        window.clickMainCategory = function(catName) {
-            // 이미 해당 대분류를 보고 있을 때 한 번 더 누르면 하위 폴더 접기/펼치기
-            if (currentFilterMain === catName && currentFilterSub === null) {
-                if (expandedCategories.has(catName)) {
-                    expandedCategories.delete(catName);
-                } else {
-                    expandedCategories.add(catName);
-                }
-            } else {
-                // 다른 대분류 클릭 시 무조건 펼치기
-                expandedCategories.add(catName);
-            }
-            filterByCategory(catName);
         }
 
         // ★ 필터 변경 시: 소개 화면(intro)과 자료 테이블 화면을 전환
@@ -1044,7 +1071,7 @@
                 if (subCat) titleText += ` > ${subCat}`;
                 document.getElementById('currentCategoryTitle').innerText = titleText;
                 
-                // ★ 선택된 카테고리에 따른 맞춤형 서브타이틀(법적 근거) 적용
+                // 선택된 카테고리에 따른 맞춤형 서브타이틀(법적 근거) 적용
                 let subtitleText = '업데이트된 안전보건 자료를 다운로드 하세요.';
                 if (mainCat !== 'all') {
                     if (mainCat.includes('안전보건교육')) subtitleText = '산업안전보건법 제29조 관련';
@@ -1063,7 +1090,21 @@
             renderSidebarCategories();
         }
 
-        // ★ 사이드바 트리 렌더링
+        // ★ 대분류 클릭 시 하위메뉴 토글 로직
+        window.clickMainCategory = function(catName) {
+            if (currentFilterMain === catName && currentFilterSub === null) {
+                if (expandedCategories.has(catName)) {
+                    expandedCategories.delete(catName);
+                } else {
+                    expandedCategories.add(catName);
+                }
+            } else {
+                expandedCategories.add(catName);
+            }
+            filterByCategory(catName);
+        }
+
+        // 사이드바 트리 렌더링
         function renderSidebarCategories() {
             const nav = document.getElementById('categoryNav');
             let html = `
@@ -1080,12 +1121,10 @@
                 const isActiveMain = currentFilterMain === cat.name && currentFilterSub === null;
                 const activeClassMain = isActiveMain ? 'bg-amber-500 text-white shadow-md' : 'text-slate-400 hover:bg-white/5 hover:text-slate-200';
                 
-                // 해당 대분류에 속하는 유니크한 하위 폴더(subCat)들을 추출
                 const subCats = [...new Set(files.filter(f => f.mainCat === cat.name && f.subCat).map(f => f.subCat))].sort();
                 const hasSubCats = subCats.length > 0;
                 const isExpanded = expandedCategories.has(cat.name);
                 
-                // 우측 화살표 아이콘 (하위폴더가 있을 때만 표시, 펼쳐짐 여부에 따라 방향 변경)
                 let chevronHtml = hasSubCats ? `<i class="fas fa-chevron-${isExpanded ? 'down' : 'right'} ml-auto text-[10px] opacity-50 transition-transform"></i>` : '';
 
                 html += `<div class="mb-1">
@@ -1096,12 +1135,10 @@
                             </a>
                 `;
 
-                // 트리의 자식 노드 렌더링 (펼쳐진 상태일 때만 표시)
                 if (hasSubCats && isExpanded) {
                     html += `<div class="ml-6 mt-1 mb-2 space-y-1 border-l-2 border-white/10 pl-2 fade-in">`;
                     subCats.forEach(sub => {
                         const isActiveSub = currentFilterMain === cat.name && currentFilterSub === sub;
-                        // 하위 폴더가 활성화되면 배경색을 다르게 주어 뎁스(Depth) 구분
                         const activeClassSub = isActiveSub ? 'bg-amber-500/20 text-amber-300 font-bold' : 'text-slate-400 hover:text-amber-200 hover:bg-white/5';
                         html += `
                             <a href="#" onclick="filterByCategory('${cat.name}', '${sub}')" class="${activeClassSub} block px-3 py-2 rounded-lg transition-all text-[12px] flex items-center truncate" title="${sub}">
@@ -1116,13 +1153,30 @@
             nav.innerHTML = html;
         }
 
+        // 대분류 셀렉트 박스 렌더링
         function renderUploadCategorySelect() {
             const select = document.getElementById('uploadMainCat');
             select.innerHTML = '';
             categories.forEach(cat => {
                 select.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
             });
+            updateUploadSubCategoryList(); // 대분류 렌더링 후 하위폴더 자동완성 즉시 갱신
         }
+
+        // ★ [하위 폴더(태그) 자동완성 목록 갱신 로직]
+        window.updateUploadSubCategoryList = function() {
+            const mainCat = document.getElementById('uploadMainCat').value;
+            const datalist = document.getElementById('existingSubCats');
+            datalist.innerHTML = '';
+            
+            if (mainCat) {
+                // 선택한 대분류에 등록되어 있는 하위 폴더들을 중복 없이 불러오기
+                const subCats = [...new Set(files.filter(f => f.mainCat === mainCat && f.subCat).map(f => f.subCat))].sort();
+                subCats.forEach(sub => {
+                    datalist.innerHTML += `<option value="${sub}"></option>`;
+                });
+            }
+        };
 
         // --- [자료 테이블 렌더링 & 처리] ---
         window.renderTable = function() {
@@ -1213,6 +1267,7 @@
                         storagePath: null
                     });
                     updateDashboardStats();
+                    updateUploadSubCategoryList(); // 로컬 업로드 시 자동완성 즉시 갱신
                     renderSidebarCategories(); 
                     renderTable();
                     document.getElementById('uploadSubCat').value = '';
@@ -1262,6 +1317,7 @@
                 if (isLocalMode) {
                     files = files.filter(f => f.id !== id);
                     updateDashboardStats();
+                    updateUploadSubCategoryList();
                     renderSidebarCategories(); // 파일 삭제 시 사이드바 트리 실시간 반영
                     renderTable();
                     showToast('자료가 삭제되었습니다. (로컬)');
