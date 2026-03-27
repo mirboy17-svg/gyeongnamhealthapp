@@ -292,8 +292,11 @@
 
                             <!-- 등록된 회원사 목록 확인 -->
                             <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[320px]">
-                                <h3 class="text-sm font-bold text-slate-800 flex items-center mb-4 pb-2 border-b border-slate-100">
-                                    <i class="fas fa-list-ul text-slate-400 mr-2"></i> 등록된 사업장 목록
+                                <h3 class="text-sm font-bold text-slate-800 flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
+                                    <span class="flex items-center"><i class="fas fa-list-ul text-slate-400 mr-2"></i> 등록된 사업장 목록</span>
+                                    <button onclick="deleteAllMembers()" class="text-[10px] bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 px-2.5 py-1 rounded transition-colors flex items-center gap-1 font-semibold shadow-sm">
+                                        <i class="fas fa-trash-alt"></i> 전체 삭제
+                                    </button>
                                 </h3>
                                 <div class="relative mb-3">
                                     <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-xs"></i>
@@ -1088,6 +1091,35 @@
                     await deleteDoc(doc(db, 'allowed_members', safeId));
                     showToast('해당 번호의 권한이 삭제되었습니다.');
                 } catch(e) {
+                    showToast('삭제 중 오류가 발생했습니다.', 'error');
+                }
+                hideLoader();
+            }
+        };
+
+        // ★ [회원사 전체 일괄 삭제 로직]
+        window.deleteAllMembers = async function() {
+            if(allowedMembers.length === 0) {
+                return showToast('삭제할 사업장 목록이 없습니다.', 'info');
+            }
+            if(confirm(`정말로 등록된 ${allowedMembers.length}개의 사업장 목록을 전부 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다!`)) {
+                showLoader('전체 사업장 삭제 중...');
+                if (isLocalMode) {
+                    allowedMembers = [];
+                    renderAdminMemberManager();
+                    hideLoader();
+                    return showToast('전체 삭제되었습니다. (로컬)');
+                }
+                try {
+                    // 비동기로 모든 문서 일괄 삭제 처리
+                    const deletePromises = allowedMembers.map(m => {
+                        const safeId = m.id.replace(/\//g, '_');
+                        return deleteDoc(doc(db, 'allowed_members', safeId));
+                    });
+                    await Promise.all(deletePromises);
+                    showToast('모든 사업장 목록이 성공적으로 삭제되었습니다.');
+                } catch(e) {
+                    console.error('전체 삭제 에러:', e);
                     showToast('삭제 중 오류가 발생했습니다.', 'error');
                 }
                 hideLoader();
