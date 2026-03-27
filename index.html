@@ -1187,17 +1187,18 @@
             }
 
             badge.innerText = allowedMembers.length;
-            list.innerHTML = '';
             
             if(displayMembers.length === 0) {
                 list.innerHTML = `<li class="p-4 text-center text-slate-400 text-xs">등록된 사업자번호가 없습니다.</li>`;
                 return;
             }
 
+            // ★ 렌더링 최적화: 메모리에서 HTML 문자열을 모두 조립한 후 단 한 번만 DOM에 삽입 (프리징 방지)
+            let htmlContent = '';
             displayMembers.forEach(m => {
                 let formatNum = m.bizNumber;
                 if(formatNum.length === 10) formatNum = formatNum.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
-                list.innerHTML += `
+                htmlContent += `
                     <li class="p-2.5 bg-slate-50 border border-slate-100 rounded-lg mb-1.5 flex justify-between items-center hover:bg-white transition-colors">
                         <div class="flex flex-col truncate pr-2">
                             <span class="font-bold text-slate-700 truncate">${formatNum}</span>
@@ -1206,6 +1207,7 @@
                     </li>
                 `;
             });
+            list.innerHTML = htmlContent;
         };
 
 
@@ -1649,11 +1651,14 @@
             if(!select || !datalist) return;
             
             const mainCat = select.value;
-            datalist.innerHTML = '';
+            
+            // ★ 렌더링 최적화: 메모리 상에서 옵션 문자열 조립
+            let htmlContent = '';
             if (mainCat) {
                 const subs = getSubCatsByMainCat(mainCat);
-                subs.forEach(sub => { datalist.innerHTML += `<option value="${sub.name}"></option>`; });
+                subs.forEach(sub => { htmlContent += `<option value="${sub.name}"></option>`; });
             }
+            datalist.innerHTML = htmlContent;
         };
 
         window.renderTable = function() {
@@ -1663,7 +1668,6 @@
             if(!tbody) return;
 
             const searchKeyword = searchInput ? searchInput.value.toLowerCase() : '';
-            tbody.innerHTML = '';
             
             let filteredFiles = files.filter(f => {
                 const matchMainCat = currentFilterMain === 'all' || f.mainCat === currentFilterMain;
@@ -1676,10 +1680,13 @@
             if(countBadge) countBadge.innerText = `${filteredFiles.length}건`;
 
             if(filteredFiles.length === 0) {
+                tbody.innerHTML = '';
                 if(emptyState) { emptyState.classList.remove('hidden'); emptyState.classList.add('flex'); }
             } else {
                 if(emptyState) { emptyState.classList.add('hidden'); emptyState.classList.remove('flex'); }
                 
+                // ★ 렌더링 최적화: 테이블 행(tr)을 미리 모두 생성하여 한 번만 삽입
+                let tableHtml = '';
                 filteredFiles.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)).forEach(file => {
                     let actionBtn = '';
                     if(currentUser && currentUser.role === 'admin') {
@@ -1705,7 +1712,7 @@
                     const isNew = file.date === new Date().toISOString().split('T')[0];
                     const newBadge = isNew ? `<span class="ml-2 px-1.5 py-0.5 bg-red-100 text-red-600 text-[10px] font-bold rounded uppercase">New</span>` : '';
 
-                    const row = `
+                    tableHtml += `
                         <tr class="hover:bg-slate-50/80 transition-colors group border-b border-slate-50 last:border-0">
                             <td class="px-6 py-4"><span class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-md text-xs font-bold border border-slate-200 truncate block max-w-full" title="${file.mainCat}">${catShort}</span></td>
                             <td class="px-6 py-4">${file.subCat ? `<span class="text-[11px] font-bold text-amber-600 bg-amber-50 border border-amber-100 px-2 py-1 rounded-md whitespace-nowrap"><i class="fas fa-hashtag mr-1 opacity-70"></i>${file.subCat}</span>` : '<span class="text-slate-300">-</span>'}</td>
@@ -1719,8 +1726,8 @@
                             <td class="px-6 py-4"><div class="flex gap-2 justify-center">${actionBtn}</div></td>
                         </tr>
                     `;
-                    tbody.insertAdjacentHTML('beforeend', row);
                 });
+                tbody.innerHTML = tableHtml;
             }
         }
 
@@ -1809,10 +1816,12 @@
             moveFileId.value = id;
             moveFileName.innerText = fileName;
             
-            moveMainCat.innerHTML = '';
+            // ★ 렌더링 최적화
+            let catOptionsHtml = '';
             categories.forEach(cat => {
-                moveMainCat.innerHTML += `<option value="${cat.name}" ${cat.name === mainCat ? 'selected' : ''}>${cat.name}</option>`;
+                catOptionsHtml += `<option value="${cat.name}" ${cat.name === mainCat ? 'selected' : ''}>${cat.name}</option>`;
             });
+            moveMainCat.innerHTML = catOptionsHtml;
             
             moveSubCat.value = (!subCat || subCat === 'null') ? '' : subCat;
             updateMoveSubCategoryList();
@@ -1831,12 +1840,14 @@
             if(!mainCatInput || !datalist) return;
 
             const mainCat = mainCatInput.value;
-            datalist.innerHTML = '';
             
+            // ★ 렌더링 최적화
+            let subOptionsHtml = '';
             if (mainCat) {
                 const subs = getSubCatsByMainCat(mainCat);
-                subs.forEach(sub => { datalist.innerHTML += `<option value="${sub.name}"></option>`; });
+                subs.forEach(sub => { subOptionsHtml += `<option value="${sub.name}"></option>`; });
             }
+            datalist.innerHTML = subOptionsHtml;
         };
 
         window.handleMoveFile = async function() {
