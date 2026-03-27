@@ -483,7 +483,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // ★ 초고속 대량 처리를 위한 writeBatch 추가
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, setDoc, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
         // =====================================================================
@@ -1026,7 +1027,7 @@
             filterByCategory('intro');
         }
 
-        // ★ [단일 사업자등록번호 일괄 등록 처리 로직]
+        // ★ [단일 사업자등록번호 일괄 초고속 등록 처리 로직]
         window.batchAddMembers = async function() {
             const textarea = document.getElementById('batchMemberInput');
             if(!textarea) return;
@@ -1036,44 +1037,72 @@
             const lines = text.split('\n');
             let successCount = 0;
             
-            showLoader('사업자번호 등록 중...');
+            showLoader('데이터 초고속 연동 중입니다...');
 
-            for(const line of lines) {
-                if(!line.trim()) continue;
-                
-                // 단일 입력이므로 줄 전체를 가져와서 숫자만 남기기 (하이픈, 슬래시 등 제거)
-                let rawBizNum = line.trim();
-                let bizNum = rawBizNum.replace(/-/g, '').replace(/\//g, '_'); 
-
-                if(bizNum) {
-                    if (isLocalMode) {
+            if (isLocalMode) {
+                for(const line of lines) {
+                    if(!line.trim()) continue;
+                    let rawBizNum = line.trim();
+                    let bizNum = rawBizNum.replace(/-/g, '').replace(/\//g, '_'); 
+                    if(bizNum) {
                         if(!allowedMembers.find(m => m.bizNumber === bizNum)) {
                             allowedMembers.push({ id: bizNum, bizNumber: bizNum, timestamp: Date.now() });
                             successCount++;
                         }
-                    } else {
-                        try {
-                            await setDoc(doc(db, 'allowed_members', bizNum), {
-                                bizNumber: bizNum,
-                                timestamp: Date.now()
-                            });
-                            successCount++;
-                        } catch(e) {
-                            console.error('회원사 추가 에러 (사업자번호: ' + bizNum + '):', e);
+                    }
+                }
+                hideLoader();
+                textarea.value = '';
+                renderAdminMemberManager();
+                if(successCount > 0) showToast(`${successCount}개의 사업자번호 등록 처리가 완료되었습니다.`);
+                else showToast('올바른 데이터가 없거나 이미 등록되어 있습니다.', 'error');
+                return;
+            }
+
+            try {
+                // ★ Firestore Batch를 사용하여 500개 단위로 묶어서 초고속 저장
+                const chunkSize = 500;
+                let currentBatch = writeBatch(db);
+                let currentBatchCount = 0;
+
+                for(const line of lines) {
+                    if(!line.trim()) continue;
+                    let rawBizNum = line.trim();
+                    let bizNum = rawBizNum.replace(/-/g, '').replace(/\//g, '_'); 
+
+                    if(bizNum) {
+                        const docRef = doc(db, 'allowed_members', bizNum);
+                        currentBatch.set(docRef, {
+                            bizNumber: bizNum,
+                            timestamp: Date.now()
+                        });
+                        currentBatchCount++;
+                        successCount++;
+
+                        if (currentBatchCount === chunkSize) {
+                            await currentBatch.commit();
+                            currentBatch = writeBatch(db);
+                            currentBatchCount = 0;
                         }
                     }
                 }
-            }
+                
+                if (currentBatchCount > 0) {
+                    await currentBatch.commit();
+                }
 
-            hideLoader();
-            textarea.value = '';
-            
-            if (isLocalMode) renderAdminMemberManager();
-            
-            if(successCount > 0) {
-                showToast(`${successCount}개의 사업자번호 등록 처리가 완료되었습니다.`);
-            } else {
-                showToast('등록할 수 있는 올바른 데이터가 없거나 이미 등록되어 있습니다.', 'error');
+                hideLoader();
+                textarea.value = '';
+                
+                if(successCount > 0) {
+                    showToast(`${successCount}개의 사업자번호 초고속 등록이 완료되었습니다.`);
+                } else {
+                    showToast('올바른 데이터가 없거나 이미 등록되어 있습니다.', 'error');
+                }
+            } catch(e) {
+                console.error('고속 등록 에러:', e);
+                hideLoader();
+                showToast('등록 중 오류가 발생했습니다.', 'error');
             }
         };
 
@@ -1097,13 +1126,13 @@
             }
         };
 
-        // ★ [회원사 전체 일괄 삭제 로직]
+        // ★ [회원사 전체 일괄 초고속 삭제 로직]
         window.deleteAllMembers = async function() {
             if(allowedMembers.length === 0) {
                 return showToast('삭제할 사업장 목록이 없습니다.', 'info');
             }
             if(confirm(`정말로 등록된 ${allowedMembers.length}개의 사업장 목록을 전부 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다!`)) {
-                showLoader('전체 사업장 삭제 중...');
+                showLoader('전체 데이터 초고속 삭제 중...');
                 if (isLocalMode) {
                     allowedMembers = [];
                     renderAdminMemberManager();
@@ -1111,13 +1140,19 @@
                     return showToast('전체 삭제되었습니다. (로컬)');
                 }
                 try {
-                    // 비동기로 모든 문서 일괄 삭제 처리
-                    const deletePromises = allowedMembers.map(m => {
-                        const safeId = m.id.replace(/\//g, '_');
-                        return deleteDoc(doc(db, 'allowed_members', safeId));
-                    });
-                    await Promise.all(deletePromises);
-                    showToast('모든 사업장 목록이 성공적으로 삭제되었습니다.');
+                    // ★ Firestore Batch를 사용하여 500개 단위로 묶어서 초고속 삭제
+                    const chunkSize = 500;
+                    for (let i = 0; i < allowedMembers.length; i += chunkSize) {
+                        const chunk = allowedMembers.slice(i, i + chunkSize);
+                        const batch = writeBatch(db);
+                        chunk.forEach(m => {
+                            const safeId = m.id.replace(/\//g, '_');
+                            const docRef = doc(db, 'allowed_members', safeId);
+                            batch.delete(docRef);
+                        });
+                        await batch.commit();
+                    }
+                    showToast('모든 사업장 목록이 성공적으로 초고속 삭제되었습니다.');
                 } catch(e) {
                     console.error('전체 삭제 에러:', e);
                     showToast('삭제 중 오류가 발생했습니다.', 'error');
