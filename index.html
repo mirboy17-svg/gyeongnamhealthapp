@@ -44,7 +44,7 @@
             </div>
             
             <div class="space-y-6">
-                <!-- ★ 회원사 전용 로그인 (사업자등록번호) 로 변경 -->
+                <!-- 회원사 전용 로그인 -->
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-2">회원사 로그인</label>
                     <div class="relative">
@@ -153,7 +153,7 @@
             <!-- 본문 영역 -->
             <div class="flex-1 overflow-y-auto p-8 scroll-smooth relative">
                 
-                <!-- [2-1] 경남지역본부 소개 화면 (첫 화면) -->
+                <!-- [2-1] 경남지역본부 소개 화면 -->
                 <div id="introSection" class="fade-in max-w-5xl mx-auto space-y-8">
                     <!-- 환영 배너 -->
                     <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-10 text-white shadow-xl relative overflow-hidden">
@@ -272,26 +272,31 @@
                             <hr class="flex-1 border-slate-200">
                         </div>
                         
-                        <!-- ★ 1. 회원사 및 카테고리 관리 -->
+                        <!-- ★ 1. 회원사 관리 -->
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                            
-                            <!-- 회원사 엑셀 일괄 등록 (사업장명 삭제) -->
-                            <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[320px]">
+                            <!-- 회원사 등록 -->
+                            <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[360px]">
                                 <div class="flex justify-between items-center mb-4">
                                     <h3 class="text-lg font-bold text-slate-800 flex items-center">
-                                        <i class="fas fa-users text-blue-500 mr-2"></i> 회원사 일괄 등록 (사업자번호만)
+                                        <i class="fas fa-users text-blue-500 mr-2"></i> 회원사 등록 (사업자번호)
                                     </h3>
                                     <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">현재 <span id="memberCountBadge">0</span>개사 등록됨</span>
                                 </div>
-                                <p class="text-xs text-slate-500 mb-2">구글 스프레드시트나 엑셀에서 <b>[사업자등록번호]</b> 단일 열을 쭈욱 드래그 복사하여 아래에 붙여넣으세요.</p>
+
+                                <div class="flex gap-2 mb-4">
+                                    <input type="text" id="singleMemberInput" placeholder="단일 번호 1개 입력 (예: 1234567890)" class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none transition" onkeypress="if(event.key === 'Enter') addSingleMember()">
+                                    <button onclick="addSingleMember()" class="bg-blue-50 text-blue-700 border border-blue-100 px-5 rounded-lg font-bold hover:bg-blue-600 hover:text-white transition-colors whitespace-nowrap"><i class="fas fa-plus mr-1"></i>개별 추가</button>
+                                </div>
+                                
+                                <p class="text-xs text-slate-500 mb-2 border-t border-slate-100 pt-3 flex items-center"><i class="fas fa-file-excel mr-1.5 opacity-70"></i>또는 엑셀/스프레드시트에서 열을 복사하여 <b>대량 일괄 등록</b>:</p>
                                 <textarea id="batchMemberInput" class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none custom-scrollbar mb-3 font-mono" placeholder="예시)&#10;123-45-67890&#10;1112233333"></textarea>
-                                <button onclick="batchAddMembers()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-md flex items-center justify-center gap-2">
-                                    <i class="fas fa-save"></i> 사업자번호 일괄 저장 (연동)
+                                <button onclick="batchAddMembers()" class="w-full bg-slate-800 text-white py-2.5 rounded-xl font-bold text-[13px] hover:bg-blue-600 transition shadow-md flex items-center justify-center gap-2">
+                                    <i class="fas fa-layer-group"></i> 엑셀 데이터 일괄 초고속 연동
                                 </button>
                             </section>
 
-                            <!-- 등록된 회원사 목록 확인 -->
-                            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[320px]">
+                            <!-- 회원사 목록 확인 -->
+                            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[360px]">
                                 <h3 class="text-sm font-bold text-slate-800 flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
                                     <span class="flex items-center"><i class="fas fa-list-ul text-slate-400 mr-2"></i> 등록된 사업장 목록</span>
                                     <button onclick="deleteAllMembers()" class="text-[10px] bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 px-2.5 py-1 rounded transition-colors flex items-center gap-1 font-semibold shadow-sm">
@@ -306,39 +311,39 @@
                                     <ul id="adminMemberList" class="space-y-1.5 text-xs"></ul>
                                 </div>
                             </section>
-
                         </div>
 
-                        <!-- ★ 2. 카테고리 및 파일 업로드 -->
+                        <!-- ★ 2. 카테고리(상/하위 폴더 통합) 및 파일 업로드 -->
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <!-- 카테고리 관리 섹션 -->
-                            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[380px]">
+                            <!-- ★ 대/하위 통합 카테고리 관리 섹션 -->
+                            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[400px]">
                                 <h3 class="text-lg font-bold text-slate-800 flex items-center mb-5">
-                                    <i class="fas fa-folder-tree text-amber-500 mr-2"></i> 대분류 순서 및 관리
+                                    <i class="fas fa-folder-tree text-amber-500 mr-2"></i> 폴더(카테고리) 통합 관리
                                 </h3>
-                                <div class="flex gap-2 mb-4">
-                                    <input type="text" id="newCategoryInput" placeholder="새 분류명 입력..." class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition">
-                                    <button onclick="addNewCategory()" class="bg-amber-50 text-amber-700 border border-amber-100 px-4 rounded-lg font-bold hover:bg-amber-500 hover:text-white transition-colors whitespace-nowrap">추가</button>
+                                <div class="flex gap-2 mb-4 border-b border-slate-100 pb-4">
+                                    <input type="text" id="newCategoryInput" placeholder="새로운 [대분류] 이름..." class="flex-1 p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition">
+                                    <button onclick="addNewCategory()" class="bg-amber-50 text-amber-700 border border-amber-100 px-4 rounded-lg font-bold text-sm hover:bg-amber-500 hover:text-white transition-colors whitespace-nowrap">추가</button>
                                 </div>
                                 <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-                                    <ul id="adminCategoryList" class="space-y-2 text-sm"></ul>
+                                    <!-- 관리자용 계층형 트리 렌더링 영역 -->
+                                    <ul id="adminCategoryList" class="space-y-3"></ul>
                                 </div>
                             </section>
 
                             <!-- 대용량 자료 업로드 섹션 -->
-                            <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 h-[380px] flex flex-col">
+                            <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 h-[400px] flex flex-col">
                                 <h3 class="text-lg font-bold text-slate-800 flex items-center mb-5">
                                     <i class="fas fa-cloud-upload-alt text-amber-500 mr-2"></i> 클라우드 대용량 파일 배포
                                 </h3>
                                 
                                 <div class="grid grid-cols-2 gap-4 mb-4">
                                     <div>
-                                        <label class="block text-xs font-bold text-slate-500 mb-1.5">메인 카테고리</label>
+                                        <label class="block text-xs font-bold text-slate-500 mb-1.5">메인 카테고리 (대분류)</label>
                                         <select id="uploadMainCat" onchange="updateUploadSubCategoryList()" class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:ring-2 focus:ring-amber-500 outline-none cursor-pointer"></select>
                                     </div>
                                     <div>
                                         <label class="block text-xs font-bold text-slate-500 mb-1.5">하위 폴더/태그 (선택 또는 신규입력)</label>
-                                        <input type="text" id="uploadSubCat" list="existingSubCats" placeholder="기존 폴더 선택 또는 새 이름 입력..." class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                                        <input type="text" id="uploadSubCat" list="existingSubCats" placeholder="기존 폴더 선택 또는 새 이름 직접입력..." class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
                                         <datalist id="existingSubCats"></datalist>
                                     </div>
                                 </div>
@@ -425,7 +430,7 @@
         </main>
     </div>
 
-    <!-- 사업안내 상세 모달 (동적 팝업창) -->
+    <!-- 사업안내 상세 모달 -->
     <div id="bizModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden z-[70] fade-in opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden border border-slate-200 transform scale-95 transition-transform duration-300" id="bizModalContentContainer">
             <div class="flex justify-between items-center p-6 border-b border-slate-100 bg-slate-50 flex-shrink-0">
@@ -441,7 +446,7 @@
         </div>
     </div>
 
-    <!-- 자료 이동 모달 (동적 팝업창) -->
+    <!-- 자료 이동 모달 -->
     <div id="moveFileModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden z-[80] fade-in">
         <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-200">
             <h2 class="text-xl font-bold mb-6 text-slate-800 flex items-center">
@@ -483,7 +488,6 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        // ★ 초고속 대량 처리를 위한 writeBatch 추가
         import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, setDoc, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
@@ -510,8 +514,9 @@
         const ADMIN_PW = 'wjdwodyd21';
         let currentUser = null; 
         let categories = []; 
+        let subCategories = []; // ★ 신규: 하위 폴더 데이터 별도 분리 관리
         let files = []; 
-        let allowedMembers = []; // ★ 허용된 회원사 리스트 배열
+        let allowedMembers = []; 
         let currentFilterMain = 'intro'; 
         let currentFilterSub = null;
         let isLocalMode = false;
@@ -763,6 +768,10 @@
                 { id: 'cat6', name: "6. 안전보건표지", timestamp: 60 }
             ];
             
+            subCategories = [
+                { id: 'scat1', mainCat: "1. 정기안전보건교육자료", name: "3월 자료", timestamp: 10 }
+            ];
+
             files = [
                 { id: 'f1', mainCat: "1. 정기안전보건교육자료", subCat: "3월 자료", name: "[샘플] 2026년_산업안전보건법_가이드.pdf", date: new Date().toISOString().split('T')[0], timestamp: Date.now(), fileUrl: null }
             ];
@@ -825,12 +834,9 @@
                     updateUploadSubCategoryList();
                     renderSidebarCategories();
                     renderTable();
-                }, (error) => {
-                    console.error("파일 읽기 에러:", error);
-                    enableLocalMode("권한 에러 발생");
-                });
+                }, (error) => { enableLocalMode("권한 에러 발생"); });
 
-                // 2. 카테고리 동기화
+                // 2. 대분류 카테고리 동기화
                 const catRef = collection(db, 'health_categories');
                 onSnapshot(catRef, (snapshot) => {
                     if (isLocalMode) return;
@@ -843,24 +849,31 @@
                             "3. CMR물질 유해성 정보", "4. 초과공정개선보고서", "5. 프로그램(청력, 밀폐, 호흡기)", "6. 안전보건표지"
                         ];
                         defaultCats.forEach(async (name, idx) => {
-                            try {
-                                await addDoc(catRef, { name: name, timestamp: (idx + 1) * 10 });
-                            } catch (err) {}
+                            try { await addDoc(catRef, { name: name, timestamp: (idx + 1) * 10 }); } catch (err) {}
                         });
                     } else {
                         categories.sort((a, b) => a.timestamp - b.timestamp);
                         updateAllCategoryViews();
                     }
-                }, (error) => { console.error("카테고리 읽기 에러:", error); });
+                }, (error) => { console.error("카테고리 에러:", error); });
 
-                // ★ 3. 회원사 목록(사업자등록번호) 동기화 추가
+                // ★ 3. 하위 폴더(서브 카테고리) 동기화 추가
+                const subCatRef = collection(db, 'health_subcategories');
+                onSnapshot(subCatRef, (snapshot) => {
+                    if (isLocalMode) return;
+                    subCategories = [];
+                    snapshot.forEach(doc => { subCategories.push({ id: doc.id, ...doc.data() }); });
+                    updateAllCategoryViews();
+                }, (error) => { console.error("서브카테고리 에러:", error); });
+
+                // 4. 회원사 목록 동기화
                 const membersRef = collection(db, 'allowed_members');
                 onSnapshot(membersRef, (snapshot) => {
                     if (isLocalMode) return;
                     allowedMembers = [];
                     snapshot.forEach(doc => { allowedMembers.push({ id: doc.id, ...doc.data() }); });
                     renderAdminMemberManager();
-                }, (error) => { console.error("회원사 읽기 에러:", error); });
+                }, (error) => { console.error("회원사 에러:", error); });
 
             } catch (err) {
                 enableLocalMode("DB 연결 실패");
@@ -872,10 +885,7 @@
             const dt = e.dataTransfer;
             if(dt.files && dt.files.length > 0) {
                 const fileInput = document.getElementById('uploadFile');
-                if(fileInput) {
-                    fileInput.files = dt.files; 
-                    updateFileNameDisplay(fileInput);
-                }
+                if(fileInput) { fileInput.files = dt.files; updateFileNameDisplay(fileInput); }
             }
         }
 
@@ -939,12 +949,11 @@
             if(ui) ui.classList.add('hidden');
         }
 
-        // ★ [회원사 사업자등록번호 단일 로그인 로직]
+        // --- [로그인 처리 로직] ---
         window.loginAsClient = function() {
             const inputEl = document.getElementById('clientBizNumber');
             if(!inputEl) return;
             
-            // 입력받은 번호에서 혹시 모를 하이픈(-) 제거 및 공백 제거
             const bizNumInput = inputEl.value.trim().replace(/-/g, '');
             if(!bizNumInput) return showToast('사업자등록번호를 입력해주세요.', 'error');
 
@@ -956,11 +965,9 @@
                 return;
             }
 
-            // 허용된 회원사 배열에서 일치하는 사업자 번호 찾기
             const member = allowedMembers.find(m => m.bizNumber === bizNumInput);
             
             if (member) {
-                // 접속에 성공하면 상단에 표시될 이름을 사업자번호(포맷팅)로 설정
                 let formatNum = member.bizNumber;
                 if(formatNum.length === 10) formatNum = formatNum.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
                 
@@ -973,14 +980,8 @@
             }
         }
 
-        window.showAdminModal = () => {
-            const m = document.getElementById('adminModal');
-            if(m) m.classList.remove('hidden');
-        };
-        window.hideAdminModal = () => {
-            const m = document.getElementById('adminModal');
-            if(m) m.classList.add('hidden');
-        };
+        window.showAdminModal = () => { const m = document.getElementById('adminModal'); if(m) m.classList.remove('hidden'); };
+        window.hideAdminModal = () => { const m = document.getElementById('adminModal'); if(m) m.classList.add('hidden'); };
 
         window.loginAsAdmin = function() {
             const idInput = document.getElementById('adminId');
@@ -1027,7 +1028,39 @@
             filterByCategory('intro');
         }
 
-        // ★ [단일 사업자등록번호 일괄 초고속 등록 처리 로직]
+        // --- [회원사 등록/삭제 로직] ---
+        window.addSingleMember = async function() {
+            const input = document.getElementById('singleMemberInput');
+            if (!input) return;
+            const rawVal = input.value.trim();
+            if (!rawVal) return showToast('등록할 사업자등록번호를 입력해주세요.', 'error');
+
+            let bizNum = rawVal.replace(/-/g, '').replace(/\//g, '_');
+            if (!bizNum) return;
+
+            showLoader('사업자번호 등록 중...');
+
+            if (isLocalMode) {
+                if (!allowedMembers.find(m => m.bizNumber === bizNum)) {
+                    allowedMembers.push({ id: bizNum, bizNumber: bizNum, timestamp: Date.now() });
+                    showToast('사업자번호가 등록되었습니다. (로컬)');
+                    renderAdminMemberManager();
+                } else { showToast('이미 등록된 번호입니다.', 'error'); }
+                input.value = '';
+                hideLoader();
+                return;
+            }
+
+            try {
+                await setDoc(doc(db, 'allowed_members', bizNum), { bizNumber: bizNum, timestamp: Date.now() });
+                showToast('사업자번호가 성공적으로 등록되었습니다.');
+                input.value = '';
+            } catch (e) {
+                showToast('등록 중 권한 오류가 발생했습니다.', 'error');
+            }
+            hideLoader();
+        };
+
         window.batchAddMembers = async function() {
             const textarea = document.getElementById('batchMemberInput');
             if(!textarea) return;
@@ -1042,40 +1075,32 @@
             if (isLocalMode) {
                 for(const line of lines) {
                     if(!line.trim()) continue;
-                    let rawBizNum = line.trim();
-                    let bizNum = rawBizNum.replace(/-/g, '').replace(/\//g, '_'); 
-                    if(bizNum) {
-                        if(!allowedMembers.find(m => m.bizNumber === bizNum)) {
-                            allowedMembers.push({ id: bizNum, bizNumber: bizNum, timestamp: Date.now() });
-                            successCount++;
-                        }
+                    let bizNum = line.trim().replace(/-/g, '').replace(/\//g, '_'); 
+                    if(bizNum && !allowedMembers.find(m => m.bizNumber === bizNum)) {
+                        allowedMembers.push({ id: bizNum, bizNumber: bizNum, timestamp: Date.now() });
+                        successCount++;
                     }
                 }
                 hideLoader();
                 textarea.value = '';
                 renderAdminMemberManager();
-                if(successCount > 0) showToast(`${successCount}개의 사업자번호 등록 처리가 완료되었습니다.`);
+                if(successCount > 0) showToast(`${successCount}개의 사업자번호 등록 완료`);
                 else showToast('올바른 데이터가 없거나 이미 등록되어 있습니다.', 'error');
                 return;
             }
 
             try {
-                // ★ Firestore Batch를 사용하여 500개 단위로 묶어서 초고속 저장
                 const chunkSize = 500;
                 let currentBatch = writeBatch(db);
                 let currentBatchCount = 0;
 
                 for(const line of lines) {
                     if(!line.trim()) continue;
-                    let rawBizNum = line.trim();
-                    let bizNum = rawBizNum.replace(/-/g, '').replace(/\//g, '_'); 
+                    let bizNum = line.trim().replace(/-/g, '').replace(/\//g, '_'); 
 
                     if(bizNum) {
                         const docRef = doc(db, 'allowed_members', bizNum);
-                        currentBatch.set(docRef, {
-                            bizNumber: bizNum,
-                            timestamp: Date.now()
-                        });
+                        currentBatch.set(docRef, { bizNumber: bizNum, timestamp: Date.now() });
                         currentBatchCount++;
                         successCount++;
 
@@ -1087,20 +1112,13 @@
                     }
                 }
                 
-                if (currentBatchCount > 0) {
-                    await currentBatch.commit();
-                }
+                if (currentBatchCount > 0) await currentBatch.commit();
 
                 hideLoader();
                 textarea.value = '';
-                
-                if(successCount > 0) {
-                    showToast(`${successCount}개의 사업자번호 초고속 등록이 완료되었습니다.`);
-                } else {
-                    showToast('올바른 데이터가 없거나 이미 등록되어 있습니다.', 'error');
-                }
+                if(successCount > 0) showToast(`${successCount}개의 사업자번호 초고속 등록 완료`);
+                else showToast('올바른 데이터가 없거나 이미 등록되어 있습니다.', 'error');
             } catch(e) {
-                console.error('고속 등록 에러:', e);
                 hideLoader();
                 showToast('등록 중 오류가 발생했습니다.', 'error');
             }
@@ -1119,18 +1137,14 @@
                     const safeId = id.replace(/\//g, '_');
                     await deleteDoc(doc(db, 'allowed_members', safeId));
                     showToast('해당 번호의 권한이 삭제되었습니다.');
-                } catch(e) {
-                    showToast('삭제 중 오류가 발생했습니다.', 'error');
-                }
+                } catch(e) { showToast('삭제 중 오류가 발생했습니다.', 'error'); }
                 hideLoader();
             }
         };
 
-        // ★ [회원사 전체 일괄 초고속 삭제 로직]
         window.deleteAllMembers = async function() {
-            if(allowedMembers.length === 0) {
-                return showToast('삭제할 사업장 목록이 없습니다.', 'info');
-            }
+            if(allowedMembers.length === 0) return showToast('삭제할 목록이 없습니다.', 'info');
+            
             if(confirm(`정말로 등록된 ${allowedMembers.length}개의 사업장 목록을 전부 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다!`)) {
                 showLoader('전체 데이터 초고속 삭제 중...');
                 if (isLocalMode) {
@@ -1140,21 +1154,18 @@
                     return showToast('전체 삭제되었습니다. (로컬)');
                 }
                 try {
-                    // ★ Firestore Batch를 사용하여 500개 단위로 묶어서 초고속 삭제
                     const chunkSize = 500;
                     for (let i = 0; i < allowedMembers.length; i += chunkSize) {
                         const chunk = allowedMembers.slice(i, i + chunkSize);
                         const batch = writeBatch(db);
                         chunk.forEach(m => {
                             const safeId = m.id.replace(/\//g, '_');
-                            const docRef = doc(db, 'allowed_members', safeId);
-                            batch.delete(docRef);
+                            batch.delete(doc(db, 'allowed_members', safeId));
                         });
                         await batch.commit();
                     }
                     showToast('모든 사업장 목록이 성공적으로 초고속 삭제되었습니다.');
                 } catch(e) {
-                    console.error('전체 삭제 에러:', e);
                     showToast('삭제 중 오류가 발생했습니다.', 'error');
                 }
                 hideLoader();
@@ -1172,7 +1183,6 @@
             
             if(searchInput && searchInput.value) {
                 const keyword = searchInput.value.toLowerCase();
-                // 사업장명이 없으므로 번호로만 검색
                 displayMembers = displayMembers.filter(m => m.bizNumber.includes(keyword));
             }
 
@@ -1186,9 +1196,7 @@
 
             displayMembers.forEach(m => {
                 let formatNum = m.bizNumber;
-                // 10자리인 경우 일반적인 사업자등록번호 포맷으로 표시
                 if(formatNum.length === 10) formatNum = formatNum.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
-
                 list.innerHTML += `
                     <li class="p-2.5 bg-slate-50 border border-slate-100 rounded-lg mb-1.5 flex justify-between items-center hover:bg-white transition-colors">
                         <div class="flex flex-col truncate pr-2">
@@ -1200,24 +1208,41 @@
             });
         };
 
-        // --- [카테고리 관리] ---
+
+        // --- [★ 핵심: 대분류/하위폴더 계층형 통합 카테고리 관리] ---
+        
+        // 헬퍼: 특정 대분류에 속한 '정식 하위폴더'와 '기존 파일에만 남아있는 레거시 폴더'를 혼합하여 가져옵니다.
+        function getSubCatsByMainCat(mainCatName) {
+            const registered = subCategories.filter(s => s.mainCat === mainCatName).sort((a,b) => a.timestamp - b.timestamp);
+            const registeredNames = registered.map(s => s.name);
+            
+            // 기존 파일에만 흔적으로 남아있는 미등록 폴더들 발굴 (호환성 유지)
+            const fileOnlyNames = [...new Set(files.filter(f => f.mainCat === mainCatName && f.subCat && !registeredNames.includes(f.subCat)).map(f => f.subCat))].sort();
+            
+            return [
+                ...registered.map(s => ({ id: s.id, name: s.name, isRegistered: true })),
+                ...fileOnlyNames.map(name => ({ id: null, name: name, isRegistered: false }))
+            ];
+        }
+
         function updateAllCategoryViews() {
             renderSidebarCategories();
             renderUploadCategorySelect();
             renderAdminCategoryManager();
         }
 
+        // --- 1. 대분류 CRUD ---
         window.addNewCategory = async function() {
             const input = document.getElementById('newCategoryInput');
             const name = input ? input.value.trim() : '';
-            if(!name) return showToast('카테고리명을 입력해주세요.', 'error');
+            if(!name) return showToast('새 대분류명을 입력해주세요.', 'error');
             
             const newTimestamp = categories.length > 0 ? categories[categories.length - 1].timestamp + 10 : 10;
             
             if (isLocalMode) {
                 categories.push({ id: Date.now().toString(), name: name, timestamp: newTimestamp });
                 updateAllCategoryViews();
-                showToast('카테고리가 생성되었습니다. (로컬)');
+                showToast('대분류가 생성되었습니다. (로컬)');
                 if(input) input.value = '';
                 return;
             }
@@ -1225,114 +1250,291 @@
             showLoader('추가 중...');
             try {
                 await addDoc(collection(db, 'health_categories'), { name: name, timestamp: newTimestamp });
-                showToast('카테고리가 생성되었습니다.');
-            } catch(error) { 
-                showToast('권한 문제로 오류가 발생했습니다.', 'error'); 
-            }
+                showToast('대분류가 생성되었습니다.');
+            } catch(error) { showToast('오류가 발생했습니다.', 'error'); }
             if(input) input.value = '';
             hideLoader();
         }
 
-        window.editCategory = async function(id, currentName) {
-            const newName = prompt('카테고리명을 수정하세요:', currentName);
-            if(newName && newName.trim() !== '' && newName !== currentName) {
-                if (isLocalMode) {
-                    categories = categories.map(c => c.id === id ? { ...c, name: newName } : c);
-                    updateAllCategoryViews();
-                    showToast('카테고리가 수정되었습니다. (로컬)');
-                    return;
-                }
-
-                showLoader('업데이트 중...');
-                try {
-                    await updateDoc(doc(db, 'health_categories', id), { name: newName });
-                    showToast('카테고리가 수정되었습니다.');
-                } catch(error) { 
-                    showToast('권한 문제로 오류가 발생했습니다.', 'error'); 
-                }
-                hideLoader();
+        window.editCategory = async function(id, oldName) {
+            const newName = prompt('대분류명을 수정하세요:\n(속해있는 파일과 하위 폴더의 대분류 속성도 함께 수정됩니다.)', oldName);
+            if(!newName || newName.trim() === '' || newName === oldName) return;
+            
+            if (isLocalMode) {
+                categories = categories.map(c => c.id === id ? { ...c, name: newName } : c);
+                subCategories = subCategories.map(s => s.mainCat === oldName ? { ...s, mainCat: newName } : s);
+                files = files.map(f => f.mainCat === oldName ? { ...f, mainCat: newName } : f);
+                updateAllCategoryViews();
+                renderTable();
+                return showToast('대분류가 수정되었습니다. (로컬)');
             }
+
+            showLoader('데이터 일괄 업데이트 중...');
+            try {
+                const batch = writeBatch(db);
+                // 1. 대분류 수정
+                batch.update(doc(db, 'health_categories', id), { name: newName });
+                // 2. 속한 하위 폴더의 메인 카테고리 수정
+                subCategories.filter(s => s.mainCat === oldName).forEach(s => {
+                    batch.update(doc(db, 'health_subcategories', s.id), { mainCat: newName });
+                });
+                // 3. 속한 파일들의 메인 카테고리 수정
+                files.filter(f => f.mainCat === oldName).forEach(f => {
+                    batch.update(doc(db, 'health_files', f.id), { mainCat: newName });
+                });
+                
+                await batch.commit();
+                showToast('대분류 및 연관 데이터가 수정되었습니다.');
+            } catch(error) { showToast('오류가 발생했습니다.', 'error'); }
+            hideLoader();
         }
 
-        window.deleteCategory = async function(id) {
-            if(confirm('이 카테고리를 삭제하시겠습니까?')) {
-                if (isLocalMode) {
-                    categories = categories.filter(c => c.id !== id);
-                    updateAllCategoryViews();
-                    showToast('카테고리가 삭제되었습니다. (로컬)');
-                    return;
-                }
+        window.deleteCategory = async function(id, name) {
+            if(!confirm('이 대분류를 삭제하시겠습니까?\n(속해있는 하위 폴더도 삭제되며, 파일들은 대분류 속성을 잃습니다.)')) return;
 
-                showLoader('삭제 중...');
-                try {
-                    await deleteDoc(doc(db, 'health_categories', id));
-                    showToast('카테고리가 삭제되었습니다.');
-                } catch(error) { 
-                    showToast('권한 문제로 오류가 발생했습니다.', 'error'); 
-                }
-                hideLoader();
+            if (isLocalMode) {
+                categories = categories.filter(c => c.id !== id);
+                subCategories = subCategories.filter(s => s.mainCat !== name);
+                updateAllCategoryViews();
+                return showToast('대분류가 삭제되었습니다. (로컬)');
             }
+
+            showLoader('삭제 중...');
+            try {
+                const batch = writeBatch(db);
+                batch.delete(doc(db, 'health_categories', id));
+                subCategories.filter(s => s.mainCat === name).forEach(s => {
+                    batch.delete(doc(db, 'health_subcategories', s.id));
+                });
+                await batch.commit();
+                showToast('대분류가 삭제되었습니다.');
+            } catch(error) { showToast('오류가 발생했습니다.', 'error'); }
+            hideLoader();
         }
 
         window.moveCategoryUp = async function(id) {
             const index = categories.findIndex(c => c.id === id);
             if (index > 0) swapCategoryOrder(index, index - 1);
         };
-
         window.moveCategoryDown = async function(id) {
             const index = categories.findIndex(c => c.id === id);
             if (index !== -1 && index < categories.length - 1) swapCategoryOrder(index, index + 1);
         };
-
         async function swapCategoryOrder(idx1, idx2) {
             const temp = categories[idx1];
             categories[idx1] = categories[idx2];
             categories[idx2] = temp;
-            
             categories.forEach((c, i) => c.timestamp = (i + 1) * 10);
             
-            if (isLocalMode) {
-                updateAllCategoryViews();
-                return;
-            }
+            if (isLocalMode) return updateAllCategoryViews();
             
             showLoader('순서 변경 중...');
             try {
-                await Promise.all(categories.map(c => 
-                    updateDoc(doc(db, 'health_categories', c.id), { timestamp: c.timestamp })
-                ));
-            } catch(error) {
-                showToast('순서 변경 중 오류가 발생했습니다.', 'error');
-            }
+                const batch = writeBatch(db);
+                categories.forEach(c => { batch.update(doc(db, 'health_categories', c.id), { timestamp: c.timestamp }); });
+                await batch.commit();
+            } catch(error) { showToast('오류가 발생했습니다.', 'error'); }
             hideLoader();
         }
 
-        function renderAdminCategoryManager() {
+        // --- 2. 하위 폴더 CRUD ---
+        window.addNewSubCategory = async function(mainCat, inputId) {
+            const input = document.getElementById(inputId);
+            const name = input ? input.value.trim() : '';
+            if(!name) return showToast('새 하위 폴더명을 입력해주세요.', 'error');
+            
+            if(subCategories.find(s => s.mainCat === mainCat && s.name === name)) {
+                return showToast('이미 동일한 이름의 하위 폴더가 존재합니다.', 'error');
+            }
+
+            const filtered = subCategories.filter(s => s.mainCat === mainCat);
+            const newTimestamp = filtered.length > 0 ? Math.max(...filtered.map(s => s.timestamp)) + 10 : 10;
+            
+            if(isLocalMode) {
+                subCategories.push({ id: Date.now().toString(), mainCat: mainCat, name: name, timestamp: newTimestamp });
+                updateAllCategoryViews();
+                if(input) input.value = '';
+                return showToast('하위 폴더가 추가되었습니다. (로컬)');
+            }
+
+            showLoader('추가 중...');
+            try {
+                await addDoc(collection(db, 'health_subcategories'), { mainCat: mainCat, name: name, timestamp: newTimestamp });
+                showToast('하위 폴더가 추가되었습니다.');
+            } catch(e) { showToast('오류가 발생했습니다.', 'error'); }
+            if(input) input.value = '';
+            hideLoader();
+        }
+
+        window.editSubCategory = async function(subId, oldName, mainCat) {
+            const newName = prompt(`하위 폴더명을 수정하세요:\n(속해있는 자료들의 폴더 경로도 함께 수정됩니다.)`, oldName);
+            if(!newName || newName.trim() === '' || newName === oldName) return;
+            
+            if(isLocalMode) {
+                subCategories = subCategories.map(s => s.id === subId ? { ...s, name: newName } : s);
+                files = files.map(f => (f.mainCat === mainCat && f.subCat === oldName) ? { ...f, subCat: newName } : f);
+                updateAllCategoryViews();
+                renderTable();
+                return showToast('하위 폴더가 수정되었습니다. (로컬)');
+            }
+
+            showLoader('일괄 업데이트 중...');
+            try {
+                const batch = writeBatch(db);
+                batch.update(doc(db, 'health_subcategories', subId), { name: newName });
+                
+                const affectedFiles = files.filter(f => f.mainCat === mainCat && f.subCat === oldName);
+                affectedFiles.forEach(f => {
+                    batch.update(doc(db, 'health_files', f.id), { subCat: newName });
+                });
+                
+                await batch.commit();
+                showToast('하위 폴더 및 파일 경로가 수정되었습니다.');
+            } catch(e) { showToast('오류가 발생했습니다.', 'error'); }
+            hideLoader();
+        }
+
+        window.deleteSubCategory = async function(subId, subName, mainCat) {
+            if(!confirm('이 하위 폴더를 삭제하시겠습니까?\n(이 폴더에 있던 파일들은 지워지지 않고 "폴더없음" 상태로 남게 됩니다.)')) return;
+            
+            if(isLocalMode) {
+                subCategories = subCategories.filter(s => s.id !== subId);
+                files = files.map(f => (f.mainCat === mainCat && f.subCat === subName) ? { ...f, subCat: '' } : f);
+                updateAllCategoryViews();
+                renderTable();
+                return showToast('삭제되었습니다. (로컬)');
+            }
+
+            showLoader('삭제 중...');
+            try {
+                const batch = writeBatch(db);
+                batch.delete(doc(db, 'health_subcategories', subId));
+                
+                const affectedFiles = files.filter(f => f.mainCat === mainCat && f.subCat === subName);
+                affectedFiles.forEach(f => {
+                    batch.update(doc(db, 'health_files', f.id), { subCat: '' });
+                });
+                
+                await batch.commit();
+                showToast('삭제되었습니다.');
+            } catch(e) { showToast('오류가 발생했습니다.', 'error'); }
+            hideLoader();
+        }
+
+        window.moveSubCategoryUp = async function(subId) {
+            const sub = subCategories.find(s => s.id === subId);
+            if(!sub) return;
+            const siblings = subCategories.filter(s => s.mainCat === sub.mainCat).sort((a,b) => a.timestamp - b.timestamp);
+            const index = siblings.findIndex(s => s.id === subId);
+            if(index > 0) swapSubCategoryOrder(siblings, index, index - 1);
+        }
+        window.moveSubCategoryDown = async function(subId) {
+            const sub = subCategories.find(s => s.id === subId);
+            if(!sub) return;
+            const siblings = subCategories.filter(s => s.mainCat === sub.mainCat).sort((a,b) => a.timestamp - b.timestamp);
+            const index = siblings.findIndex(s => s.id === subId);
+            if(index !== -1 && index < siblings.length - 1) swapSubCategoryOrder(siblings, index, index + 1);
+        }
+        async function swapSubCategoryOrder(siblings, idx1, idx2) {
+            const temp = siblings[idx1];
+            siblings[idx1] = siblings[idx2];
+            siblings[idx2] = temp;
+            siblings.forEach((s, i) => s.timestamp = (i + 1) * 10);
+            
+            if(isLocalMode) return updateAllCategoryViews();
+            
+            showLoader('순서 변경 중...');
+            try {
+                const batch = writeBatch(db);
+                siblings.forEach(s => { batch.update(doc(db, 'health_subcategories', s.id), { timestamp: s.timestamp }); });
+                await batch.commit();
+            } catch(e) { showToast('오류가 발생했습니다.', 'error'); }
+            hideLoader();
+        }
+
+        // 기존 파일에만 존재했던 유령 폴더를 정식 DB에 등록 (호환성)
+        window.registerLegacySubCat = async function(mainCat, subName) {
+            showLoader('정식 등록 중...');
+            await checkAndAddSubCategory(mainCat, subName);
+            hideLoader();
+            showToast('기존 폴더가 시스템에 정식으로 등록되었습니다.');
+        }
+
+        // 업로드/이동 시 없는 하위폴더면 자동 생성해주는 유틸 함수
+        async function checkAndAddSubCategory(mainCat, subCat) {
+            if(!subCat) return;
+            const exists = subCategories.find(s => s.mainCat === mainCat && s.name === subCat);
+            if(!exists) {
+                const filtered = subCategories.filter(s => s.mainCat === mainCat);
+                const newTimestamp = filtered.length > 0 ? Math.max(...filtered.map(s => s.timestamp)) + 10 : 10;
+                if(isLocalMode) {
+                    subCategories.push({ id: Date.now().toString(), mainCat: mainCat, name: subCat, timestamp: newTimestamp });
+                } else {
+                    await addDoc(collection(db, 'health_subcategories'), { mainCat: mainCat, name: subCat, timestamp: newTimestamp });
+                }
+            }
+        }
+
+        // --- 3. 카테고리 계층형 관리 UI 렌더링 ---
+        window.renderAdminCategoryManager = function() {
             const list = document.getElementById('adminCategoryList');
             if(!list) return;
             list.innerHTML = '';
+            
             categories.forEach(cat => {
+                const subs = getSubCatsByMainCat(cat.name);
+                let subsHtml = '';
+                
+                subs.forEach(sub => {
+                    const actionBtns = sub.isRegistered ? `
+                        <button onclick="moveSubCategoryUp('${sub.id}')" class="w-5 h-5 flex items-center justify-center bg-white text-slate-400 border border-slate-200 rounded hover:bg-slate-200 hover:text-slate-700" title="위로"><i class="fas fa-arrow-up text-[9px]"></i></button>
+                        <button onclick="moveSubCategoryDown('${sub.id}')" class="w-5 h-5 flex items-center justify-center bg-white text-slate-400 border border-slate-200 rounded hover:bg-slate-200 hover:text-slate-700" title="아래로"><i class="fas fa-arrow-down text-[9px]"></i></button>
+                        <button onclick="editSubCategory('${sub.id}', '${sub.name.replace(/'/g, "\\'")}', '${cat.name.replace(/'/g, "\\'")}')" class="w-5 h-5 flex items-center justify-center bg-blue-50 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition" title="수정"><i class="fas fa-pen text-[9px]"></i></button>
+                        <button onclick="deleteSubCategory('${sub.id}', '${sub.name.replace(/'/g, "\\'")}', '${cat.name.replace(/'/g, "\\'")}')" class="w-5 h-5 flex items-center justify-center bg-red-50 text-red-500 rounded hover:bg-red-500 hover:text-white transition" title="삭제"><i class="fas fa-trash text-[9px]"></i></button>
+                    ` : `
+                        <span class="text-[9px] text-amber-500 bg-amber-50 px-1 py-0.5 rounded border border-amber-100 whitespace-nowrap">미등록</span>
+                        <button onclick="registerLegacySubCat('${cat.name.replace(/'/g, "\\'")}', '${sub.name.replace(/'/g, "\\'")}')" class="w-5 h-5 flex items-center justify-center bg-green-50 text-green-600 rounded hover:bg-green-500 hover:text-white" title="정식 폴더로 추가"><i class="fas fa-plus text-[9px]"></i></button>
+                    `;
+
+                    subsHtml += `
+                        <li class="pl-7 pr-3 py-2 flex justify-between items-center hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0 group">
+                            <span class="text-[12px] text-slate-600 font-medium flex items-center"><i class="fas fa-level-up-alt transform rotate-90 mr-2 opacity-40 text-xs"></i> ${sub.name}</span>
+                            <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                ${actionBtns}
+                            </div>
+                        </li>
+                    `;
+                });
+
                 list.innerHTML += `
-                    <li class="p-3 bg-white border border-slate-100 rounded-lg mb-2 flex justify-between items-center hover:border-amber-200 transition-colors shadow-sm">
-                        <span class="font-bold text-slate-700 truncate pr-2"><i class="far fa-folder text-slate-400 mr-2"></i>${cat.name}</span>
-                        <div class="flex gap-1 flex-shrink-0">
-                            <button onclick="moveCategoryUp('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-slate-50 text-slate-400 rounded hover:bg-slate-200 hover:text-slate-700 transition" title="위로"><i class="fas fa-arrow-up text-xs"></i></button>
-                            <button onclick="moveCategoryDown('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-slate-50 text-slate-400 rounded hover:bg-slate-200 hover:text-slate-700 transition" title="아래로"><i class="fas fa-arrow-down text-xs"></i></button>
-                            <button onclick="editCategory('${cat.id}', '${cat.name}')" class="w-7 h-7 flex items-center justify-center bg-slate-100 text-slate-500 rounded hover:bg-slate-200 hover:text-slate-700 transition" title="이름 수정"><i class="fas fa-pen text-xs"></i></button>
-                            <button onclick="deleteCategory('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-red-50 text-red-500 rounded hover:bg-red-100 hover:text-red-700 transition" title="삭제"><i class="fas fa-trash text-xs"></i></button>
+                    <li class="bg-white border border-slate-200 rounded-xl mb-3 shadow-sm overflow-hidden group/main">
+                        <div class="p-3.5 bg-slate-50 flex justify-between items-center border-b border-slate-100">
+                            <span class="font-bold text-slate-800 truncate pr-2 flex items-center text-sm"><i class="far fa-folder-open text-amber-500 mr-2"></i>${cat.name}</span>
+                            <div class="flex gap-1 flex-shrink-0">
+                                <button onclick="moveCategoryUp('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-white text-slate-400 rounded border border-slate-200 hover:bg-slate-200 hover:text-slate-700 transition" title="위로"><i class="fas fa-arrow-up text-[11px]"></i></button>
+                                <button onclick="moveCategoryDown('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-white text-slate-400 rounded border border-slate-200 hover:bg-slate-200 hover:text-slate-700 transition" title="아래로"><i class="fas fa-arrow-down text-[11px]"></i></button>
+                                <button onclick="editCategory('${cat.id}', '${cat.name.replace(/'/g, "\\'")}')" class="w-7 h-7 flex items-center justify-center bg-blue-50 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition" title="수정"><i class="fas fa-pen text-[11px]"></i></button>
+                                <button onclick="deleteCategory('${cat.id}', '${cat.name.replace(/'/g, "\\'")}')" class="w-7 h-7 flex items-center justify-center bg-red-50 text-red-500 rounded hover:bg-red-500 hover:text-white transition" title="삭제"><i class="fas fa-trash text-[11px]"></i></button>
+                            </div>
                         </div>
+                        <ul class="bg-white">
+                            ${subsHtml}
+                            <!-- 하위 폴더 신규 추가 인풋 -->
+                            <li class="pl-7 pr-3 py-2.5 bg-slate-50/50 flex gap-2 items-center">
+                                <input type="text" id="newSubCatInput_${cat.id}" placeholder="새 하위폴더 추가..." class="flex-1 p-2 bg-white border border-slate-200 rounded-md text-[12px] focus:ring-1 focus:ring-amber-500 outline-none" onkeypress="if(event.key === 'Enter') addNewSubCategory('${cat.name.replace(/'/g, "\\'")}', 'newSubCatInput_${cat.id}')">
+                                <button onclick="addNewSubCategory('${cat.name.replace(/'/g, "\\'")}', 'newSubCatInput_${cat.id}')" class="bg-amber-100 text-amber-700 px-3 py-2 rounded-md text-[11px] font-bold hover:bg-amber-500 hover:text-white transition-colors whitespace-nowrap"><i class="fas fa-plus mr-1"></i>추가</button>
+                            </li>
+                        </ul>
                     </li>
                 `;
             });
         }
 
+        // --- 기타 사이드바/셀렉트 렌더링 로직 연동 ---
         window.filterByCategory = function(mainCat, subCat = null) {
             currentFilterMain = mainCat;
             currentFilterSub = subCat;
-            
-            if (subCat) {
-                expandedCategories.add(mainCat);
-            }
+            if (subCat) expandedCategories.add(mainCat);
             
             const introSection = document.getElementById('introSection');
             const fileListSection = document.getElementById('fileListSection');
@@ -1344,7 +1546,6 @@
             if (mainCat === 'intro') {
                 introSection.classList.remove('hidden');
                 fileListSection.classList.add('hidden');
-                
                 if(currentTitle) currentTitle.innerText = '경남지역본부 맞춤형 통합 산업보건 Hub';
                 if(subtitle) subtitle.innerText = 'Partnering for a Safer Workplace';
             } else {
@@ -1369,17 +1570,13 @@
                 
                 renderTable();
             }
-            
             renderSidebarCategories();
         }
 
         window.clickMainCategory = function(catName) {
             if (currentFilterMain === catName && currentFilterSub === null) {
-                if (expandedCategories.has(catName)) {
-                    expandedCategories.delete(catName);
-                } else {
-                    expandedCategories.add(catName);
-                }
+                if (expandedCategories.has(catName)) expandedCategories.delete(catName);
+                else expandedCategories.add(catName);
             } else {
                 expandedCategories.add(catName);
             }
@@ -1404,14 +1601,14 @@
                 const isActiveMain = currentFilterMain === cat.name && currentFilterSub === null;
                 const activeClassMain = isActiveMain ? 'bg-amber-500 text-white shadow-md' : 'text-slate-400 hover:bg-white/5 hover:text-slate-200';
                 
-                const subCats = [...new Set(files.filter(f => f.mainCat === cat.name && f.subCat).map(f => f.subCat))].sort();
-                const hasSubCats = subCats.length > 0;
+                const subs = getSubCatsByMainCat(cat.name);
+                const hasSubCats = subs.length > 0;
                 const isExpanded = expandedCategories.has(cat.name);
                 
                 let chevronHtml = hasSubCats ? `<i class="fas fa-chevron-${isExpanded ? 'down' : 'right'} ml-auto text-[10px] opacity-50 transition-transform"></i>` : '';
 
                 html += `<div class="mb-1">
-                            <a href="#" onclick="clickMainCategory('${cat.name}')" class="${activeClassMain} block px-4 py-2.5 rounded-xl transition-all text-[13px] font-medium flex items-center" title="${cat.name}">
+                            <a href="#" onclick="clickMainCategory('${cat.name.replace(/'/g, "\\'")}')" class="${activeClassMain} block px-4 py-2.5 rounded-xl transition-all text-[13px] font-medium flex items-center" title="${cat.name}">
                                 <i class="far fa-folder w-5 text-center mr-2 opacity-70"></i> 
                                 <span class="truncate flex-1">${cat.name}</span>
                                 ${chevronHtml}
@@ -1420,12 +1617,12 @@
 
                 if (hasSubCats && isExpanded) {
                     html += `<div class="ml-6 mt-1 mb-2 space-y-1 border-l-2 border-white/10 pl-2 fade-in">`;
-                    subCats.forEach(sub => {
-                        const isActiveSub = currentFilterMain === cat.name && currentFilterSub === sub;
+                    subs.forEach(sub => {
+                        const isActiveSub = currentFilterMain === cat.name && currentFilterSub === sub.name;
                         const activeClassSub = isActiveSub ? 'bg-amber-500/20 text-amber-300 font-bold' : 'text-slate-400 hover:text-amber-200 hover:bg-white/5';
                         html += `
-                            <a href="#" onclick="filterByCategory('${cat.name}', '${sub}')" class="${activeClassSub} block px-3 py-2 rounded-lg transition-all text-[12px] flex items-center truncate" title="${sub}">
-                                <i class="fas fa-level-up-alt transform rotate-90 mr-2 opacity-50 text-[10px]"></i> <span class="truncate">${sub}</span>
+                            <a href="#" onclick="filterByCategory('${cat.name.replace(/'/g, "\\'")}', '${sub.name.replace(/'/g, "\\'")}')" class="${activeClassSub} block px-3 py-2 rounded-lg transition-all text-[12px] flex items-center truncate" title="${sub.name}">
+                                <i class="fas fa-level-up-alt transform rotate-90 mr-2 opacity-50 text-[10px]"></i> <span class="truncate">${sub.name}</span>
                             </a>
                         `;
                     });
@@ -1453,12 +1650,9 @@
             
             const mainCat = select.value;
             datalist.innerHTML = '';
-            
             if (mainCat) {
-                const subCats = [...new Set(files.filter(f => f.mainCat === mainCat && f.subCat).map(f => f.subCat))].sort();
-                subCats.forEach(sub => {
-                    datalist.innerHTML += `<option value="${sub}"></option>`;
-                });
+                const subs = getSubCatsByMainCat(mainCat);
+                subs.forEach(sub => { datalist.innerHTML += `<option value="${sub.name}"></option>`; });
             }
         };
 
@@ -1469,7 +1663,6 @@
             if(!tbody) return;
 
             const searchKeyword = searchInput ? searchInput.value.toLowerCase() : '';
-            
             tbody.innerHTML = '';
             
             let filteredFiles = files.filter(f => {
@@ -1491,7 +1684,7 @@
                     let actionBtn = '';
                     if(currentUser && currentUser.role === 'admin') {
                         actionBtn = `
-                            <button onclick="openMoveFileModal('${file.id}', '${file.mainCat}', '${file.subCat || ''}', '${file.name.replace(/'/g, "\\'")}')" class="flex-1 bg-blue-50 text-blue-600 py-1.5 px-3 rounded-lg hover:bg-blue-500 hover:text-white transition font-semibold text-xs border border-blue-100 whitespace-nowrap">이동</button>
+                            <button onclick="openMoveFileModal('${file.id}', '${file.mainCat.replace(/'/g, "\\'")}', '${(file.subCat || '').replace(/'/g, "\\'")}', '${file.name.replace(/'/g, "\\'")}')" class="flex-1 bg-blue-50 text-blue-600 py-1.5 px-3 rounded-lg hover:bg-blue-500 hover:text-white transition font-semibold text-xs border border-blue-100 whitespace-nowrap">이동</button>
                             <button onclick="deleteFile('${file.id}', '${file.storagePath}')" class="flex-1 bg-red-50 text-red-600 py-1.5 px-3 rounded-lg hover:bg-red-500 hover:text-white transition font-semibold text-xs border border-red-100 whitespace-nowrap">삭제</button>
                         `;
                     } else {
@@ -1531,6 +1724,7 @@
             }
         }
 
+        // 업로드 시 하위폴더 자동 추가 + 파일 생성
         window.handleUpload = async function() {
             const mainCatInput = document.getElementById('uploadMainCat');
             const subCatInput = document.getElementById('uploadSubCat');
@@ -1544,6 +1738,9 @@
 
             const file = fileInput.files[0];
             showLoader('업로드 중입니다...');
+
+            // 없는 하위폴더면 자동 생성 연동
+            await checkAndAddSubCategory(mainCat, subCat);
 
             if (isLocalMode) {
                 const reader = new FileReader();
@@ -1590,8 +1787,7 @@
 
                 showToast('자료가 성공적으로 업로드 되었습니다.');
             } catch(error) {
-                console.error("업로드 에러:", error);
-                showToast("업로드 실패: Firebase 저장소 권한이 막혀있습니다.", 'error');
+                showToast("업로드 실패: Firebase 권한이 막혀있습니다.", 'error');
             }
             
             if(subCatInput) subCatInput.value = '';
@@ -1600,7 +1796,7 @@
             hideLoader();
         }
 
-        // ★ [자료 이동 로직]
+        // 파일 이동 로직
         window.openMoveFileModal = function(id, mainCat, subCat, fileName) {
             const moveFileId = document.getElementById('moveFileId');
             const moveFileName = document.getElementById('moveFileName');
@@ -1638,10 +1834,8 @@
             datalist.innerHTML = '';
             
             if (mainCat) {
-                const subCats = [...new Set(files.filter(f => f.mainCat === mainCat && f.subCat).map(f => f.subCat))].sort();
-                subCats.forEach(sub => {
-                    datalist.innerHTML += `<option value="${sub}"></option>`;
-                });
+                const subs = getSubCatsByMainCat(mainCat);
+                subs.forEach(sub => { datalist.innerHTML += `<option value="${sub.name}"></option>`; });
             }
         };
 
@@ -1655,6 +1849,8 @@
             closeMoveFileModal();
             showLoader('자료 이동 중...');
             
+            await checkAndAddSubCategory(newMainCat, newSubCat);
+
             if (isLocalMode) {
                 const fileIndex = files.findIndex(f => f.id === id);
                 if (fileIndex !== -1) {
@@ -1676,8 +1872,7 @@
                 });
                 showToast('자료가 성공적으로 이동되었습니다.');
             } catch(error) {
-                console.error("이동 에러:", error);
-                showToast("이동 중 권한 오류가 발생했습니다.", 'error');
+                showToast("이동 중 오류가 발생했습니다.", 'error');
             }
             hideLoader();
         };
@@ -1702,10 +1897,7 @@
                     }
                     await deleteDoc(doc(db, 'health_files', id));
                     showToast('자료가 완전히 삭제되었습니다.');
-                } catch(error) {
-                    console.error(error);
-                    showToast("삭제 중 권한 오류가 발생했습니다.", 'error');
-                }
+                } catch(error) { showToast("삭제 중 오류가 발생했습니다.", 'error'); }
                 hideLoader();
             }
         }
