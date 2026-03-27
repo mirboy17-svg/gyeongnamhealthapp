@@ -37,24 +37,26 @@
             
             <div class="text-center mb-10 mt-2">
                 <div class="bg-amber-50 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 transform rotate-3">
-                    <i class="fas fa-cloud-upload-alt text-4xl text-amber-500 transform -rotate-3"></i>
+                    <i class="fas fa-user-shield text-4xl text-amber-500 transform -rotate-3"></i>
                 </div>
                 <h1 class="text-3xl font-bold text-slate-800 tracking-tight">산업보건 자료실</h1>
                 <p class="text-sm text-slate-500 mt-3 font-medium">대한산업보건협회 경남지역본부</p>
             </div>
             
             <div class="space-y-6">
+                <!-- ★ 회원사 전용 로그인 (사업자등록번호) 로 변경 -->
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">사업장명 접속</label>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">회원사 로그인</label>
                     <div class="relative">
-                        <i class="fas fa-building absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
-                        <input type="text" id="clientCompany" placeholder="사업장명을 입력하세요 (예: 00공장)" 
-                               class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white outline-none transition-all"
+                        <i class="fas fa-id-card absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="clientBizNumber" placeholder="사업자등록번호 숫자만 입력 (예: 1234567890)" 
+                               class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white outline-none transition-all font-medium tracking-wider"
                                onkeypress="if(event.key === 'Enter') loginAsClient()">
                     </div>
+                    <p class="text-xs text-slate-400 mt-2 ml-1"><i class="fas fa-info-circle mr-1"></i>하이픈(-) 없이 숫자만 입력해주세요.</p>
                 </div>
                 <button onclick="loginAsClient()" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold text-lg hover:bg-amber-500 transition-colors shadow-lg shadow-slate-200 flex items-center justify-center gap-2">
-                    <span>자료실 입장하기</span>
+                    <span>보안 시스템 접속</span>
                     <i class="fas fa-arrow-right text-sm"></i>
                 </button>
             </div>
@@ -62,7 +64,7 @@
         
         <div class="mt-10">
             <button onclick="showAdminModal()" class="text-xs font-semibold text-slate-400 hover:text-slate-600 transition flex items-center gap-1.5">
-                <i class="fas fa-lock"></i> 관리자 전용 접속
+                <i class="fas fa-lock"></i> 관리자 전용 메뉴
             </button>
         </div>
     </div>
@@ -159,7 +161,6 @@
                             <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-xs font-bold tracking-wider mb-4 border border-amber-500/30">Korean Industrial Health Association</span>
                             <h2 class="text-3xl sm:text-4xl font-bold mb-6 leading-tight">일터를 넘어 국민의 삶 속으로,<br><span class="text-amber-400">대한산업보건협회 경남지역본부</span>가 함께합니다.</h2>
                             
-                            <!-- ★ AI 스마트 파트너 슬로건 -->
                             <div class="text-center bg-white/5 border border-white/10 rounded-xl py-3.5 px-6 mb-6 max-w-2xl backdrop-blur-sm">
                                 <p class="text-amber-400 text-base sm:text-lg font-bold tracking-wide">" AI로 똑똑하게 공유하는 스마트 안전 파트너 "</p>
                             </div>
@@ -173,7 +174,6 @@
                     <div class="bg-white rounded-2xl shadow-[0_2px_15px_rgb(0,0,0,0.03)] border border-slate-200 p-8">
                         <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center"><i class="fas fa-briefcase-medical text-amber-500 mr-2"></i>주요 사업안내</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                            
                             <!-- 1. 작업환경측정 -->
                             <div onclick="openBizModal('workEnv')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
                                 <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -184,7 +184,6 @@
                                 </h4>
                                 <p class="text-xs text-slate-500 leading-relaxed">유해인자 노출수준을 정밀하게 평가하고 쾌적한 작업환경 조성을 위한 개선대책을 제시합니다.</p>
                             </div>
-
                             <!-- 2. 근골격계 부담작업 조사 -->
                             <div onclick="openBizModal('msk')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
                                 <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -195,7 +194,6 @@
                                 </h4>
                                 <p class="text-xs text-slate-500 leading-relaxed">작업 시 인체에 과도한 부담을 주는 유해요인을 조사하여 근골격계질환을 예방합니다.</p>
                             </div>
-
                             <!-- 3. 보건관리대행 -->
                             <div onclick="openBizModal('healthMgmt')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
                                 <div class="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -206,7 +204,6 @@
                                 </h4>
                                 <p class="text-xs text-slate-500 leading-relaxed">전문인력이 사업장을 주기적으로 방문하여 사업장 맞춤형 근로자 건강관리 서비스를 제공합니다.</p>
                             </div>
-
                             <!-- 4. 근로자 건강진단 -->
                             <div onclick="openBizModal('healthCheck')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
                                 <div class="w-12 h-12 bg-red-100 text-red-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -224,12 +221,9 @@
                     <div class="bg-white rounded-2xl shadow-[0_2px_15px_rgb(0,0,0,0.03)] border border-slate-200 p-8">
                         <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center"><i class="fas fa-map-marked-alt text-amber-500 mr-2"></i>찾아오시는 길</h3>
                         <div class="flex flex-col lg:flex-row gap-8">
-                            <!-- 구글 맵 -->
                             <div class="flex-1 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 h-72 relative">
                                 <iframe src="https://maps.google.com/maps?q=경남 창원시 마산회원구 자유무역2길 38&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
-                            
-                            <!-- 연락처 정보 -->
                             <div class="lg:w-1/3 flex flex-col justify-center space-y-6">
                                 <div class="flex items-start gap-4">
                                     <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-slate-100">
@@ -268,7 +262,7 @@
                     </div>
                 </div>
 
-                <!-- [2-2] 자료실 및 관리자 패널 (숨김/표시 전환됨) -->
+                <!-- [2-2] 자료실 및 관리자 패널 -->
                 <div id="fileListSection" class="hidden fade-in">
                     
                     <!-- [관리자 전용] 워크스페이스 -->
@@ -278,8 +272,43 @@
                             <hr class="flex-1 border-slate-200">
                         </div>
                         
+                        <!-- ★ 1. 회원사 및 카테고리 관리 -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                            
+                            <!-- 회원사 엑셀 일괄 등록 (사업장명 삭제) -->
+                            <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[320px]">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-lg font-bold text-slate-800 flex items-center">
+                                        <i class="fas fa-users text-blue-500 mr-2"></i> 회원사 일괄 등록 (사업자번호만)
+                                    </h3>
+                                    <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">현재 <span id="memberCountBadge">0</span>개사 등록됨</span>
+                                </div>
+                                <p class="text-xs text-slate-500 mb-2">구글 스프레드시트나 엑셀에서 <b>[사업자등록번호]</b> 단일 열을 쭈욱 드래그 복사하여 아래에 붙여넣으세요.</p>
+                                <textarea id="batchMemberInput" class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none custom-scrollbar mb-3 font-mono" placeholder="예시)&#10;123-45-67890&#10;1112233333"></textarea>
+                                <button onclick="batchAddMembers()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-md flex items-center justify-center gap-2">
+                                    <i class="fas fa-save"></i> 사업자번호 일괄 저장 (연동)
+                                </button>
+                            </section>
+
+                            <!-- 등록된 회원사 목록 확인 -->
+                            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[320px]">
+                                <h3 class="text-sm font-bold text-slate-800 flex items-center mb-4 pb-2 border-b border-slate-100">
+                                    <i class="fas fa-list-ul text-slate-400 mr-2"></i> 등록된 사업장 목록
+                                </h3>
+                                <div class="relative mb-3">
+                                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-xs"></i>
+                                    <input type="text" id="memberSearch" placeholder="사업자번호 검색..." onkeyup="renderAdminMemberManager()" class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-blue-500">
+                                </div>
+                                <div class="flex-1 overflow-y-auto pr-1 custom-scrollbar">
+                                    <ul id="adminMemberList" class="space-y-1.5 text-xs"></ul>
+                                </div>
+                            </section>
+
+                        </div>
+
+                        <!-- ★ 2. 카테고리 및 파일 업로드 -->
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <!-- 1. 카테고리 관리 섹션 -->
+                            <!-- 카테고리 관리 섹션 -->
                             <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[380px]">
                                 <h3 class="text-lg font-bold text-slate-800 flex items-center mb-5">
                                     <i class="fas fa-folder-tree text-amber-500 mr-2"></i> 대분류 순서 및 관리
@@ -293,7 +322,7 @@
                                 </div>
                             </section>
 
-                            <!-- 2. 대용량 자료 업로드 섹션 -->
+                            <!-- 대용량 자료 업로드 섹션 -->
                             <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 h-[380px] flex flex-col">
                                 <h3 class="text-lg font-bold text-slate-800 flex items-center mb-5">
                                     <i class="fas fa-cloud-upload-alt text-amber-500 mr-2"></i> 클라우드 대용량 파일 배포
@@ -396,22 +425,13 @@
     <!-- 사업안내 상세 모달 (동적 팝업창) -->
     <div id="bizModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden z-[70] fade-in opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden border border-slate-200 transform scale-95 transition-transform duration-300" id="bizModalContentContainer">
-            <!-- 헤더 -->
             <div class="flex justify-between items-center p-6 border-b border-slate-100 bg-slate-50 flex-shrink-0">
-                <h2 class="text-xl font-bold text-slate-800 flex items-center" id="modalTitleText">
-                    <!-- Title injected by JS -->
-                </h2>
+                <h2 class="text-xl font-bold text-slate-800 flex items-center" id="modalTitleText"></h2>
                 <button onclick="closeBizModal()" class="text-slate-400 hover:text-slate-600 transition focus:outline-none">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
-            
-            <!-- 상세 내용 (Scrollable) -->
-            <div id="modalBodyContent" class="p-6 overflow-y-auto custom-scrollbar flex-1 bg-white space-y-7">
-                <!-- Content injected by JS -->
-            </div>
-            
-            <!-- 푸터 버튼 -->
+            <div id="modalBodyContent" class="p-6 overflow-y-auto custom-scrollbar flex-1 bg-white space-y-7"></div>
             <div class="p-4 border-t border-slate-100 bg-slate-50 text-right flex-shrink-0">
                 <button onclick="closeBizModal()" class="px-6 py-2.5 bg-slate-800 text-white rounded-lg text-sm font-bold hover:bg-slate-700 transition-colors shadow-md">확인 및 닫기</button>
             </div>
@@ -432,7 +452,6 @@
                 <p id="moveFileName" class="text-sm font-bold text-slate-700 truncate bg-slate-50 p-3 rounded-lg border border-slate-100"></p>
             </div>
             <input type="hidden" id="moveFileId">
-            
             <div class="space-y-4 mb-8">
                 <div>
                     <label class="block text-xs font-bold text-slate-500 mb-1.5">이동할 대분류 지정</label>
@@ -461,7 +480,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
         // =====================================================================
@@ -488,10 +507,11 @@
         let currentUser = null; 
         let categories = []; 
         let files = []; 
+        let allowedMembers = []; // ★ 허용된 회원사 리스트 배열
         let currentFilterMain = 'intro'; 
         let currentFilterSub = null;
         let isLocalMode = false;
-        let expandedCategories = new Set(); // 하위폴더 펼침 상태 관리
+        let expandedCategories = new Set(); 
 
         // --- [동적 모달 데이터 객체] ---
         const bizModalData = {
@@ -689,7 +709,6 @@
             }
         };
 
-        // --- [모달 제어 함수 (Global)] ---
         window.openBizModal = function(type) {
             const data = bizModalData[type];
             if(!data) return;
@@ -719,7 +738,6 @@
             }, 300);
         };
 
-        // --- [로컬 데모 모드 전환 함수] ---
         function enableLocalMode(reason) {
             if (isLocalMode) return;
             isLocalMode = true;
@@ -748,9 +766,9 @@
             updateAllCategoryViews();
             updateDashboardStats();
             renderTable();
+            renderAdminMemberManager();
         }
 
-        // Firebase 초기 인증
         const initAuth = async () => {
             try {
                 await signInAnonymously(auth);
@@ -793,6 +811,7 @@
         // --- [실시간 동기화 (Firestore)] ---
         function setupRealtimeSync() {
             try {
+                // 1. 파일 동기화
                 const filesRef = collection(db, 'health_files');
                 onSnapshot(filesRef, (snapshot) => {
                     if (isLocalMode) return;
@@ -803,10 +822,11 @@
                     renderSidebarCategories();
                     renderTable();
                 }, (error) => {
-                    console.error("파일 데이터 읽기 에러:", error);
+                    console.error("파일 읽기 에러:", error);
                     enableLocalMode("권한 에러 발생");
                 });
 
+                // 2. 카테고리 동기화
                 const catRef = collection(db, 'health_categories');
                 onSnapshot(catRef, (snapshot) => {
                     if (isLocalMode) return;
@@ -827,11 +847,19 @@
                         categories.sort((a, b) => a.timestamp - b.timestamp);
                         updateAllCategoryViews();
                     }
-                }, (error) => {
-                    console.error("카테고리 데이터 읽기 에러:", error);
-                });
+                }, (error) => { console.error("카테고리 읽기 에러:", error); });
+
+                // ★ 3. 회원사 목록(사업자등록번호) 동기화 추가
+                const membersRef = collection(db, 'allowed_members');
+                onSnapshot(membersRef, (snapshot) => {
+                    if (isLocalMode) return;
+                    allowedMembers = [];
+                    snapshot.forEach(doc => { allowedMembers.push({ id: doc.id, ...doc.data() }); });
+                    renderAdminMemberManager();
+                }, (error) => { console.error("회원사 읽기 에러:", error); });
+
             } catch (err) {
-                enableLocalMode("DB 연결 자체 실패");
+                enableLocalMode("DB 연결 실패");
             }
         }
 
@@ -847,7 +875,6 @@
             }
         }
 
-        // --- [UI 헬퍼 함수] ---
         function showLoader(text) {
             const loaderText = document.getElementById('loaderText');
             const globalLoader = document.getElementById('globalLoader');
@@ -868,7 +895,6 @@
             if(!toast || !icon || !toastMsg) return;
 
             toastMsg.innerText = msg;
-            
             if(type === 'error') icon.innerHTML = '<i class="fas fa-exclamation-circle text-red-400"></i>';
             else if(type === 'info') icon.innerHTML = '<i class="fas fa-info-circle text-amber-400"></i>';
             else icon.innerHTML = '<i class="fas fa-check-circle text-green-400"></i>';
@@ -909,15 +935,38 @@
             if(ui) ui.classList.add('hidden');
         }
 
-        // --- [로그인/로그아웃] ---
+        // ★ [회원사 사업자등록번호 단일 로그인 로직]
         window.loginAsClient = function() {
-            const companyInput = document.getElementById('clientCompany');
-            const company = companyInput ? companyInput.value.trim() : '';
-            if(!company) return alert('접속하실 사업장명을 입력해주세요.');
-            currentUser = { role: 'client', name: company };
-            if(companyInput) companyInput.value = '';
-            enterDashboard();
-            showToast(`${company} 권한으로 접속되었습니다.`);
+            const inputEl = document.getElementById('clientBizNumber');
+            if(!inputEl) return;
+            
+            // 입력받은 번호에서 혹시 모를 하이픈(-) 제거 및 공백 제거
+            const bizNumInput = inputEl.value.trim().replace(/-/g, '');
+            if(!bizNumInput) return showToast('사업자등록번호를 입력해주세요.', 'error');
+
+            if (isLocalMode) {
+                currentUser = { role: 'client', name: '회원사 (' + bizNumInput + ')', bizNumber: bizNumInput };
+                inputEl.value = '';
+                enterDashboard();
+                showToast(`테스트 모드로 접속되었습니다.`);
+                return;
+            }
+
+            // 허용된 회원사 배열에서 일치하는 사업자 번호 찾기
+            const member = allowedMembers.find(m => m.bizNumber === bizNumInput);
+            
+            if (member) {
+                // 접속에 성공하면 상단에 표시될 이름을 사업자번호(포맷팅)로 설정
+                let formatNum = member.bizNumber;
+                if(formatNum.length === 10) formatNum = formatNum.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
+                
+                currentUser = { role: 'client', name: `사업장 (${formatNum})`, bizNumber: member.bizNumber };
+                inputEl.value = '';
+                enterDashboard();
+                showToast(`정상적으로 접속되었습니다.`);
+            } else {
+                showToast('등록되지 않은 사업자등록번호입니다.', 'error');
+            }
         }
 
         window.showAdminModal = () => {
@@ -973,6 +1022,116 @@
             updateDashboardStats();
             filterByCategory('intro');
         }
+
+        // ★ [단일 사업자등록번호 일괄 등록 처리 로직]
+        window.batchAddMembers = async function() {
+            const textarea = document.getElementById('batchMemberInput');
+            if(!textarea) return;
+            const text = textarea.value.trim();
+            if(!text) return showToast('등록할 사업자등록번호를 입력해주세요.', 'error');
+
+            const lines = text.split('\n');
+            let successCount = 0;
+            
+            showLoader('사업자번호 등록 중...');
+
+            for(const line of lines) {
+                if(!line.trim()) continue;
+                
+                // 단일 입력이므로 줄 전체를 가져와서 숫자만 남기기 (하이픈, 슬래시 등 제거)
+                let rawBizNum = line.trim();
+                let bizNum = rawBizNum.replace(/-/g, '').replace(/\//g, '_'); 
+
+                if(bizNum) {
+                    if (isLocalMode) {
+                        if(!allowedMembers.find(m => m.bizNumber === bizNum)) {
+                            allowedMembers.push({ id: bizNum, bizNumber: bizNum, timestamp: Date.now() });
+                            successCount++;
+                        }
+                    } else {
+                        try {
+                            await setDoc(doc(db, 'allowed_members', bizNum), {
+                                bizNumber: bizNum,
+                                timestamp: Date.now()
+                            });
+                            successCount++;
+                        } catch(e) {
+                            console.error('회원사 추가 에러 (사업자번호: ' + bizNum + '):', e);
+                        }
+                    }
+                }
+            }
+
+            hideLoader();
+            textarea.value = '';
+            
+            if (isLocalMode) renderAdminMemberManager();
+            
+            if(successCount > 0) {
+                showToast(`${successCount}개의 사업자번호 등록 처리가 완료되었습니다.`);
+            } else {
+                showToast('등록할 수 있는 올바른 데이터가 없거나 이미 등록되어 있습니다.', 'error');
+            }
+        };
+
+        window.deleteMember = async function(id) {
+            if(confirm('이 사업자번호의 접속 권한을 삭제하시겠습니까?')) {
+                showLoader('삭제 중...');
+                if (isLocalMode) {
+                    allowedMembers = allowedMembers.filter(m => m.id !== id);
+                    renderAdminMemberManager();
+                    hideLoader();
+                    return showToast('삭제되었습니다. (로컬)');
+                }
+                try {
+                    const safeId = id.replace(/\//g, '_');
+                    await deleteDoc(doc(db, 'allowed_members', safeId));
+                    showToast('해당 번호의 권한이 삭제되었습니다.');
+                } catch(e) {
+                    showToast('삭제 중 오류가 발생했습니다.', 'error');
+                }
+                hideLoader();
+            }
+        };
+
+        window.renderAdminMemberManager = function() {
+            const list = document.getElementById('adminMemberList');
+            const badge = document.getElementById('memberCountBadge');
+            const searchInput = document.getElementById('memberSearch');
+            
+            if(!list || !badge) return;
+            
+            let displayMembers = [...allowedMembers].sort((a,b) => b.timestamp - a.timestamp);
+            
+            if(searchInput && searchInput.value) {
+                const keyword = searchInput.value.toLowerCase();
+                // 사업장명이 없으므로 번호로만 검색
+                displayMembers = displayMembers.filter(m => m.bizNumber.includes(keyword));
+            }
+
+            badge.innerText = allowedMembers.length;
+            list.innerHTML = '';
+            
+            if(displayMembers.length === 0) {
+                list.innerHTML = `<li class="p-4 text-center text-slate-400 text-xs">등록된 사업자번호가 없습니다.</li>`;
+                return;
+            }
+
+            displayMembers.forEach(m => {
+                let formatNum = m.bizNumber;
+                // 10자리인 경우 일반적인 사업자등록번호 포맷으로 표시
+                if(formatNum.length === 10) formatNum = formatNum.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
+
+                list.innerHTML += `
+                    <li class="p-2.5 bg-slate-50 border border-slate-100 rounded-lg mb-1.5 flex justify-between items-center hover:bg-white transition-colors">
+                        <div class="flex flex-col truncate pr-2">
+                            <span class="font-bold text-slate-700 truncate">${formatNum}</span>
+                        </div>
+                        <button onclick="deleteMember('${m.id}')" class="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-red-50 text-red-500 rounded hover:bg-red-500 hover:text-white transition" title="삭제"><i class="fas fa-times text-[10px]"></i></button>
+                    </li>
+                `;
+            });
+        };
 
         // --- [카테고리 관리] ---
         function updateAllCategoryViews() {
