@@ -9,17 +9,29 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; }
+        /* ★ 1. 폰트 업데이트: 완벽한 자간과 가독성을 자랑하는 '프리텐다드(Pretendard)' 적용 */
+        @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+        
+        /* ★ 2. 배경색(60%) 적용: 순백색보다 눈이 편안한 아주 연한 회색(#F3F4F6) */
+        body { font-family: 'Pretendard', sans-serif; background-color: #F3F4F6; }
+        
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        .drag-active { border-color: #f59e0b !important; background-color: #fffbeb !important; }
-        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #f59e0b; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
+        .drag-active { border-color: #2563eb !important; background-color: #eff6ff !important; }
+        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #2563eb; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* ★ 3. 카드 UI 그림자 클래스 (커스텀 부드러운 그림자) */
+        .glass-card {
+            background-color: #ffffff;
+            border-radius: 1rem; /* 16px */
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.04);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+        }
     </style>
 </head>
 <body class="text-slate-800 antialiased overflow-hidden h-screen flex flex-col">
@@ -31,31 +43,30 @@
     </div>
 
     <!-- [1] 로그인 화면 -->
-    <div id="loginView" class="absolute inset-0 z-50 flex flex-col items-center justify-center p-4 bg-slate-50 fade-in hidden">
-        <div class="bg-white p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-md border border-slate-100 relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-amber-400 to-orange-500"></div>
+    <div id="loginView" class="absolute inset-0 z-50 flex flex-col items-center justify-center p-4 bg-[#F3F4F6] fade-in hidden">
+        <div class="glass-card p-10 w-full max-w-md relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-600 to-teal-400"></div>
             
             <div class="text-center mb-10 mt-2">
-                <div class="bg-amber-50 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 transform rotate-3">
-                    <i class="fas fa-user-shield text-4xl text-amber-500 transform -rotate-3"></i>
+                <div class="bg-blue-50 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 transform rotate-3 shadow-sm border border-blue-100/50">
+                    <i class="fas fa-user-shield text-4xl text-blue-600 transform -rotate-3"></i>
                 </div>
-                <h1 class="text-3xl font-bold text-slate-800 tracking-tight">산업보건 자료실</h1>
+                <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight">산업보건 자료실</h1>
                 <p class="text-sm text-slate-500 mt-3 font-medium">대한산업보건협회 경남지역본부</p>
             </div>
             
             <div class="space-y-6">
-                <!-- 회원사 전용 로그인 -->
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-2">회원사 로그인</label>
                     <div class="relative">
                         <i class="fas fa-id-card absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
                         <input type="text" id="clientBizNumber" placeholder="사업자등록번호 숫자만 입력 (예: 1234567890)" 
-                               class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white outline-none transition-all font-medium tracking-wider"
+                               class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white outline-none transition-all font-medium tracking-wider"
                                onkeypress="if(event.key === 'Enter') loginAsClient()">
                     </div>
                     <p class="text-xs text-slate-400 mt-2 ml-1"><i class="fas fa-info-circle mr-1"></i>하이픈(-) 없이 숫자만 입력해주세요.</p>
                 </div>
-                <button onclick="loginAsClient()" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold text-lg hover:bg-amber-500 transition-colors shadow-lg shadow-slate-200 flex items-center justify-center gap-2">
+                <button onclick="loginAsClient()" class="w-full bg-[#1e293b] text-white py-3.5 rounded-xl font-bold text-lg hover:bg-blue-600 transition-colors shadow-lg shadow-slate-200/50 flex items-center justify-center gap-2">
                     <span>보안 시스템 접속</span>
                     <i class="fas fa-arrow-right text-sm"></i>
                 </button>
@@ -63,64 +74,64 @@
         </div>
         
         <div class="mt-10">
-            <button onclick="showAdminModal()" class="text-xs font-semibold text-slate-400 hover:text-slate-600 transition flex items-center gap-1.5">
+            <button onclick="showAdminModal()" class="text-xs font-semibold text-slate-400 hover:text-blue-600 transition flex items-center gap-1.5 px-4 py-2 rounded-full hover:bg-white/50">
                 <i class="fas fa-lock"></i> 관리자 전용 메뉴
             </button>
         </div>
     </div>
 
     <!-- [1-1] 관리자 로그인 모달 -->
-    <div id="adminModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden z-[60] fade-in">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-sm border border-slate-200">
+    <div id="adminModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden z-[60] fade-in">
+        <div class="glass-card p-8 w-full max-w-sm">
             <h2 class="text-xl font-bold mb-6 text-slate-800 flex items-center">
-                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center mr-3">
-                    <i class="fas fa-user-shield text-slate-600"></i>
+                <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-3">
+                    <i class="fas fa-user-shield text-blue-600"></i>
                 </div>
                 시스템 관리자 인증
             </h2>
             <div class="space-y-4 mb-8">
                 <div>
                     <label class="block text-xs font-bold text-slate-500 mb-1">아이디</label>
-                    <input type="text" id="adminId" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-slate-800 transition">
+                    <input type="text" id="adminId" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-600 transition">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-500 mb-1">비밀번호</label>
-                    <input type="password" id="adminPw" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-slate-800 transition"
+                    <input type="password" id="adminPw" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-600 transition"
                            onkeypress="if(event.key === 'Enter') loginAsAdmin()">
                 </div>
             </div>
             <div class="flex gap-3">
                 <button onclick="hideAdminModal()" class="flex-1 bg-white border border-slate-200 text-slate-600 py-3 rounded-lg font-bold hover:bg-slate-50 transition">취소</button>
-                <button onclick="loginAsAdmin()" class="flex-1 bg-slate-800 text-white py-3 rounded-lg font-bold hover:bg-slate-900 transition shadow-md">로그인</button>
+                <button onclick="loginAsAdmin()" class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition shadow-md shadow-blue-500/30">로그인</button>
             </div>
         </div>
     </div>
 
     <!-- [2] 대시보드 화면 -->
-    <div id="dashboardView" class="hidden flex-1 flex overflow-hidden fade-in bg-slate-50">
+    <div id="dashboardView" class="hidden flex-1 flex overflow-hidden fade-in bg-[#F3F4F6]">
         
         <!-- 사이드바 -->
-        <aside class="w-72 bg-slate-900 text-slate-300 flex flex-col flex-shrink-0 shadow-2xl z-20">
-            <div class="p-6 border-b border-white/10">
+        <aside class="w-72 bg-[#0f172a] text-slate-300 flex flex-col flex-shrink-0 shadow-2xl z-20">
+            <div class="p-6 border-b border-white/5">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-amber-500 w-10 h-10 rounded-lg flex items-center justify-center shadow-lg shadow-amber-500/30">
+                    <div class="bg-blue-600 w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/40">
                         <i class="fas fa-leaf text-white text-xl"></i>
                     </div>
-                    <h1 class="text-xl font-bold text-white tracking-wide">경남<span class="text-amber-400">Hub</span></h1>
+                    <h1 class="text-xl font-extrabold text-white tracking-wide">경남<span class="text-teal-400">Hub</span></h1>
                 </div>
-                <div id="userInfo" class="w-full text-sm px-4 py-2.5 bg-white/10 rounded-lg border border-white/5 text-amber-200 font-medium flex items-center">
+                <div id="userInfo" class="w-full text-sm px-4 py-2.5 bg-white/5 rounded-lg border border-white/5 text-teal-200 font-medium flex items-center shadow-inner">
                     <!-- 유저 정보 표시 -->
                 </div>
             </div>
             
-            <div class="p-5 text-xs font-bold text-slate-500 uppercase tracking-widest flex justify-between items-center mt-2">
+            <div class="p-5 text-[11px] font-bold text-slate-500 uppercase tracking-widest flex justify-between items-center mt-2">
                 <span>카테고리 메뉴</span>
             </div>
-            <nav class="flex-1 overflow-y-auto px-4 space-y-1.5 pb-6 custom-scrollbar" id="categoryNav">
+            <nav class="flex-1 overflow-y-auto px-4 space-y-1 pb-6 custom-scrollbar" id="categoryNav">
                 <!-- 메뉴 및 카테고리 트리 렌더링 영역 -->
             </nav>
             
-            <div class="p-5 border-t border-white/10 bg-slate-950/30">
+            <div class="p-5 border-t border-white/5 bg-[#0b1120]">
                 <button onclick="logout()" class="w-full flex items-center justify-center gap-2 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-all">
                     <i class="fas fa-sign-out-alt"></i> 시스템 로그아웃
                 </button>
@@ -130,21 +141,21 @@
         <!-- 메인 콘텐츠 영역 -->
         <main class="flex-1 flex flex-col h-full overflow-hidden relative">
             
-            <!-- 상단 헤더 & 통계 요약 -->
-            <header class="bg-white px-8 py-6 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center flex-shrink-0 z-10 shadow-[0_2px_10px_rgb(0,0,0,0.02)] gap-4">
+            <!-- 상단 헤더 -->
+            <header class="bg-white px-8 py-5 border-b border-slate-200/60 flex flex-col sm:flex-row justify-between items-start sm:items-center flex-shrink-0 z-10 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)] gap-4">
                 <div class="flex-1 pr-4">
                     <h2 class="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight break-keep" id="currentCategoryTitle">경남지역본부 맞춤형 통합 산업보건 Hub</h2>
-                    <p class="text-sm text-slate-500 mt-1.5 font-medium" id="headerSubtitle">Partnering for a Safer Workplace</p>
+                    <p class="text-[13px] text-slate-500 mt-1 font-medium" id="headerSubtitle">Partnering for a Safer Workplace</p>
                 </div>
                 
                 <div class="flex gap-3">
-                    <div class="bg-slate-50 border border-slate-100 px-5 py-3 rounded-xl flex items-center gap-4">
-                        <div class="bg-amber-100 text-amber-600 w-10 h-10 rounded-full flex items-center justify-center">
-                            <i class="fas fa-file-alt text-lg"></i>
+                    <div class="bg-[#F8FAFC] border border-slate-100 px-5 py-2.5 rounded-xl flex items-center gap-4 shadow-sm">
+                        <div class="bg-blue-100 text-blue-600 w-9 h-9 rounded-full flex items-center justify-center">
+                            <i class="fas fa-file-alt text-base"></i>
                         </div>
                         <div>
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">총 보유 자료</p>
-                            <p class="text-xl font-extrabold text-slate-800" id="totalFilesStat">0<span class="text-sm font-medium text-slate-500 ml-1">건</span></p>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">총 보유 자료</p>
+                            <p class="text-lg font-extrabold text-slate-800" id="totalFilesStat">0<span class="text-xs font-medium text-slate-500 ml-1">건</span></p>
                         </div>
                     </div>
                 </div>
@@ -156,104 +167,100 @@
                 <!-- [2-1] 경남지역본부 소개 화면 -->
                 <div id="introSection" class="fade-in max-w-5xl mx-auto space-y-8">
                     <!-- 환영 배너 -->
-                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-10 text-white shadow-xl relative overflow-hidden">
+                    <div class="bg-gradient-to-br from-[#0f172a] to-[#1e1b4b] rounded-2xl p-10 text-white shadow-xl relative overflow-hidden border border-slate-800">
                         <div class="relative z-10">
-                            <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-xs font-bold tracking-wider mb-4 border border-amber-500/30">Korean Industrial Health Association</span>
-                            <h2 class="text-3xl sm:text-4xl font-bold mb-6 leading-tight">일터를 넘어 국민의 삶 속으로,<br><span class="text-amber-400">대한산업보건협회 경남지역본부</span>가 함께합니다.</h2>
+                            <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-300 rounded-full text-xs font-bold tracking-wider mb-5 border border-teal-500/30">Korean Industrial Health Association</span>
+                            <h2 class="text-3xl sm:text-4xl font-extrabold mb-6 leading-tight tracking-tight">일터를 넘어 국민의 삶 속으로,<br><span class="text-blue-400">대한산업보건협회 경남지역본부</span>가 함께합니다.</h2>
                             
-                            <div class="text-center bg-white/5 border border-white/10 rounded-xl py-3.5 px-6 mb-6 max-w-2xl backdrop-blur-sm">
-                                <p class="text-amber-400 text-base sm:text-lg font-bold tracking-wide">" AI로 똑똑하게 공유하는 스마트 안전 파트너 "</p>
+                            <div class="inline-block bg-white/5 border border-white/10 rounded-xl py-3 px-6 mb-7 backdrop-blur-sm shadow-inner">
+                                <p class="text-teal-400 text-base sm:text-lg font-bold tracking-wide">" AI로 똑똑하게 공유하는 스마트 안전 파트너 "</p>
                             </div>
 
-                            <p class="text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">본 홈페이지는 <b>"대한산업보건협회 경남지역본부" 고객사업장 전용 서비스</b>로, 사업장별 맞춤형 자료를 공유 및 제공합니다.<br><br>언제 어디서든 간편하게 보건 관리 현황을 점검하고, 협회 전문가와 긴밀하게 소통하십시오. 귀사의 든든한 보건 파트너로서 최적의 솔루션을 약속드립니다.</p>
+                            <p class="text-slate-300 text-sm sm:text-[15px] max-w-2xl leading-relaxed font-light">본 홈페이지는 <b class="font-bold text-white">"대한산업보건협회 경남지역본부" 고객사업장 전용 서비스</b>로, 사업장별 맞춤형 자료를 공유 및 제공합니다.<br><br>언제 어디서든 간편하게 보건 관리 현황을 점검하고, 협회 전문가와 긴밀하게 소통하십시오. 귀사의 든든한 보건 파트너로서 최적의 솔루션을 약속드립니다.</p>
                         </div>
                         <i class="fas fa-shield-virus absolute -right-10 -bottom-10 text-[180px] text-white/5 transform rotate-12"></i>
                     </div>
 
                     <!-- 주요 사업안내 -->
-                    <div class="bg-white rounded-2xl shadow-[0_2px_15px_rgb(0,0,0,0.03)] border border-slate-200 p-8">
-                        <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center"><i class="fas fa-briefcase-medical text-amber-500 mr-2"></i>주요 사업안내</h3>
+                    <div class="glass-card p-8">
+                        <h3 class="text-lg font-extrabold text-slate-800 mb-6 flex items-center tracking-tight"><i class="fas fa-briefcase-medical text-blue-600 mr-2.5"></i>주요 사업안내</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                            <!-- 1. 작업환경측정 -->
-                            <div onclick="openBizModal('workEnv')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
-                                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <div onclick="openBizModal('workEnv')" class="bg-[#F8FAFC] p-6 rounded-xl border border-slate-100 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md transition-all duration-300 group cursor-pointer">
+                                <div class="w-12 h-12 bg-white text-blue-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
                                     <i class="fas fa-microscope text-xl"></i>
                                 </div>
-                                <h4 class="font-bold text-slate-800 mb-2 flex items-center justify-between">
-                                    작업환경측정 <i class="fas fa-external-link-alt text-xs text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                <h4 class="font-bold text-slate-800 mb-2.5 flex items-center justify-between text-[15px]">
+                                    작업환경측정 <i class="fas fa-external-link-alt text-xs text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                                 </h4>
-                                <p class="text-xs text-slate-500 leading-relaxed">유해인자 노출수준을 정밀하게 평가하고 쾌적한 작업환경 조성을 위한 개선대책을 제시합니다.</p>
+                                <p class="text-[13px] text-slate-500 leading-relaxed">유해인자 노출수준을 정밀하게 평가하고 쾌적한 작업환경 조성을 위한 개선대책을 제시합니다.</p>
                             </div>
-                            <!-- 2. 근골격계 부담작업 조사 -->
-                            <div onclick="openBizModal('msk')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
-                                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <div onclick="openBizModal('msk')" class="bg-[#F8FAFC] p-6 rounded-xl border border-slate-100 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md transition-all duration-300 group cursor-pointer">
+                                <div class="w-12 h-12 bg-white text-orange-500 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
                                     <i class="fas fa-people-carry text-xl"></i>
                                 </div>
-                                <h4 class="font-bold text-slate-800 mb-2 flex items-center justify-between">
-                                    근골격계 부담작업 조사 <i class="fas fa-external-link-alt text-xs text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                <h4 class="font-bold text-slate-800 mb-2.5 flex items-center justify-between text-[15px]">
+                                    근골격계 유해요인조사 <i class="fas fa-external-link-alt text-xs text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                                 </h4>
-                                <p class="text-xs text-slate-500 leading-relaxed">작업 시 인체에 과도한 부담을 주는 유해요인을 조사하여 근골격계질환을 예방합니다.</p>
+                                <p class="text-[13px] text-slate-500 leading-relaxed">작업 시 인체에 과도한 부담을 주는 유해요인을 조사하여 근골격계질환을 예방합니다.</p>
                             </div>
-                            <!-- 3. 보건관리대행 -->
-                            <div onclick="openBizModal('healthMgmt')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
-                                <div class="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <div onclick="openBizModal('healthMgmt')" class="bg-[#F8FAFC] p-6 rounded-xl border border-slate-100 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md transition-all duration-300 group cursor-pointer">
+                                <div class="w-12 h-12 bg-white text-green-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
                                     <i class="fas fa-user-nurse text-xl"></i>
                                 </div>
-                                <h4 class="font-bold text-slate-800 mb-2 flex items-center justify-between">
-                                    보건관리대행 <i class="fas fa-external-link-alt text-xs text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                <h4 class="font-bold text-slate-800 mb-2.5 flex items-center justify-between text-[15px]">
+                                    보건관리대행 <i class="fas fa-external-link-alt text-xs text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                                 </h4>
-                                <p class="text-xs text-slate-500 leading-relaxed">전문인력이 사업장을 주기적으로 방문하여 사업장 맞춤형 근로자 건강관리 서비스를 제공합니다.</p>
+                                <p class="text-[13px] text-slate-500 leading-relaxed">전문인력이 사업장을 주기적으로 방문하여 사업장 맞춤형 근로자 건강관리 서비스를 제공합니다.</p>
                             </div>
-                            <!-- 4. 근로자 건강진단 -->
-                            <div onclick="openBizModal('healthCheck')" class="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md transition-all group cursor-pointer">
-                                <div class="w-12 h-12 bg-red-100 text-red-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <div onclick="openBizModal('healthCheck')" class="bg-[#F8FAFC] p-6 rounded-xl border border-slate-100 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md transition-all duration-300 group cursor-pointer">
+                                <div class="w-12 h-12 bg-white text-red-500 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
                                     <i class="fas fa-stethoscope text-xl"></i>
                                 </div>
-                                <h4 class="font-bold text-slate-800 mb-2 flex items-center justify-between">
-                                    근로자 건강진단 <i class="fas fa-external-link-alt text-xs text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                <h4 class="font-bold text-slate-800 mb-2.5 flex items-center justify-between text-[15px]">
+                                    근로자 건강진단 <i class="fas fa-external-link-alt text-xs text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                                 </h4>
-                                <p class="text-xs text-slate-500 leading-relaxed">일반, 특수, 배치전 등 근로자 맞춤형 건강진단과 유소견자에 대한 철저한 사후관리를 실시합니다.</p>
+                                <p class="text-[13px] text-slate-500 leading-relaxed">일반, 특수, 배치전 등 근로자 맞춤형 건강진단과 유소견자에 대한 철저한 사후관리를 실시합니다.</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- 찾아오시는 길 -->
-                    <div class="bg-white rounded-2xl shadow-[0_2px_15px_rgb(0,0,0,0.03)] border border-slate-200 p-8">
-                        <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center"><i class="fas fa-map-marked-alt text-amber-500 mr-2"></i>찾아오시는 길</h3>
+                    <div class="glass-card p-8">
+                        <h3 class="text-lg font-extrabold text-slate-800 mb-6 flex items-center tracking-tight"><i class="fas fa-map-marked-alt text-blue-600 mr-2.5"></i>찾아오시는 길</h3>
                         <div class="flex flex-col lg:flex-row gap-8">
-                            <div class="flex-1 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 h-72 relative">
+                            <div class="flex-1 bg-slate-100 rounded-xl overflow-hidden border border-slate-200/60 h-72 relative shadow-inner">
                                 <iframe src="https://maps.google.com/maps?q=경남 창원시 마산회원구 자유무역2길 38&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                             <div class="lg:w-1/3 flex flex-col justify-center space-y-6">
                                 <div class="flex items-start gap-4">
-                                    <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-slate-100">
-                                        <i class="fas fa-map-marker-alt text-slate-400 text-lg"></i>
+                                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100/50">
+                                        <i class="fas fa-map-marker-alt text-lg"></i>
                                     </div>
                                     <div>
-                                        <p class="font-bold text-slate-800 text-sm mb-1">주소</p>
-                                        <p class="text-sm text-slate-500 leading-relaxed">경남 창원시 마산회원구 자유무역2길 38</p>
+                                        <p class="font-bold text-slate-800 text-[13px] mb-0.5">주소</p>
+                                        <p class="text-[13px] text-slate-500 leading-relaxed">경남 창원시 마산회원구 자유무역2길 38</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
-                                    <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-slate-100">
-                                        <i class="fas fa-phone-alt text-slate-400 text-lg"></i>
+                                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100/50">
+                                        <i class="fas fa-phone-alt text-lg"></i>
                                     </div>
                                     <div>
-                                        <p class="font-bold text-slate-800 text-sm mb-1">전화번호</p>
-                                        <p class="text-sm text-slate-500">055-295-2461</p>
+                                        <p class="font-bold text-slate-800 text-[13px] mb-0.5">전화번호</p>
+                                        <p class="text-[13px] text-slate-500">055-295-2461</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
-                                    <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-slate-100">
-                                        <i class="fas fa-fax text-slate-400 text-lg"></i>
+                                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100/50">
+                                        <i class="fas fa-fax text-lg"></i>
                                     </div>
                                     <div>
-                                        <p class="font-bold text-slate-800 text-sm mb-1">팩스</p>
-                                        <p class="text-sm text-slate-500">055-295-2466</p>
+                                        <p class="font-bold text-slate-800 text-[13px] mb-0.5">팩스</p>
+                                        <p class="text-[13px] text-slate-500">055-295-2466</p>
                                     </div>
                                 </div>
-                                <div class="pt-4 border-t border-slate-100">
-                                    <a href="http://kiha21.or.kr/" target="_blank" class="w-full inline-block text-center bg-slate-800 text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-amber-500 transition-colors shadow-md">
+                                <div class="pt-5 border-t border-slate-100">
+                                    <a href="http://kiha21.or.kr/" target="_blank" class="w-full inline-block text-center bg-[#1e293b] text-white px-5 py-3.5 rounded-xl text-[13px] font-bold hover:bg-blue-600 transition-colors shadow-md shadow-slate-200/50 tracking-wide">
                                         대한산업보건협회 공식 홈페이지 가기 <i class="fas fa-external-link-alt ml-1"></i>
                                     </a>
                                 </div>
@@ -263,178 +270,222 @@
                 </div>
 
                 <!-- [2-2] 자료실 및 관리자 패널 -->
-                <div id="fileListSection" class="hidden fade-in">
+                <div id="fileListSection" class="hidden fade-in max-w-7xl mx-auto">
                     
                     <!-- [관리자 전용] 워크스페이스 -->
-                    <div id="adminPanel" class="hidden mb-10">
-                        <div class="mb-4 flex items-center gap-2">
-                            <span class="bg-slate-800 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"><i class="fas fa-cloud mr-1"></i> Cloud Storage <span id="cloudStatusText">연동됨</span></span>
-                            <hr class="flex-1 border-slate-200">
+                    <div id="adminPanel" class="hidden mb-10 space-y-6">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-blue-600 text-white text-[11px] font-bold px-3 py-1.5 rounded-md uppercase tracking-wider shadow-sm"><i class="fas fa-crown mr-1.5"></i> Admin Workspace</span>
+                            <hr class="flex-1 border-slate-200/60">
                         </div>
                         
                         <!-- ★ 1. 회원사 관리 -->
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                            <!-- 회원사 등록 -->
-                            <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[360px]">
-                                <div class="flex justify-between items-center mb-4">
-                                    <h3 class="text-lg font-bold text-slate-800 flex items-center">
-                                        <i class="fas fa-users text-blue-500 mr-2"></i> 회원사 등록 (사업자번호)
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <section class="lg:col-span-2 glass-card p-7 flex flex-col h-[360px]">
+                                <div class="flex justify-between items-center mb-5">
+                                    <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center tracking-tight">
+                                        <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center mr-2.5 border border-blue-100"><i class="fas fa-users"></i></div>
+                                        회원사 접속 권한 관리
                                     </h3>
-                                    <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">현재 <span id="memberCountBadge">0</span>개사 등록됨</span>
+                                    <span class="text-[11px] font-bold text-blue-700 bg-blue-50 border border-blue-100/50 px-2.5 py-1 rounded-md shadow-sm">등록된 기업: <span id="memberCountBadge" class="text-blue-600 ml-0.5">0</span></span>
                                 </div>
 
-                                <div class="flex gap-2 mb-4">
-                                    <input type="text" id="singleMemberInput" placeholder="단일 번호 1개 입력 (예: 1234567890)" class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none transition" onkeypress="if(event.key === 'Enter') addSingleMember()">
-                                    <button onclick="addSingleMember()" class="bg-blue-50 text-blue-700 border border-blue-100 px-5 rounded-lg font-bold hover:bg-blue-600 hover:text-white transition-colors whitespace-nowrap"><i class="fas fa-plus mr-1"></i>개별 추가</button>
+                                <div class="flex gap-2 mb-5">
+                                    <input type="text" id="singleMemberInput" placeholder="단일 사업자번호 1개 신규 등록 (예: 1234567890)" class="flex-1 p-3 bg-[#F8FAFC] border border-slate-200/60 rounded-xl text-[13px] focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition" onkeypress="if(event.key === 'Enter') addSingleMember()">
+                                    <button onclick="addSingleMember()" class="bg-blue-50 text-blue-600 border border-blue-200/60 px-5 rounded-xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors whitespace-nowrap shadow-sm text-[13px]"><i class="fas fa-plus mr-1.5"></i>개별 등록</button>
                                 </div>
                                 
-                                <p class="text-xs text-slate-500 mb-2 border-t border-slate-100 pt-3 flex items-center"><i class="fas fa-file-excel mr-1.5 opacity-70"></i>또는 엑셀/스프레드시트에서 열을 복사하여 <b>대량 일괄 등록</b>:</p>
-                                <textarea id="batchMemberInput" class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none custom-scrollbar mb-3 font-mono" placeholder="예시)&#10;123-45-67890&#10;1112233333"></textarea>
-                                <button onclick="batchAddMembers()" class="w-full bg-slate-800 text-white py-2.5 rounded-xl font-bold text-[13px] hover:bg-blue-600 transition shadow-md flex items-center justify-center gap-2">
-                                    <i class="fas fa-layer-group"></i> 엑셀 데이터 일괄 초고속 연동
+                                <p class="text-[11px] text-slate-500 mb-2 border-t border-slate-100 pt-4 flex items-center font-medium"><i class="fas fa-file-excel mr-1.5 text-green-600"></i>엑셀 열 전체 복사 ➔ 대량 일괄 등록:</p>
+                                <textarea id="batchMemberInput" class="flex-1 p-3 bg-[#F8FAFC] border border-slate-200/60 rounded-xl text-[12px] focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none resize-none custom-scrollbar mb-3 font-mono leading-relaxed" placeholder="123-45-67890&#10;1112233333"></textarea>
+                                <button onclick="batchAddMembers()" class="w-full bg-[#1e293b] text-white py-3 rounded-xl font-bold text-[13px] hover:bg-blue-600 transition shadow-md flex items-center justify-center gap-2">
+                                    <i class="fas fa-bolt text-yellow-400"></i> 엑셀 데이터 초고속 일괄 연동
                                 </button>
                             </section>
 
-                            <!-- 회원사 목록 확인 -->
-                            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[360px]">
-                                <h3 class="text-sm font-bold text-slate-800 flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
+                            <section class="glass-card p-7 flex flex-col h-[360px]">
+                                <h3 class="text-[14px] font-extrabold text-slate-800 flex justify-between items-center mb-4 pb-3 border-b border-slate-100/80 tracking-tight">
                                     <span class="flex items-center"><i class="fas fa-list-ul text-slate-400 mr-2"></i> 등록된 사업장 목록</span>
-                                    <button onclick="deleteAllMembers()" class="text-[10px] bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 px-2.5 py-1 rounded transition-colors flex items-center gap-1 font-semibold shadow-sm">
+                                    <button onclick="deleteAllMembers()" class="text-[10px] bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 px-2.5 py-1.5 rounded-md transition-colors flex items-center gap-1 font-bold shadow-sm">
                                         <i class="fas fa-trash-alt"></i> 전체 삭제
                                     </button>
                                 </h3>
                                 <div class="relative mb-3">
-                                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-xs"></i>
-                                    <input type="text" id="memberSearch" placeholder="사업자번호 검색..." onkeyup="renderAdminMemberManager()" class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-blue-500">
+                                    <i class="fas fa-search absolute left-3.5 top-1/2 transform -translate-y-1/2 text-slate-400 text-[11px]"></i>
+                                    <input type="text" id="memberSearch" placeholder="사업자번호 검색..." onkeyup="renderAdminMemberManager()" class="w-full pl-9 pr-3 py-2.5 bg-[#F8FAFC] border border-slate-200/60 rounded-lg text-[12px] outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition">
                                 </div>
                                 <div class="flex-1 overflow-y-auto pr-1 custom-scrollbar">
-                                    <ul id="adminMemberList" class="space-y-1.5 text-xs"></ul>
+                                    <ul id="adminMemberList" class="space-y-2"></ul>
                                 </div>
                             </section>
                         </div>
 
-                        <!-- ★ 2. 카테고리(상/하위 폴더 통합) 및 파일 업로드 -->
+                        <!-- ★ 2. 카테고리 및 파일 업로드 -->
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <!-- ★ 대/하위 통합 카테고리 관리 섹션 -->
-                            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-[400px]">
-                                <h3 class="text-lg font-bold text-slate-800 flex items-center mb-5">
-                                    <i class="fas fa-folder-tree text-amber-500 mr-2"></i> 폴더(카테고리) 통합 관리
+                            <section class="glass-card p-7 flex flex-col h-[420px]">
+                                <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center mb-5 tracking-tight">
+                                    <div class="w-8 h-8 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center mr-2.5 border border-teal-100"><i class="fas fa-folder-tree"></i></div>
+                                    폴더(카테고리) 통합 관리
                                 </h3>
-                                <div class="flex gap-2 mb-4 border-b border-slate-100 pb-4">
-                                    <input type="text" id="newCategoryInput" placeholder="새로운 [대분류] 이름..." class="flex-1 p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition">
-                                    <button onclick="addNewCategory()" class="bg-amber-50 text-amber-700 border border-amber-100 px-4 rounded-lg font-bold text-sm hover:bg-amber-500 hover:text-white transition-colors whitespace-nowrap">추가</button>
+                                <div class="flex gap-2 mb-4 border-b border-slate-100/80 pb-4">
+                                    <input type="text" id="newCategoryInput" placeholder="새로운 [대분류] 이름..." class="flex-1 p-2.5 bg-[#F8FAFC] border border-slate-200/60 rounded-lg text-[13px] focus:ring-2 focus:ring-teal-500 focus:bg-white outline-none transition">
+                                    <button onclick="addNewCategory()" class="bg-teal-50 text-teal-700 border border-teal-200/60 px-4 rounded-lg font-bold text-[12px] hover:bg-teal-500 hover:text-white transition-colors whitespace-nowrap shadow-sm">추가</button>
                                 </div>
                                 <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-                                    <!-- 관리자용 계층형 트리 렌더링 영역 -->
                                     <ul id="adminCategoryList" class="space-y-3"></ul>
                                 </div>
-                                <!-- ★ 카테고리별 안내문구(부제목) 변경 UI -->
-                                <div class="mt-4 pt-4 border-t border-slate-100 shrink-0">
-                                    <label class="block text-xs font-bold text-slate-500 mb-1.5"><i class="fas fa-cog mr-1"></i>카테고리별 상단 안내문구(부제목) 설정</label>
+                                <div class="mt-4 pt-4 border-t border-slate-100/80 shrink-0 bg-slate-50/50 -mx-7 -mb-7 p-5 rounded-b-2xl">
+                                    <label class="block text-[11px] font-bold text-slate-500 mb-2"><i class="fas fa-cog mr-1.5 opacity-70"></i>카테고리별 상단 안내문구(부제목) 설정</label>
                                     <div class="flex flex-col gap-2">
-                                        <select id="subtitleCatSelect" onchange="onSubtitleCatChange()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold text-slate-600 focus:ring-2 focus:ring-amber-500 outline-none transition cursor-pointer">
+                                        <select id="subtitleCatSelect" onchange="onSubtitleCatChange()" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-[12px] font-bold text-slate-700 focus:ring-2 focus:ring-teal-500 outline-none transition cursor-pointer shadow-sm">
                                             <option value="all">전체 자료 보기</option>
                                         </select>
                                         <div class="flex gap-2">
-                                            <input type="text" id="customSubtitleInput" placeholder="해당 카테고리의 상단 안내문구 입력..." class="flex-1 p-2 bg-slate-50 border border-slate-200 rounded-lg text-[11px] focus:ring-2 focus:ring-amber-500 outline-none transition" onkeypress="if(event.key === 'Enter') saveCustomSubtitle()">
-                                            <button onclick="saveCustomSubtitle()" class="bg-slate-800 text-white px-3 py-2 rounded-lg font-bold text-[11px] hover:bg-slate-700 transition-colors whitespace-nowrap shadow-sm">저장</button>
+                                            <input type="text" id="customSubtitleInput" placeholder="안내문구 입력..." class="flex-1 p-2.5 bg-white border border-slate-200 rounded-lg text-[12px] focus:ring-2 focus:ring-teal-500 outline-none transition shadow-sm" onkeypress="if(event.key === 'Enter') saveCustomSubtitle()">
+                                            <button onclick="saveCustomSubtitle()" class="bg-[#1e293b] text-white px-4 py-2.5 rounded-lg font-bold text-[12px] hover:bg-teal-600 transition-colors whitespace-nowrap shadow-sm">적용</button>
                                         </div>
                                     </div>
                                 </div>
                             </section>
 
-                            <!-- 대용량 자료 업로드 섹션 -->
-                            <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 h-[400px] flex flex-col">
-                                <h3 class="text-lg font-bold text-slate-800 flex items-center mb-5">
-                                    <i class="fas fa-cloud-upload-alt text-amber-500 mr-2"></i> 클라우드 대용량 파일 배포
+                            <section class="lg:col-span-2 glass-card p-7 flex flex-col h-[420px]">
+                                <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center mb-5 tracking-tight">
+                                    <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center mr-2.5 border border-indigo-100"><i class="fas fa-cloud-upload-alt"></i></div>
+                                    클라우드 대용량 파일 배포
                                 </h3>
                                 
-                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="grid grid-cols-2 gap-5 mb-5">
                                     <div>
-                                        <label class="block text-xs font-bold text-slate-500 mb-1.5">메인 카테고리 (대분류)</label>
-                                        <select id="uploadMainCat" onchange="updateUploadSubCategoryList()" class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:ring-2 focus:ring-amber-500 outline-none cursor-pointer"></select>
+                                        <label class="block text-[11px] font-bold text-slate-500 mb-1.5">저장할 메인 카테고리 (대분류)</label>
+                                        <select id="uploadMainCat" onchange="updateUploadSubCategoryList()" class="w-full p-3 border border-slate-200/60 rounded-xl bg-[#F8FAFC] text-[13px] font-medium text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none cursor-pointer transition"></select>
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-bold text-slate-500 mb-1.5">하위 폴더/태그 (선택 또는 신규입력)</label>
-                                        <input type="text" id="uploadSubCat" list="existingSubCats" placeholder="기존 폴더 선택 또는 새 이름 직접입력..." class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                                        <label class="block text-[11px] font-bold text-slate-500 mb-1.5">하위 폴더 (선택 또는 신규 직접입력)</label>
+                                        <input type="text" id="uploadSubCat" list="existingSubCats" placeholder="폴더명 입력..." class="w-full p-3 border border-slate-200/60 rounded-xl bg-[#F8FAFC] text-[13px] font-medium text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition">
                                         <datalist id="existingSubCats"></datalist>
                                     </div>
                                 </div>
                                 
-                                <!-- Drag & Drop Area -->
-                                <div id="dropZone" class="flex-1 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 flex flex-col items-center justify-center text-center p-6 cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-all group relative">
+                                <div id="dropZone" class="flex-1 border-2 border-dashed border-slate-300/80 rounded-2xl bg-[#F8FAFC] flex flex-col items-center justify-center text-center p-6 cursor-pointer hover:bg-indigo-50/50 hover:border-indigo-400 transition-all duration-300 group relative">
                                     <input type="file" id="uploadFile" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="updateFileNameDisplay(this)">
                                     
                                     <div id="uploadPrompt">
-                                        <div class="w-14 h-14 bg-white rounded-full shadow-sm flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                                            <i class="fas fa-file-import text-2xl text-slate-400 group-hover:text-amber-500 transition-colors"></i>
+                                        <div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-4 border border-slate-100 group-hover:scale-110 group-hover:border-indigo-200 transition-all duration-300">
+                                            <i class="fas fa-file-import text-3xl text-slate-300 group-hover:text-indigo-500 transition-colors"></i>
                                         </div>
-                                        <p class="text-sm font-bold text-slate-700">클릭하거나 파일을 이곳에 드롭하세요</p>
-                                        <p class="text-xs text-slate-500 mt-1">대용량 PDF, 고화질 이미지, 엑셀 파일 등 용량 제한 없음</p>
+                                        <p class="text-[14px] font-bold text-slate-700">여기를 클릭하거나 파일을 드롭하세요</p>
+                                        <p class="text-[12px] text-slate-400 mt-1.5">대용량 PDF, 고화질 이미지, 엑셀 파일 등 용량 무제한</p>
                                     </div>
 
                                     <div id="fileSelectedUI" class="hidden flex flex-col items-center w-full px-4">
-                                        <i class="fas fa-file-check text-4xl text-green-500 mb-2"></i>
-                                        <p id="selectedFileName" class="text-sm font-bold text-slate-800 truncate w-full max-w-xs mt-2"></p>
-                                        <p id="selectedFileSize" class="text-xs text-slate-500 mt-1"></p>
-                                        <button onclick="clearFileInput(event)" class="mt-3 text-xs text-red-500 hover:text-red-700 font-semibold bg-red-50 px-3 py-1 rounded-full">파일 취소</button>
+                                        <div class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-green-100">
+                                            <i class="fas fa-check text-3xl text-green-500"></i>
+                                        </div>
+                                        <p id="selectedFileName" class="text-[14px] font-bold text-slate-800 truncate w-full max-w-xs mt-1"></p>
+                                        <p id="selectedFileSize" class="text-[12px] text-slate-500 mt-1"></p>
+                                        <button onclick="clearFileInput(event)" class="mt-4 text-[11px] text-red-500 hover:text-red-700 font-bold bg-red-50 px-4 py-1.5 rounded-full border border-red-100 transition-colors">업로드 취소</button>
                                     </div>
                                 </div>
 
-                                <button onclick="handleUpload()" class="mt-4 w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold text-[15px] hover:bg-amber-500 transition-colors shadow-md flex items-center justify-center gap-2">
-                                    <i class="fas fa-paper-plane"></i> 자료 업로드 및 전사 공유
+                                <button onclick="handleUpload()" class="mt-5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-bold text-[14px] hover:bg-indigo-600 transition shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2">
+                                    <i class="fas fa-paper-plane"></i> 선택한 자료 보안 서버에 업로드
                                 </button>
+                            </section>
+                        </div>
+
+                        <!-- ★ 3. 팝업 이미지 설정 영역 추가 -->
+                        <div class="mb-6">
+                            <section class="glass-card p-7 flex flex-col h-auto">
+                                <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center mb-5 tracking-tight">
+                                    <div class="w-8 h-8 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center mr-2.5 border border-pink-100"><i class="fas fa-images"></i></div>
+                                    로그인 안내 팝업 설정 (우측 상단, 최대 2개)
+                                </h3>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 flex-1">
+                                    <!-- 팝업 1 -->
+                                    <div class="flex flex-col gap-2">
+                                        <div class="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-slate-300/80 rounded-2xl bg-[#F8FAFC] p-2 relative group cursor-pointer hover:bg-pink-50/50 hover:border-pink-300 transition-all duration-300 min-h-[180px]" id="popupDropZone1">
+                                            <input type="file" id="popupUploadFile1" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" onchange="previewPopupImage(this, 1)">
+                                            
+                                            <div id="popupPrompt1" class="text-center w-full">
+                                                <i class="fas fa-file-image text-3xl text-slate-300 group-hover:text-pink-400 mb-2 transition-colors"></i>
+                                                <p class="text-[12px] font-bold text-slate-600">첫 번째 팝업 이미지</p>
+                                            </div>
+                                            <div id="popupPreviewContainer1" class="hidden w-full h-full flex flex-col items-center justify-center relative bg-black/5 rounded-xl p-1">
+                                                <img id="popupPreviewImage1" src="" class="max-h-[160px] max-w-full object-contain rounded-lg drop-shadow-md">
+                                            </div>
+                                        </div>
+                                        <button onclick="clearPopupImageSlot(1)" class="w-full bg-red-50 text-red-500 py-2.5 rounded-xl text-[11px] font-bold border border-red-100 hover:bg-red-500 hover:text-white transition-colors tracking-wide">1번 이미지 초기화</button>
+                                    </div>
+                                    <!-- 팝업 2 -->
+                                    <div class="flex flex-col gap-2">
+                                        <div class="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-slate-300/80 rounded-2xl bg-[#F8FAFC] p-2 relative group cursor-pointer hover:bg-pink-50/50 hover:border-pink-300 transition-all duration-300 min-h-[180px]" id="popupDropZone2">
+                                            <input type="file" id="popupUploadFile2" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" onchange="previewPopupImage(this, 2)">
+                                            
+                                            <div id="popupPrompt2" class="text-center w-full">
+                                                <i class="fas fa-file-image text-3xl text-slate-300 group-hover:text-pink-400 mb-2 transition-colors"></i>
+                                                <p class="text-[12px] font-bold text-slate-600">두 번째 팝업 이미지</p>
+                                            </div>
+                                            <div id="popupPreviewContainer2" class="hidden w-full h-full flex flex-col items-center justify-center relative bg-black/5 rounded-xl p-1">
+                                                <img id="popupPreviewImage2" src="" class="max-h-[160px] max-w-full object-contain rounded-lg drop-shadow-md">
+                                            </div>
+                                        </div>
+                                        <button onclick="clearPopupImageSlot(2)" class="w-full bg-red-50 text-red-500 py-2.5 rounded-xl text-[11px] font-bold border border-red-100 hover:bg-red-500 hover:text-white transition-colors tracking-wide">2번 이미지 초기화</button>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-slate-100 flex gap-2 shrink-0">
+                                    <button onclick="savePopupImages()" class="w-full bg-[#1e293b] text-white py-3.5 rounded-xl text-[13px] font-bold hover:bg-pink-600 transition-colors shadow-md">현재 구성으로 팝업 배포하기</button>
+                                </div>
                             </section>
                         </div>
                     </div>
 
                     <!-- 자료 목록 테이블 -->
-                    <section class="bg-white rounded-2xl shadow-[0_2px_15px_rgb(0,0,0,0.03)] border border-slate-200 flex flex-col mt-4">
-                        <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white rounded-t-2xl">
+                    <section class="glass-card flex flex-col mt-4 overflow-hidden">
+                        <div class="p-6 border-b border-slate-100/80 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white">
                             <div class="flex items-center gap-3">
-                                <span id="filteredCountBadge" class="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full">0건</span>
+                                <span class="bg-blue-50 border border-blue-100/60 text-blue-700 text-[12px] font-bold px-3 py-1.5 rounded-lg shadow-sm">
+                                    검색된 자료: <span id="filteredCountBadge" class="ml-1 text-blue-600">0건</span>
+                                </span>
                             </div>
                             
-                            <div class="relative w-full sm:w-72">
-                                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
-                                <input type="text" id="searchInput" placeholder="자료명, 태그 검색..." onkeyup="renderTable()" 
-                                       class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all">
+                            <div class="relative w-full sm:w-80">
+                                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm"></i>
+                                <input type="text" id="searchInput" placeholder="자료명 또는 태그 검색..." onkeyup="renderTable()" 
+                                       class="w-full pl-11 pr-4 py-3 bg-[#F8FAFC] border border-slate-200/60 rounded-xl text-[13px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all shadow-inner">
                             </div>
                         </div>
                         
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs font-bold uppercase tracking-wider">
-                                        <th class="px-6 py-4 w-1/4">분류</th>
-                                        <th class="px-6 py-4 w-1/6">하위폴더</th>
-                                        <th class="px-6 py-4">자료명</th>
-                                        <th class="px-6 py-4 text-center w-32">업데이트일</th>
-                                        <th class="px-6 py-4 text-center w-24">액션</th>
+                                    <tr class="bg-[#F8FAFC] border-b border-slate-200/60 text-slate-500 text-[11px] font-extrabold uppercase tracking-wider">
+                                        <th class="px-7 py-4 w-1/4">대분류 카테고리</th>
+                                        <th class="px-7 py-4 w-1/6">하위 폴더</th>
+                                        <th class="px-7 py-4">자료명</th>
+                                        <th class="px-7 py-4 text-center w-32">업데이트 일자</th>
+                                        <th class="px-7 py-4 text-center w-28">액션</th>
                                     </tr>
                                 </thead>
-                                <tbody id="fileTableBody" class="divide-y divide-slate-100 text-[14px]"></tbody>
+                                <tbody id="fileTableBody" class="divide-y divide-slate-100/60 text-[13px] bg-white"></tbody>
                             </table>
                             
-                            <div id="emptyState" class="hidden py-20 text-center flex flex-col items-center justify-center bg-slate-50/50">
-                                <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                                    <i class="fas fa-box-open text-3xl text-slate-300"></i>
+                            <div id="emptyState" class="hidden py-24 text-center flex flex-col items-center justify-center bg-[#F8FAFC]/50">
+                                <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-5 shadow-sm border border-slate-100">
+                                    <i class="fas fa-folder-open text-4xl text-slate-300"></i>
                                 </div>
-                                <h4 class="text-lg font-bold text-slate-700 mb-1">해당하는 자료가 없습니다.</h4>
-                                <p class="text-sm text-slate-500">다른 검색어를 입력하거나 카테고리를 변경해보세요.</p>
+                                <h4 class="text-lg font-extrabold text-slate-700 mb-1.5 tracking-tight">해당하는 자료가 없습니다</h4>
+                                <p class="text-[13px] text-slate-500 font-medium">다른 검색어를 입력하거나 좌측 메뉴를 변경해보세요.</p>
                             </div>
                         </div>
                     </section>
                 </div>
 
-                <footer class="mt-12 text-center pb-8 border-t border-slate-200 pt-6">
-                    <p class="text-xs text-slate-500 font-medium mb-3">&copy; 2026 HealthHub 산업보건 자료 관리 시스템.</p>
-                    <div class="text-[11px] text-slate-400 space-y-1.5">
-                        <p class="font-bold text-slate-500">시스템 오류 및 사용 문의</p>
-                        <p>대한산업보건협회 경남지역본부 환경위생국 <span class="mx-1 opacity-50">|</span> 산업위생관리기술사 정재용</p>
+                <footer class="mt-16 text-center pb-8 pt-6 opacity-80">
+                    <p class="text-[11px] text-slate-400 font-semibold tracking-wide mb-3 uppercase">&copy; 2026 HealthHub Industrial Health Document System</p>
+                    <div class="text-[11px] text-slate-400 space-y-1.5 font-medium">
+                        <p>대한산업보건협회 경남지역본부 환경위생국 <span class="mx-1.5 opacity-40">|</span> 산업위생관리기술사 정재용</p>
                         <p class="flex items-center justify-center gap-3">
                             <span><i class="fas fa-phone-alt opacity-70 mr-1"></i> 055-295-2461</span>
-                            <span class="opacity-50">|</span>
+                            <span class="opacity-40">|</span>
                             <span><i class="fas fa-envelope opacity-70 mr-1"></i> aniag000@kiha21.or.kr</span>
                         </p>
                     </div>
@@ -443,58 +494,101 @@
         </main>
     </div>
 
-    <!-- 사업안내 상세 모달 -->
-    <div id="bizModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden z-[70] fade-in opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden border border-slate-200 transform scale-95 transition-transform duration-300" id="bizModalContentContainer">
-            <div class="flex justify-between items-center p-6 border-b border-slate-100 bg-slate-50 flex-shrink-0">
-                <h2 class="text-xl font-bold text-slate-800 flex items-center" id="modalTitleText"></h2>
-                <button onclick="closeBizModal()" class="text-slate-400 hover:text-slate-600 transition focus:outline-none">
-                    <i class="fas fa-times text-xl"></i>
+    <!-- 동적 팝업 모달창 (Card UI 스타일 적용) -->
+    <div id="bizModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden z-[70] fade-in opacity-0 transition-opacity duration-300">
+        <div class="glass-card w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden transform scale-95 transition-transform duration-300 shadow-2xl" id="bizModalContentContainer">
+            <div class="flex justify-between items-center p-6 border-b border-slate-100/80 bg-[#F8FAFC] flex-shrink-0">
+                <h2 class="text-lg font-extrabold text-slate-800 flex items-center tracking-tight" id="modalTitleText"></h2>
+                <button onclick="closeBizModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-white text-slate-400 hover:text-slate-700 hover:bg-slate-200 border border-slate-200 transition focus:outline-none shadow-sm">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div id="modalBodyContent" class="p-6 overflow-y-auto custom-scrollbar flex-1 bg-white space-y-7"></div>
-            <div class="p-4 border-t border-slate-100 bg-slate-50 text-right flex-shrink-0">
-                <button onclick="closeBizModal()" class="px-6 py-2.5 bg-slate-800 text-white rounded-lg text-sm font-bold hover:bg-slate-700 transition-colors shadow-md">확인 및 닫기</button>
+            <div id="modalBodyContent" class="p-7 overflow-y-auto custom-scrollbar flex-1 bg-white space-y-7"></div>
+            <div class="p-5 border-t border-slate-100/80 bg-[#F8FAFC] text-right flex-shrink-0">
+                <button onclick="closeBizModal()" class="px-6 py-2.5 bg-[#1e293b] text-white rounded-xl text-[13px] font-bold hover:bg-blue-600 transition-colors shadow-md">확인 및 닫기</button>
             </div>
         </div>
     </div>
 
     <!-- 자료 이동 모달 -->
-    <div id="moveFileModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden z-[80] fade-in">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-200">
-            <h2 class="text-xl font-bold mb-6 text-slate-800 flex items-center">
-                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+    <div id="moveFileModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden z-[80] fade-in">
+        <div class="glass-card p-8 w-full max-w-md shadow-2xl">
+            <h2 class="text-lg font-extrabold mb-6 text-slate-800 flex items-center tracking-tight">
+                <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center mr-3 border border-blue-100">
                     <i class="fas fa-exchange-alt text-blue-600"></i>
                 </div>
-                자료 카테고리 이동
+                자료 위치 이동
             </h2>
-            <div class="mb-5">
-                <p class="text-xs font-bold text-slate-500 mb-1">선택된 자료</p>
-                <p id="moveFileName" class="text-sm font-bold text-slate-700 truncate bg-slate-50 p-3 rounded-lg border border-slate-100"></p>
+            <div class="mb-5 bg-[#F8FAFC] p-4 rounded-xl border border-slate-100">
+                <p class="text-[10px] font-bold text-slate-400 mb-1 uppercase tracking-wider">선택된 자료</p>
+                <p id="moveFileName" class="text-[13px] font-bold text-slate-700 truncate"></p>
             </div>
             <input type="hidden" id="moveFileId">
             <div class="space-y-4 mb-8">
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 mb-1.5">이동할 대분류 지정</label>
-                    <select id="moveMainCat" onchange="updateMoveSubCategoryList()" class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer"></select>
+                    <label class="block text-[11px] font-bold text-slate-500 mb-1.5">이동할 대분류 지정</label>
+                    <select id="moveMainCat" onchange="updateMoveSubCategoryList()" class="w-full p-3 border border-slate-200/60 rounded-xl bg-[#F8FAFC] text-[13px] font-medium text-slate-700 focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none cursor-pointer transition"></select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 mb-1.5">이동할 하위 폴더 (선택 또는 신규입력)</label>
-                    <input type="text" id="moveSubCat" list="moveExistingSubCats" placeholder="폴더 없음 (또는 이름 입력)" class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    <label class="block text-[11px] font-bold text-slate-500 mb-1.5">이동할 하위 폴더 (선택 또는 직접입력)</label>
+                    <input type="text" id="moveSubCat" list="moveExistingSubCats" placeholder="폴더명 입력..." class="w-full p-3 border border-slate-200/60 rounded-xl bg-[#F8FAFC] text-[13px] font-medium text-slate-700 focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition">
                     <datalist id="moveExistingSubCats"></datalist>
                 </div>
             </div>
             <div class="flex gap-3">
-                <button onclick="closeMoveFileModal()" class="flex-1 bg-white border border-slate-200 text-slate-600 py-3 rounded-lg font-bold hover:bg-slate-50 transition">취소</button>
-                <button onclick="handleMoveFile()" class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition shadow-md">이동 완료</button>
+                <button onclick="closeMoveFileModal()" class="flex-1 bg-white border border-slate-200 text-slate-600 py-3 rounded-xl font-bold hover:bg-slate-50 transition text-[13px]">취소</button>
+                <button onclick="handleMoveFile()" class="flex-1 bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-md shadow-blue-500/30 text-[13px]">이동 완료</button>
             </div>
         </div>
     </div>
 
+    <!-- ★ 개별 이미지 팝업창 (우측 상단 플로팅, 독립적 나열 방식) -->
+    <div id="popupWrapper" class="fixed top-4 right-4 sm:top-8 sm:right-8 z-[120] flex flex-col sm:flex-row-reverse gap-4 pointer-events-none w-[calc(100%-2rem)] sm:w-auto items-end">
+        
+        <!-- 팝업 1 (가장 우측) -->
+        <div id="noticePopup1" class="pointer-events-auto transition-all duration-500 transform translate-x-20 opacity-0 hidden w-full sm:w-[380px] shrink-0">
+            <div class="relative w-full bg-white/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)] border border-white/50 overflow-hidden flex flex-col">
+                <button onclick="closeNoticePopup(1)" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-black/10 hover:bg-black/20 text-slate-700 hover:text-slate-900 rounded-full focus:outline-none z-20 transition-colors backdrop-blur-sm shadow-sm">
+                    <i class="fas fa-times text-[14px]"></i>
+                </button>
+                <div class="w-full flex items-center justify-center relative max-h-[70vh] overflow-y-auto bg-transparent p-1.5 custom-scrollbar">
+                    <img id="popupImage1" src="" alt="공지사항1" class="w-full h-auto object-contain rounded-lg shadow-sm border border-slate-100/50">
+                </div>
+                <div class="bg-white/90 backdrop-blur-md px-5 py-3.5 border-t border-slate-100 flex justify-between items-center z-10 shrink-0">
+                    <label class="flex items-center cursor-pointer group">
+                        <input type="checkbox" id="hideNoticeToday1" class="w-4 h-4 rounded text-blue-500 border-slate-300 focus:ring-blue-500 focus:ring-offset-white cursor-pointer shadow-sm transition-colors">
+                        <span class="ml-2.5 text-[12px] font-bold text-slate-500 group-hover:text-slate-700 transition-colors">오늘 하루 보지 않음</span>
+                    </label>
+                    <button onclick="closeNoticePopup(1)" class="text-[12px] font-bold text-slate-400 hover:text-slate-600 transition-colors px-2 py-1">닫기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 팝업 2 (팝업1의 바로 왼쪽) -->
+        <div id="noticePopup2" class="pointer-events-auto transition-all duration-500 transform translate-x-20 opacity-0 hidden w-full sm:w-[380px] shrink-0">
+            <div class="relative w-full bg-white/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)] border border-white/50 overflow-hidden flex flex-col">
+                <button onclick="closeNoticePopup(2)" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-black/10 hover:bg-black/20 text-slate-700 hover:text-slate-900 rounded-full focus:outline-none z-20 transition-colors backdrop-blur-sm shadow-sm">
+                    <i class="fas fa-times text-[14px]"></i>
+                </button>
+                <div class="w-full flex items-center justify-center relative max-h-[70vh] overflow-y-auto bg-transparent p-1.5 custom-scrollbar">
+                    <img id="popupImage2" src="" alt="공지사항2" class="w-full h-auto object-contain rounded-lg shadow-sm border border-slate-100/50">
+                </div>
+                <div class="bg-white/90 backdrop-blur-md px-5 py-3.5 border-t border-slate-100 flex justify-between items-center z-10 shrink-0">
+                    <label class="flex items-center cursor-pointer group">
+                        <input type="checkbox" id="hideNoticeToday2" class="w-4 h-4 rounded text-blue-500 border-slate-300 focus:ring-blue-500 focus:ring-offset-white cursor-pointer shadow-sm transition-colors">
+                        <span class="ml-2.5 text-[12px] font-bold text-slate-500 group-hover:text-slate-700 transition-colors">오늘 하루 보지 않음</span>
+                    </label>
+                    <button onclick="closeNoticePopup(2)" class="text-[12px] font-bold text-slate-400 hover:text-slate-600 transition-colors px-2 py-1">닫기</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <!-- 토스트 알림 -->
-    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl transform translate-y-24 opacity-0 transition-all duration-400 z-[110] flex items-center gap-3 border border-slate-700">
-        <div id="toastIcon" class="text-green-400 text-lg"><i class="fas fa-check-circle"></i></div>
-        <span id="toastMsg" class="font-medium text-sm">알림 메시지</span>
+    <div id="toast" class="fixed bottom-8 right-8 bg-[#1e293b] text-white px-5 py-4 rounded-2xl shadow-2xl transform translate-y-24 opacity-0 transition-all duration-400 z-[110] flex items-center gap-3 border border-slate-700/50">
+        <div id="toastIcon" class="text-teal-400 text-lg"><i class="fas fa-check-circle"></i></div>
+        <span id="toastMsg" class="font-bold text-[13px] tracking-wide">알림 메시지</span>
     </div>
 
     <!-- Firebase SDK 모듈 -->
@@ -504,9 +598,6 @@
         import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, setDoc, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
-        // =====================================================================
-        // 고객님의 Firebase 프로젝트 연동 정보
-        // =====================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyDZYFxUJVJT7_DKJHtleAgVv0Uv-lvITaY",
             authDomain: "gyeongnamhealth-90cc3.firebaseapp.com",
@@ -527,14 +618,18 @@
         const ADMIN_PW = 'wjdwodyd21';
         let currentUser = null; 
         let categories = []; 
-        let subCategories = []; // ★ 신규: 하위 폴더 데이터 별도 분리 관리
+        let subCategories = [];
         let files = []; 
         let allowedMembers = []; 
         let currentFilterMain = 'intro'; 
         let currentFilterSub = null;
         let isLocalMode = false;
         let expandedCategories = new Set(); 
-        let customSubtitles = {}; // ★ 동적 커스텀 문구 전역 객체
+        let customSubtitles = {};
+        
+        // ★ 팝업 전역 상태 (최대 2개 관리)
+        let popupConfig = { img1: null, img2: null }; 
+        let currentPopupFiles = { file1: null, file2: null };
 
         // --- [동적 모달 데이터 객체] ---
         const bizModalData = {
@@ -542,33 +637,29 @@
                 title: "작업환경측정 안내",
                 icon: "fa-microscope text-blue-600",
                 content: `
-                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl">
-                        <h4 class="font-bold text-blue-800 mb-2 text-[15px]">실시 근거</h4>
-                        <ul class="list-disc list-inside text-[13px] text-blue-700 space-y-1.5 ml-1 font-medium">
+                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl mb-6">
+                        <h4 class="font-extrabold text-blue-800 mb-2 text-[14px]">실시 근거</h4>
+                        <ul class="list-disc list-inside text-[13px] text-blue-700/80 space-y-1.5 ml-1 font-medium">
                             <li>산업안전보건법 제125조 (작업환경측정)</li>
                             <li>산업안전보건법 시행규칙 제186조 ~ 제190조</li>
                             <li>고용노동부 고시 (작업환경측정 및 지정측정기관 평가 등에 관한 고시)</li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]">
-                            <i class="fas fa-check-circle text-amber-500 mr-2"></i>측정 대상
-                        </h4>
-                        <p class="text-[13px] text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div class="mb-6">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[14px]"><i class="fas fa-check-circle text-blue-500 mr-2"></i>측정 대상</h4>
+                        <p class="text-[13px] text-slate-600 leading-relaxed bg-[#F8FAFC] p-4 rounded-xl border border-slate-100">
                             소음, 분진, 고열, 금속류, 유기화합물 등 <b>산업안전보건법 시행규칙 별표 21의 작업환경측정 대상 유해인자(190종)</b>에 노출되는 근로자가 있는 옥내외 작업장
                         </p>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]">
-                            <i class="fas fa-clock text-amber-500 mr-2"></i>측정 주기
-                        </h4>
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600 space-y-3">
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-1 rounded text-xs w-fit">신규/변경</span>
+                    <div class="mb-6">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[14px]"><i class="fas fa-clock text-blue-500 mr-2"></i>측정 주기</h4>
+                        <div class="bg-[#F8FAFC] p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2.5 py-1 rounded-md text-[11px] w-fit">신규/변경</span>
                                 <p>작업장 또는 작업공정이 신규로 가동되거나 변경되는 경우, 그 날로부터 <b>30일 이내</b> 실시</p>
                             </div>
-                            <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 pt-2 border-t border-slate-200/60">
-                                <span class="bg-amber-100 text-amber-700 font-bold px-2 py-1 rounded text-xs w-fit mt-0.5">정기 측정</span>
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3 pt-3 border-t border-slate-200/60">
+                                <span class="bg-blue-100 text-blue-700 font-bold px-2.5 py-1 rounded-md text-[11px] w-fit mt-0.5">정기 측정</span>
                                 <div class="flex-1">
                                     <p class="font-bold text-slate-800">반기에 1회 이상 실시</p>
                                     <ul class="list-disc list-inside ml-1 text-slate-500 text-[12px] mt-1.5 space-y-1">
@@ -580,10 +671,8 @@
                         </div>
                     </div>
                     <div>
-                        <h4 class="font-bold text-red-600 mb-2 flex items-center text-[15px]">
-                            <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>위반 시 과태료 (산업안전보건법 제175조)
-                        </h4>
-                        <div class="bg-red-50 p-4 rounded-xl border border-red-100 text-[13px] text-red-800 space-y-3">
+                        <h4 class="font-bold text-red-600 mb-2 flex items-center text-[14px]"><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>위반 시 과태료 (산업안전보건법 제175조)</h4>
+                        <div class="bg-red-50/50 p-4 rounded-xl border border-red-100 text-[13px] text-red-800 space-y-3">
                             <div class="flex items-start gap-2.5">
                                 <i class="fas fa-times-circle mt-1 opacity-60 text-red-500"></i>
                                 <div>
@@ -604,24 +693,24 @@
             },
             msk: {
                 title: "근골격계 부담작업 유해요인조사",
-                icon: "fa-people-carry text-orange-600",
+                icon: "fa-people-carry text-orange-500",
                 content: `
-                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl">
-                        <h4 class="font-bold text-blue-800 mb-2 text-[15px]">조사 대상</h4>
-                        <ul class="list-disc list-inside text-[13px] text-blue-700 space-y-1.5 ml-1 font-medium">
+                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl mb-6">
+                        <h4 class="font-extrabold text-blue-800 mb-2 text-[14px]">조사 대상</h4>
+                        <ul class="list-disc list-inside text-[13px] text-blue-700/80 space-y-1.5 ml-1 font-medium">
                             <li>산업안전보건법 제39조(보건조치) 및 안전보건기준에 관한 규칙 제12장</li>
                             <li>단순반복작업, 인체에 과도한 부담을 주는 작업 등 <b>근골격계 부담작업(11개 호)</b>에 종사하는 근로자가 있는 사업장</li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-clock text-amber-500 mr-2"></i>조사 주기</h4>
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600 space-y-3">
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-1 rounded text-xs w-fit">정기 조사</span>
+                    <div class="mb-6">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[14px]"><i class="fas fa-clock text-blue-500 mr-2"></i>조사 주기</h4>
+                        <div class="bg-[#F8FAFC] p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2.5 py-1 rounded-md text-[11px] w-fit">정기 조사</span>
                                 <p>신설 사업장은 <b>1년 이내</b> 최초 실시, 이후 <b>매 3년마다</b> 주기적 실시</p>
                             </div>
-                            <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 pt-2 border-t border-slate-200/60">
-                                <span class="bg-amber-100 text-amber-700 font-bold px-2 py-1 rounded text-xs w-fit mt-0.5">수시 조사</span>
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3 pt-3 border-t border-slate-200/60">
+                                <span class="bg-blue-100 text-blue-700 font-bold px-2.5 py-1 rounded-md text-[11px] w-fit mt-0.5">수시 조사</span>
                                 <div class="flex-1">
                                     <ul class="list-disc list-inside ml-1 text-slate-500 text-[12px] space-y-1">
                                         <li>근골격계질환으로 요양결정을 받은 자가 발생한 경우</li>
@@ -632,8 +721,8 @@
                         </div>
                     </div>
                     <div>
-                        <h4 class="font-bold text-red-600 mb-2 flex items-center text-[15px]"><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>위반 시 벌칙 (산업안전보건법 제167조)</h4>
-                        <div class="bg-red-50 p-4 rounded-xl border border-red-100 text-[13px] text-red-800">
+                        <h4 class="font-bold text-red-600 mb-2 flex items-center text-[14px]"><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>위반 시 벌칙 (산업안전보건법 제167조)</h4>
+                        <div class="bg-red-50/50 p-4 rounded-xl border border-red-100 text-[13px] text-red-800">
                             <div class="flex items-start gap-2.5">
                                 <i class="fas fa-times-circle mt-1 opacity-60 text-red-500"></i>
                                 <div>
@@ -649,22 +738,22 @@
                 title: "보건관리대행(위탁) 안내",
                 icon: "fa-user-nurse text-green-600",
                 content: `
-                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl">
-                        <h4 class="font-bold text-blue-800 mb-2 text-[15px]">관련 법규</h4>
-                        <ul class="list-disc list-inside text-[13px] text-blue-700 space-y-1.5 ml-1 font-medium">
+                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl mb-6">
+                        <h4 class="font-extrabold text-blue-800 mb-2 text-[14px]">관련 법규</h4>
+                        <ul class="list-disc list-inside text-[13px] text-blue-700/80 space-y-1.5 ml-1 font-medium">
                             <li>산업안전보건법 제15조 및 제17조 (보건관리자)</li>
                             <li>사업주는 보건관리자를 선임하거나, 보건관리 전문기관에 보건관리 업무를 위탁할 수 있습니다.</li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-building text-amber-500 mr-2"></i>대상 사업장</h4>
-                        <p class="text-[13px] text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div class="mb-6">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[14px]"><i class="fas fa-building text-blue-500 mr-2"></i>대상 사업장</h4>
+                        <p class="text-[13px] text-slate-600 leading-relaxed bg-[#F8FAFC] p-4 rounded-xl border border-slate-100">
                             상시근로자 <b>50인 이상 300인 미만</b>을 사용하는 사업장 (제조업, 건설업, 서비스업 등 산업안전보건법 시행령 기준 적용)
                         </p>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-clipboard-list text-amber-500 mr-2"></i>주요 위탁 업무</h4>
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600">
+                    <div class="mb-6">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[14px]"><i class="fas fa-clipboard-list text-blue-500 mr-2"></i>주요 위탁 업무</h4>
+                        <div class="bg-[#F8FAFC] p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600">
                             <ul class="list-disc list-inside space-y-2">
                                 <li>사업장 순회점검 및 작업환경관리 (보호구 관리, 유해위험요인 지도)</li>
                                 <li>근로자 건강관리 (건강상담, 질병 유소견자 사후관리, 뇌심혈관/직무스트레스 예방 등)</li>
@@ -673,8 +762,8 @@
                         </div>
                     </div>
                     <div>
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-handshake text-green-500 mr-2"></i>계약 방법</h4>
-                        <p class="text-[13px] text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[14px]"><i class="fas fa-handshake text-blue-500 mr-2"></i>계약 방법</h4>
+                        <p class="text-[13px] text-slate-600 leading-relaxed bg-[#F8FAFC] p-4 rounded-xl border border-slate-100">
                             사업장과 대한산업보건협회(전문기관) 간 <b>보건관리 위탁계약</b> 체결 후, 14일 이내 관할 고용노동부 지청에 <b>보건관리자 선임 보고</b> 제출
                         </p>
                     </div>
@@ -682,43 +771,43 @@
             },
             healthCheck: {
                 title: "근로자 특수건강진단 안내",
-                icon: "fa-stethoscope text-red-600",
+                icon: "fa-stethoscope text-red-500",
                 content: `
-                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl">
-                        <h4 class="font-bold text-blue-800 mb-2 text-[15px]">실시 근거</h4>
-                        <ul class="list-disc list-inside text-[13px] text-blue-700 space-y-1.5 ml-1 font-medium">
+                    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl mb-6">
+                        <h4 class="font-extrabold text-blue-800 mb-2 text-[14px]">실시 근거</h4>
+                        <ul class="list-disc list-inside text-[13px] text-blue-700/80 space-y-1.5 ml-1 font-medium">
                             <li>산업안전보건법 제130조 (특수건강진단 등)</li>
                             <li>유해인자에 노출되는 업무에 종사하는 근로자의 직업성 질환을 조기 발견하기 위해 실시합니다.</li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-notes-medical text-amber-500 mr-2"></i>주요 건강진단 종류</h4>
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600 space-y-3">
-                            <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
-                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-1 rounded text-xs w-20 text-center">특수</span>
+                    <div class="mb-6">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[14px]"><i class="fas fa-notes-medical text-blue-500 mr-2"></i>주요 건강진단 종류</h4>
+                        <div class="bg-[#F8FAFC] p-4 rounded-xl border border-slate-100 text-[13px] text-slate-600 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
+                                <span class="bg-slate-200 text-slate-700 font-bold px-3 py-1 rounded-md text-[11px] w-16 text-center">특수</span>
                                 <p class="flex-1">별표22의 유해인자(화학물질, 분진, 소음 등 179종) 노출 업무 종사자 대상 정기 실시</p>
                             </div>
-                            <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 pt-2 border-t border-slate-200/60">
-                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-1 rounded text-xs w-20 text-center">배치전</span>
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3 pt-3 border-t border-slate-200/60">
+                                <span class="bg-slate-200 text-slate-700 font-bold px-3 py-1 rounded-md text-[11px] w-16 text-center">배치전</span>
                                 <p class="flex-1">특수건강진단 대상 업무에 <b>신규 배치 예정</b>인 근로자 대상 적합성 평가</p>
                             </div>
-                            <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 pt-2 border-t border-slate-200/60">
-                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-1 rounded text-xs w-20 text-center">수시</span>
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3 pt-3 border-t border-slate-200/60">
+                                <span class="bg-slate-200 text-slate-700 font-bold px-3 py-1 rounded-md text-[11px] w-16 text-center">수시</span>
                                 <p class="flex-1">직업성 천식, 피부염 등 질환 의심 증상 발생 시 사업주가 신속히 실시</p>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[15px]"><i class="fas fa-moon text-indigo-500 mr-2"></i>야간작업자 특수건강진단</h4>
-                        <p class="text-[13px] text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div class="mb-6">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center text-[14px]"><i class="fas fa-moon text-indigo-500 mr-2"></i>야간작업자 특수건강진단</h4>
+                        <p class="text-[13px] text-slate-600 leading-relaxed bg-[#F8FAFC] p-4 rounded-xl border border-slate-100">
                             <b>야간작업(2종) 대상자:</b><br>
                             ① 6개월간 밤 12시~새벽 5시를 포함하여 8시간 이상 작업 월 4회 이상<br>
                             ② 6개월간 밤 10시~새벽 6시 사이 작업시간이 월 평균 60시간 이상인 자
                         </p>
                     </div>
                     <div>
-                        <h4 class="font-bold text-red-600 mb-2 flex items-center text-[15px]"><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>위반 시 과태료 (산업안전보건법 제175조)</h4>
-                        <div class="bg-red-50 p-4 rounded-xl border border-red-100 text-[13px] text-red-800">
+                        <h4 class="font-bold text-red-600 mb-2 flex items-center text-[14px]"><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>위반 시 과태료 (산업안전보건법 제175조)</h4>
+                        <div class="bg-red-50/50 p-4 rounded-xl border border-red-100 text-[13px] text-red-800">
                             <div class="flex items-start gap-2.5">
                                 <i class="fas fa-times-circle mt-1 opacity-60 text-red-500"></i>
                                 <div>
@@ -736,7 +825,7 @@
             const data = bizModalData[type];
             if(!data) return;
             
-            document.getElementById('modalTitleText').innerHTML = `<i class="fas ${data.icon} mr-2"></i>${data.title}`;
+            document.getElementById('modalTitleText').innerHTML = `<i class="fas ${data.icon} mr-2.5"></i>${data.title}`;
             document.getElementById('modalBodyContent').innerHTML = data.content;
 
             const modal = document.getElementById('bizModal');
@@ -791,6 +880,8 @@
             ];
             
             customSubtitles = {};
+            popupConfig = { img1: null, img2: null };
+            currentPopupFiles = { file1: null, file2: null };
 
             updateAllCategoryViews();
             updateDashboardStats();
@@ -802,7 +893,6 @@
             try {
                 await signInAnonymously(auth);
             } catch (error) {
-                console.error("인증 에러:", error);
                 enableLocalMode("인증 실패: " + error.code);
                 const loginView = document.getElementById('loginView');
                 if(loginView) loginView.classList.remove('hidden');
@@ -840,7 +930,6 @@
         // --- [실시간 동기화 (Firestore)] ---
         function setupRealtimeSync() {
             try {
-                // 1. 파일 동기화
                 const filesRef = collection(db, 'health_files');
                 onSnapshot(filesRef, (snapshot) => {
                     if (isLocalMode) return;
@@ -852,7 +941,6 @@
                     renderTable();
                 }, (error) => { enableLocalMode("권한 에러 발생"); });
 
-                // 2. 대분류 카테고리 동기화
                 const catRef = collection(db, 'health_categories');
                 onSnapshot(catRef, (snapshot) => {
                     if (isLocalMode) return;
@@ -873,7 +961,6 @@
                     }
                 }, (error) => { console.error("카테고리 에러:", error); });
 
-                // ★ 3. 하위 폴더(서브 카테고리) 동기화 추가
                 const subCatRef = collection(db, 'health_subcategories');
                 onSnapshot(subCatRef, (snapshot) => {
                     if (isLocalMode) return;
@@ -882,7 +969,6 @@
                     updateAllCategoryViews();
                 }, (error) => { console.error("서브카테고리 에러:", error); });
 
-                // 4. 회원사 목록 동기화
                 const membersRef = collection(db, 'allowed_members');
                 onSnapshot(membersRef, (snapshot) => {
                     if (isLocalMode) return;
@@ -891,12 +977,10 @@
                     renderAdminMemberManager();
                 }, (error) => { console.error("회원사 에러:", error); });
 
-                // ★ 5. 시스템 기본 설정 (카테고리별 안내문구 등) 동기화
                 const settingsRef = collection(db, 'system_settings');
                 onSnapshot(settingsRef, (snapshot) => {
                     if (isLocalMode) return;
                     snapshot.forEach(doc => {
-                        // 레거시 설정(general)과 새로운 설정(subtitles) 병합
                         if (doc.id === 'general' && doc.data().allFilesSubtitle && !customSubtitles['all']) {
                             customSubtitles['all'] = doc.data().allFilesSubtitle;
                             updateCurrentSubtitleDisplay();
@@ -907,6 +991,20 @@
                         }
                     });
                 }, (error) => { console.error("시스템 설정 에러:", error); });
+
+                // ★ 로그인 안내 팝업 동기화
+                const popupRef = doc(db, 'system_settings', 'popup');
+                onSnapshot(popupRef, (doc) => {
+                    if (isLocalMode) return;
+                    if (doc.exists()) {
+                        popupConfig.img1 = doc.data().img1 || null;
+                        popupConfig.img2 = doc.data().img2 || null;
+                    } else {
+                        popupConfig = { img1: null, img2: null };
+                    }
+                    updateAdminPopupUI(1, popupConfig.img1);
+                    updateAdminPopupUI(2, popupConfig.img2);
+                }, (error) => { console.error("팝업 설정 에러:", error); });
 
             } catch (err) {
                 enableLocalMode("DB 연결 실패");
@@ -943,8 +1041,8 @@
 
             toastMsg.innerText = msg;
             if(type === 'error') icon.innerHTML = '<i class="fas fa-exclamation-circle text-red-400"></i>';
-            else if(type === 'info') icon.innerHTML = '<i class="fas fa-info-circle text-amber-400"></i>';
-            else icon.innerHTML = '<i class="fas fa-check-circle text-green-400"></i>';
+            else if(type === 'info') icon.innerHTML = '<i class="fas fa-info-circle text-blue-400"></i>';
+            else icon.innerHTML = '<i class="fas fa-check-circle text-teal-400"></i>';
 
             toast.classList.remove('translate-y-24', 'opacity-0');
             clearTimeout(toastTimeout);
@@ -955,7 +1053,7 @@
 
         function updateDashboardStats() {
             const totalStatEl = document.getElementById('totalFilesStat');
-            if (totalStatEl) totalStatEl.innerHTML = `${files.length}<span class="text-sm font-medium text-slate-500 ml-1">건</span>`;
+            if (totalStatEl) totalStatEl.innerHTML = `${files.length}<span class="text-xs font-medium text-slate-500 ml-1">건</span>`;
         }
 
         window.updateFileNameDisplay = function(input) {
@@ -1049,17 +1147,161 @@
             const adminPanel = document.getElementById('adminPanel');
 
             if(currentUser.role === 'admin') {
-                if(uiSpan) uiSpan.innerHTML = '<div class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mr-2"><i class="fas fa-crown text-xs"></i></div> 시스템 관리자';
+                if(uiSpan) uiSpan.innerHTML = '<div class="w-6 h-6 rounded-md bg-blue-500/20 text-blue-400 flex items-center justify-center mr-2.5 shadow-inner"><i class="fas fa-crown text-[10px]"></i></div> 시스템 관리자';
                 if(adminPanel) adminPanel.classList.remove('hidden');
             } else {
-                if(uiSpan) uiSpan.innerHTML = `<div class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center mr-2"><i class="fas fa-building text-xs"></i></div> ${currentUser.name}`;
+                if(uiSpan) uiSpan.innerHTML = `<div class="w-6 h-6 rounded-md bg-teal-500/20 text-teal-300 flex items-center justify-center mr-2.5 shadow-inner"><i class="fas fa-building text-[10px]"></i></div> ${currentUser.name}`;
                 if(adminPanel) adminPanel.classList.add('hidden');
             }
 
             updateAllCategoryViews();
             updateDashboardStats();
             filterByCategory('intro');
+            
+            // ★ 로그인 완료 시 이미지 공지사항 팝업 노출 호출
+            showNoticePopup();
         }
+
+        // ★ [안내 이미지 개별 팝업 및 오늘하루 보지않음 로직]
+        window.showNoticePopup = function() {
+            const now = new Date().getTime();
+            
+            // 각 팝업별 로컬 스토리지 확인 (독립적 관리)
+            const hideUntil1 = localStorage.getItem('hideNoticePopup_1_v3');
+            const hideUntil2 = localStorage.getItem('hideNoticePopup_2_v3');
+
+            const show1 = popupConfig.img1 && (!hideUntil1 || now > parseInt(hideUntil1));
+            const show2 = popupConfig.img2 && (!hideUntil2 || now > parseInt(hideUntil2));
+
+            const modal1 = document.getElementById('noticePopup1');
+            const modal2 = document.getElementById('noticePopup2');
+            
+            // 첫 번째 팝업 노출
+            if(show1 && modal1) {
+                document.getElementById('popupImage1').src = popupConfig.img1;
+                const check1 = document.getElementById('hideNoticeToday1');
+                if(check1) check1.checked = false;
+                
+                modal1.classList.remove('hidden');
+                setTimeout(() => {
+                    modal1.classList.remove('translate-x-20', 'opacity-0');
+                }, 50);
+            }
+
+            // 두 번째 팝업 노출 (약간의 시차를 두어 부드럽게 연속 등장)
+            if(show2 && modal2) {
+                document.getElementById('popupImage2').src = popupConfig.img2;
+                const check2 = document.getElementById('hideNoticeToday2');
+                if(check2) check2.checked = false;
+                
+                modal2.classList.remove('hidden');
+                setTimeout(() => {
+                    modal2.classList.remove('translate-x-20', 'opacity-0');
+                }, show1 ? 150 : 50); // 1번 팝업이 있다면 약간 늦게 튀어나오게 설정
+            }
+        };
+
+        window.closeNoticePopup = function(index) {
+            const checkbox = document.getElementById(`hideNoticeToday${index}`);
+            if (checkbox && checkbox.checked) {
+                // 오늘 자정(밤 12시) 시간을 구해서 개별 키로 저장
+                const tomorrow = new Date();
+                tomorrow.setHours(24, 0, 0, 0); 
+                localStorage.setItem(`hideNoticePopup_${index}_v3`, tomorrow.getTime().toString());
+            }
+            
+            const modal = document.getElementById(`noticePopup${index}`);
+            if(modal) {
+                // 우측으로 부드럽게 슬라이드 아웃
+                modal.classList.add('translate-x-20', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 500); 
+            }
+        };
+
+        // ★ [관리자: 팝업 이미지 최대 2개 업로드 관리 로직]
+        window.updateAdminPopupUI = function(index, url) {
+            const previewImg = document.getElementById(`popupPreviewImage${index}`);
+            const prompt = document.getElementById(`popupPrompt${index}`);
+            const container = document.getElementById(`popupPreviewContainer${index}`);
+            
+            if (url) {
+                if(previewImg) previewImg.src = url;
+                if(prompt) prompt.classList.add('hidden');
+                if(container) container.classList.remove('hidden');
+            } else {
+                if(previewImg) previewImg.src = '';
+                if(prompt) prompt.classList.remove('hidden');
+                if(container) container.classList.add('hidden');
+            }
+        };
+
+        window.previewPopupImage = function(input, index) {
+            if (input.files && input.files[0]) {
+                currentPopupFiles[`file${index}`] = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    updateAdminPopupUI(index, e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+
+        window.clearPopupImageSlot = function(index) {
+            currentPopupFiles[`file${index}`] = null;
+            popupConfig[`img${index}`] = null;
+            const fileInput = document.getElementById(`popupUploadFile${index}`);
+            if(fileInput) fileInput.value = '';
+            updateAdminPopupUI(index, null);
+        };
+
+        window.savePopupImages = async function() {
+            // 둘 다 아무 설정도 없을 때 보호 처리
+            if (!currentPopupFiles.file1 && !popupConfig.img1 && !currentPopupFiles.file2 && !popupConfig.img2) {
+                // 완전히 다 지우고 배포하는 상황일 수 있으므로 그대로 진행합니다.
+            }
+            
+            showLoader('팝업 설정 사항을 서버에 반영 중...');
+            
+            if (isLocalMode) {
+                hideLoader();
+                return showToast('팝업 설정이 완료되었습니다. (로컬)');
+            }
+
+            try {
+                let finalUrl1 = popupConfig.img1;
+                let finalUrl2 = popupConfig.img2;
+                
+                if (currentPopupFiles.file1) {
+                    const path = `system_images/popup_${Date.now()}_1_${currentPopupFiles.file1.name}`;
+                    const fileRef = ref(storage, path);
+                    await uploadBytes(fileRef, currentPopupFiles.file1);
+                    finalUrl1 = await getDownloadURL(fileRef);
+                }
+                
+                if (currentPopupFiles.file2) {
+                    const path = `system_images/popup_${Date.now()}_2_${currentPopupFiles.file2.name}`;
+                    const fileRef = ref(storage, path);
+                    await uploadBytes(fileRef, currentPopupFiles.file2);
+                    finalUrl2 = await getDownloadURL(fileRef);
+                }
+                
+                await setDoc(doc(db, 'system_settings', 'popup'), {
+                    img1: finalUrl1,
+                    img2: finalUrl2,
+                    timestamp: Date.now()
+                });
+                
+                currentPopupFiles.file1 = null;
+                currentPopupFiles.file2 = null;
+                showToast('새 팝업 설정이 모든 사용자에게 배포되었습니다.');
+            } catch(e) {
+                console.error(e);
+                showToast('설정 권한 오류가 발생했습니다.', 'error');
+            }
+            hideLoader();
+        };
 
         // --- [회원사 등록/삭제 로직] ---
         window.addSingleMember = async function() {
@@ -1222,21 +1464,20 @@
             badge.innerText = allowedMembers.length;
             
             if(displayMembers.length === 0) {
-                list.innerHTML = `<li class="p-4 text-center text-slate-400 text-xs">등록된 사업자번호가 없습니다.</li>`;
+                list.innerHTML = `<li class="p-5 text-center text-slate-400 text-[12px] bg-[#F8FAFC] rounded-lg border border-slate-100">등록된 사업자번호가 없습니다.</li>`;
                 return;
             }
 
-            // ★ 렌더링 최적화: 메모리에서 HTML 문자열을 모두 조립한 후 단 한 번만 DOM에 삽입 (프리징 방지)
             let htmlContent = '';
             displayMembers.forEach(m => {
                 let formatNum = m.bizNumber;
                 if(formatNum.length === 10) formatNum = formatNum.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
                 htmlContent += `
-                    <li class="p-2.5 bg-slate-50 border border-slate-100 rounded-lg mb-1.5 flex justify-between items-center hover:bg-white transition-colors">
+                    <li class="p-3 bg-[#F8FAFC] border border-slate-100/80 rounded-xl mb-1.5 flex justify-between items-center hover:bg-white hover:border-blue-200 transition-colors shadow-sm">
                         <div class="flex flex-col truncate pr-2">
-                            <span class="font-bold text-slate-700 truncate">${formatNum}</span>
+                            <span class="font-bold text-slate-700 text-[13px] tracking-wide">${formatNum}</span>
                         </div>
-                        <button onclick="deleteMember('${m.id}')" class="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-red-50 text-red-500 rounded hover:bg-red-500 hover:text-white transition" title="삭제"><i class="fas fa-times text-[10px]"></i></button>
+                        <button onclick="deleteMember('${m.id}')" class="w-7 h-7 flex-shrink-0 flex items-center justify-center bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition" title="삭제"><i class="fas fa-times text-[11px]"></i></button>
                     </li>
                 `;
             });
@@ -1246,12 +1487,10 @@
 
         // --- [★ 핵심: 대분류/하위폴더 계층형 통합 카테고리 관리] ---
         
-        // 헬퍼: 특정 대분류에 속한 '정식 하위폴더'와 '기존 파일에만 남아있는 레거시 폴더'를 혼합하여 가져옵니다.
         function getSubCatsByMainCat(mainCatName) {
             const registered = subCategories.filter(s => s.mainCat === mainCatName).sort((a,b) => a.timestamp - b.timestamp);
             const registeredNames = registered.map(s => s.name);
             
-            // 기존 파일에만 흔적으로 남아있는 미등록 폴더들 발굴 (호환성 유지)
             const fileOnlyNames = [...new Set(files.filter(f => f.mainCat === mainCatName && f.subCat && !registeredNames.includes(f.subCat)).map(f => f.subCat))].sort();
             
             return [
@@ -1264,7 +1503,7 @@
             renderSidebarCategories();
             renderUploadCategorySelect();
             renderAdminCategoryManager();
-            updateSubtitleSelectOptions(); // ★ 안내문구 셀렉트 옵션 갱신 추가
+            updateSubtitleSelectOptions();
         }
 
         // --- 1. 대분류 CRUD ---
@@ -1308,13 +1547,10 @@
             showLoader('데이터 일괄 업데이트 중...');
             try {
                 const batch = writeBatch(db);
-                // 1. 대분류 수정
                 batch.update(doc(db, 'health_categories', id), { name: newName });
-                // 2. 속한 하위 폴더의 메인 카테고리 수정
                 subCategories.filter(s => s.mainCat === oldName).forEach(s => {
                     batch.update(doc(db, 'health_subcategories', s.id), { mainCat: newName });
                 });
-                // 3. 속한 파일들의 메인 카테고리 수정
                 files.filter(f => f.mainCat === oldName).forEach(f => {
                     batch.update(doc(db, 'health_files', f.id), { mainCat: newName });
                 });
@@ -1488,7 +1724,6 @@
             hideLoader();
         }
 
-        // 기존 파일에만 존재했던 유령 폴더를 정식 DB에 등록 (호환성)
         window.registerLegacySubCat = async function(mainCat, subName) {
             showLoader('정식 등록 중...');
             await checkAndAddSubCategory(mainCat, subName);
@@ -1496,7 +1731,6 @@
             showToast('기존 폴더가 시스템에 정식으로 등록되었습니다.');
         }
 
-        // 업로드/이동 시 없는 하위폴더면 자동 생성해주는 유틸 함수
         async function checkAndAddSubCategory(mainCat, subCat) {
             if(!subCat) return;
             const exists = subCategories.find(s => s.mainCat === mainCat && s.name === subCat);
@@ -1523,19 +1757,19 @@
                 
                 subs.forEach(sub => {
                     const actionBtns = sub.isRegistered ? `
-                        <button onclick="moveSubCategoryUp('${sub.id}')" class="w-5 h-5 flex items-center justify-center bg-white text-slate-400 border border-slate-200 rounded hover:bg-slate-200 hover:text-slate-700" title="위로"><i class="fas fa-arrow-up text-[9px]"></i></button>
-                        <button onclick="moveSubCategoryDown('${sub.id}')" class="w-5 h-5 flex items-center justify-center bg-white text-slate-400 border border-slate-200 rounded hover:bg-slate-200 hover:text-slate-700" title="아래로"><i class="fas fa-arrow-down text-[9px]"></i></button>
-                        <button onclick="editSubCategory('${sub.id}', '${sub.name.replace(/'/g, "\\'")}', '${cat.name.replace(/'/g, "\\'")}')" class="w-5 h-5 flex items-center justify-center bg-blue-50 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition" title="수정"><i class="fas fa-pen text-[9px]"></i></button>
-                        <button onclick="deleteSubCategory('${sub.id}', '${sub.name.replace(/'/g, "\\'")}', '${cat.name.replace(/'/g, "\\'")}')" class="w-5 h-5 flex items-center justify-center bg-red-50 text-red-500 rounded hover:bg-red-500 hover:text-white transition" title="삭제"><i class="fas fa-trash text-[9px]"></i></button>
+                        <button onclick="moveSubCategoryUp('${sub.id}')" class="w-6 h-6 flex items-center justify-center bg-white text-slate-400 border border-slate-200 rounded-md hover:bg-slate-200 hover:text-slate-700" title="위로"><i class="fas fa-arrow-up text-[10px]"></i></button>
+                        <button onclick="moveSubCategoryDown('${sub.id}')" class="w-6 h-6 flex items-center justify-center bg-white text-slate-400 border border-slate-200 rounded-md hover:bg-slate-200 hover:text-slate-700" title="아래로"><i class="fas fa-arrow-down text-[10px]"></i></button>
+                        <button onclick="editSubCategory('${sub.id}', '${sub.name.replace(/'/g, "\\'")}', '${cat.name.replace(/'/g, "\\'")}')" class="w-6 h-6 flex items-center justify-center bg-blue-50 text-blue-600 rounded-md hover:bg-blue-600 hover:text-white transition" title="수정"><i class="fas fa-pen text-[10px]"></i></button>
+                        <button onclick="deleteSubCategory('${sub.id}', '${sub.name.replace(/'/g, "\\'")}', '${cat.name.replace(/'/g, "\\'")}')" class="w-6 h-6 flex items-center justify-center bg-red-50 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition" title="삭제"><i class="fas fa-trash text-[10px]"></i></button>
                     ` : `
-                        <span class="text-[9px] text-amber-500 bg-amber-50 px-1 py-0.5 rounded border border-amber-100 whitespace-nowrap">미등록</span>
-                        <button onclick="registerLegacySubCat('${cat.name.replace(/'/g, "\\'")}', '${sub.name.replace(/'/g, "\\'")}')" class="w-5 h-5 flex items-center justify-center bg-green-50 text-green-600 rounded hover:bg-green-500 hover:text-white" title="정식 폴더로 추가"><i class="fas fa-plus text-[9px]"></i></button>
+                        <span class="text-[10px] font-bold text-orange-500 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-100 whitespace-nowrap">미등록</span>
+                        <button onclick="registerLegacySubCat('${cat.name.replace(/'/g, "\\'")}', '${sub.name.replace(/'/g, "\\'")}')" class="w-6 h-6 flex items-center justify-center bg-green-50 text-green-600 rounded-md hover:bg-green-600 hover:text-white" title="정식 폴더로 추가"><i class="fas fa-plus text-[10px]"></i></button>
                     `;
 
                     subsHtml += `
-                        <li class="pl-7 pr-3 py-2 flex justify-between items-center hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0 group">
-                            <span class="text-[12px] text-slate-600 font-medium flex items-center"><i class="fas fa-level-up-alt transform rotate-90 mr-2 opacity-40 text-xs"></i> ${sub.name}</span>
-                            <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <li class="pl-8 pr-4 py-2.5 flex justify-between items-center hover:bg-white transition-colors border-b border-slate-100/60 last:border-0 group">
+                            <span class="text-[12px] text-slate-600 font-medium flex items-center"><i class="fas fa-level-up-alt transform rotate-90 mr-2.5 opacity-30 text-[10px]"></i> ${sub.name}</span>
+                            <div class="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                                 ${actionBtns}
                             </div>
                         </li>
@@ -1543,22 +1777,21 @@
                 });
 
                 list.innerHTML += `
-                    <li class="bg-white border border-slate-200 rounded-xl mb-3 shadow-sm overflow-hidden group/main">
-                        <div class="p-3.5 bg-slate-50 flex justify-between items-center border-b border-slate-100">
-                            <span class="font-bold text-slate-800 truncate pr-2 flex items-center text-sm"><i class="far fa-folder-open text-amber-500 mr-2"></i>${cat.name}</span>
-                            <div class="flex gap-1 flex-shrink-0">
-                                <button onclick="moveCategoryUp('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-white text-slate-400 rounded border border-slate-200 hover:bg-slate-200 hover:text-slate-700 transition" title="위로"><i class="fas fa-arrow-up text-[11px]"></i></button>
-                                <button onclick="moveCategoryDown('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-white text-slate-400 rounded border border-slate-200 hover:bg-slate-200 hover:text-slate-700 transition" title="아래로"><i class="fas fa-arrow-down text-[11px]"></i></button>
-                                <button onclick="editCategory('${cat.id}', '${cat.name.replace(/'/g, "\\'")}')" class="w-7 h-7 flex items-center justify-center bg-blue-50 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition" title="수정"><i class="fas fa-pen text-[11px]"></i></button>
-                                <button onclick="deleteCategory('${cat.id}', '${cat.name.replace(/'/g, "\\'")}')" class="w-7 h-7 flex items-center justify-center bg-red-50 text-red-500 rounded hover:bg-red-500 hover:text-white transition" title="삭제"><i class="fas fa-trash text-[11px]"></i></button>
+                    <li class="bg-[#F8FAFC] border border-slate-200/80 rounded-xl mb-3 shadow-sm overflow-hidden group/main">
+                        <div class="p-3.5 bg-white flex justify-between items-center border-b border-slate-100/80">
+                            <span class="font-extrabold text-slate-800 truncate pr-2 flex items-center text-[13px]"><i class="far fa-folder-open text-teal-500 mr-2.5 text-lg"></i>${cat.name}</span>
+                            <div class="flex gap-1.5 flex-shrink-0">
+                                <button onclick="moveCategoryUp('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-slate-50 text-slate-400 rounded-lg border border-slate-200 hover:bg-slate-200 hover:text-slate-700 transition" title="위로"><i class="fas fa-arrow-up text-[11px]"></i></button>
+                                <button onclick="moveCategoryDown('${cat.id}')" class="w-7 h-7 flex items-center justify-center bg-slate-50 text-slate-400 rounded-lg border border-slate-200 hover:bg-slate-200 hover:text-slate-700 transition" title="아래로"><i class="fas fa-arrow-down text-[11px]"></i></button>
+                                <button onclick="editCategory('${cat.id}', '${cat.name.replace(/'/g, "\\'")}')" class="w-7 h-7 flex items-center justify-center bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition" title="수정"><i class="fas fa-pen text-[11px]"></i></button>
+                                <button onclick="deleteCategory('${cat.id}', '${cat.name.replace(/'/g, "\\'")}')" class="w-7 h-7 flex items-center justify-center bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition" title="삭제"><i class="fas fa-trash text-[11px]"></i></button>
                             </div>
                         </div>
-                        <ul class="bg-white">
+                        <ul class="bg-[#F8FAFC]">
                             ${subsHtml}
-                            <!-- 하위 폴더 신규 추가 인풋 -->
-                            <li class="pl-7 pr-3 py-2.5 bg-slate-50/50 flex gap-2 items-center">
-                                <input type="text" id="newSubCatInput_${cat.id}" placeholder="새 하위폴더 추가..." class="flex-1 p-2 bg-white border border-slate-200 rounded-md text-[12px] focus:ring-1 focus:ring-amber-500 outline-none" onkeypress="if(event.key === 'Enter') addNewSubCategory('${cat.name.replace(/'/g, "\\'")}', 'newSubCatInput_${cat.id}')">
-                                <button onclick="addNewSubCategory('${cat.name.replace(/'/g, "\\'")}', 'newSubCatInput_${cat.id}')" class="bg-amber-100 text-amber-700 px-3 py-2 rounded-md text-[11px] font-bold hover:bg-amber-500 hover:text-white transition-colors whitespace-nowrap"><i class="fas fa-plus mr-1"></i>추가</button>
+                            <li class="pl-8 pr-4 py-3 flex gap-2 items-center bg-white/50 border-t border-slate-100/60">
+                                <input type="text" id="newSubCatInput_${cat.id}" placeholder="새 하위폴더 추가..." class="flex-1 p-2 bg-white border border-slate-200/60 rounded-lg text-[12px] focus:ring-2 focus:ring-teal-500 outline-none transition" onkeypress="if(event.key === 'Enter') addNewSubCategory('${cat.name.replace(/'/g, "\\'")}', 'newSubCatInput_${cat.id}')">
+                                <button onclick="addNewSubCategory('${cat.name.replace(/'/g, "\\'")}', 'newSubCatInput_${cat.id}')" class="bg-teal-50 text-teal-700 px-3.5 py-2 rounded-lg text-[11px] font-bold hover:bg-teal-500 hover:text-white transition-colors whitespace-nowrap border border-teal-100"><i class="fas fa-plus mr-1"></i>추가</button>
                             </li>
                         </ul>
                     </li>
@@ -1566,7 +1799,7 @@
             });
         }
 
-        // --- 기타 사이드바/셀렉트 렌더링 로직 연동 ---
+        // --- 사이드바/셀렉트 렌더링 ---
         window.filterByCategory = function(mainCat, subCat = null) {
             currentFilterMain = mainCat;
             currentFilterSub = subCat;
@@ -1575,7 +1808,6 @@
             const introSection = document.getElementById('introSection');
             const fileListSection = document.getElementById('fileListSection');
             const currentTitle = document.getElementById('currentCategoryTitle');
-            const subtitle = document.getElementById('headerSubtitle');
             
             if (!introSection || !fileListSection) return;
 
@@ -1583,7 +1815,7 @@
                 introSection.classList.remove('hidden');
                 fileListSection.classList.add('hidden');
                 if(currentTitle) currentTitle.innerText = '경남지역본부 맞춤형 통합 산업보건 Hub';
-                if(subtitle) subtitle.innerText = 'Partnering for a Safer Workplace';
+                updateCurrentSubtitleDisplay();
             } else {
                 introSection.classList.add('hidden');
                 fileListSection.classList.remove('hidden');
@@ -1592,27 +1824,20 @@
                 if (subCat) titleText += ` > ${subCat}`;
                 if(currentTitle) currentTitle.innerText = titleText;
                 
-                // ★ 동기화된 커스텀 안내문구를 출력
                 updateCurrentSubtitleDisplay();
-                
                 renderTable();
             }
             renderSidebarCategories();
         }
 
-        // ★ [카테고리별 커스텀 안내문구 설정 로직]
         function getSubtitleForCategory(mainCat) {
+            if (mainCat === 'intro') return 'Partnering for a Safer Workplace';
             let catKey = 'all';
             if (mainCat !== 'all') {
                 const catObj = categories.find(c => c.name === mainCat);
                 if (catObj) catKey = catObj.id;
             }
-
-            if (customSubtitles[catKey]) {
-                return customSubtitles[catKey];
-            }
-
-            // 기본 안내문구 (커스텀 설정이 없을 때)
+            if (customSubtitles[catKey]) return customSubtitles[catKey];
             if (mainCat === 'all') return '업데이트된 안전보건 자료를 다운로드 하세요.';
             if (mainCat.includes('안전보건교육')) return '산업안전보건법 제29조 관련';
             if (mainCat.includes('특별관리물질')) return '산업안전보건기준에 관한 규칙 제439조~440조 관련';
@@ -1621,16 +1846,12 @@
             if (mainCat.includes('프로그램')) return '산업안전보건기준에 관한 규칙 제517조, 616조, 619조 관련';
             if (mainCat.includes('안전보건표지')) return '산업안전보건법 제37조 관련';
             if (mainCat.includes('전파사항') || mainCat.includes('고용노동부') || mainCat.includes('안전보건공단')) return '안전보건 전파사항을 통한 산업재해를 적극 예방하여 주시기 바랍니다.';
-            
             return '업데이트된 안전보건 자료를 다운로드 하세요.';
         }
 
         window.updateCurrentSubtitleDisplay = function() {
-            if (currentFilterMain === 'intro') return;
             const subtitleEl = document.getElementById('headerSubtitle');
             if(subtitleEl) subtitleEl.innerText = getSubtitleForCategory(currentFilterMain);
-            
-            // 관리자 패널의 인풋도 동기화
             onSubtitleCatChange();
         };
 
@@ -1638,18 +1859,11 @@
             const select = document.getElementById('subtitleCatSelect');
             if(!select) return;
             const currentVal = select.value;
-            
             let optionsHtml = `<option value="all">전체 자료 보기</option>`;
-            categories.forEach(cat => {
-                optionsHtml += `<option value="${cat.id}">${cat.name}</option>`;
-            });
+            categories.forEach(cat => { optionsHtml += `<option value="${cat.id}">${cat.name}</option>`; });
             select.innerHTML = optionsHtml;
-            
-            if (Array.from(select.options).some(opt => opt.value === currentVal)) {
-                select.value = currentVal;
-            } else {
-                select.value = 'all';
-            }
+            if (Array.from(select.options).some(opt => opt.value === currentVal)) select.value = currentVal;
+            else select.value = 'all';
             onSubtitleCatChange();
         };
 
@@ -1657,13 +1871,11 @@
             const select = document.getElementById('subtitleCatSelect');
             const input = document.getElementById('customSubtitleInput');
             if(!select || !input) return;
-            
             let mainCatName = 'all';
             if (select.value !== 'all') {
                 const catObj = categories.find(c => c.id === select.value);
                 if(catObj) mainCatName = catObj.name;
             }
-            
             input.value = getSubtitleForCategory(mainCatName);
         };
 
@@ -1677,7 +1889,6 @@
             if(!text) return showToast('문구를 입력해주세요.', 'error');
 
             showLoader('저장 중...');
-            
             customSubtitles[catKey] = text;
 
             if (isLocalMode) {
@@ -1690,10 +1901,7 @@
                 await setDoc(doc(db, 'system_settings', 'subtitles'), customSubtitles);
                 updateCurrentSubtitleDisplay();
                 showToast('안내문구가 성공적으로 변경되었습니다.');
-            } catch(e) {
-                console.error("문구 저장 오류:", e);
-                showToast('오류가 발생했습니다.', 'error');
-            }
+            } catch(e) { showToast('오류가 발생했습니다.', 'error'); }
             hideLoader();
         };
 
@@ -1702,43 +1910,42 @@
             if(!nav) return;
 
             let html = `
-                <a href="#" onclick="filterByCategory('intro')" class="${currentFilterMain === 'intro' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-400 hover:bg-white/5'} block px-4 py-2.5 rounded-xl transition-all mb-1 font-bold text-[13px] flex items-center">
-                    <i class="fas fa-home w-5 text-center mr-2"></i> 경남지역본부 소개
+                <a href="#" onclick="filterByCategory('intro')" class="${currentFilterMain === 'intro' ? 'bg-blue-600 text-white shadow-md shadow-blue-900/50' : 'text-slate-400 hover:text-white hover:bg-white/5'} block px-4 py-3 rounded-xl transition-all mb-1 font-bold text-[13px] flex items-center tracking-wide">
+                    <i class="fas fa-home w-5 text-center mr-2.5 opacity-80"></i> 경남지역본부 소개
                 </a>
                 
-                <a href="#" onclick="filterByCategory('all')" class="${currentFilterMain === 'all' ? 'bg-amber-500 text-white shadow-md' : 'text-slate-400 hover:bg-white/5'} block px-4 py-2.5 rounded-xl transition-all mb-4 font-bold text-[13px] flex items-center">
-                    <i class="fas fa-layer-group w-5 text-center mr-2"></i> 전체 자료 보기
+                <a href="#" onclick="filterByCategory('all')" class="${currentFilterMain === 'all' ? 'bg-blue-600 text-white shadow-md shadow-blue-900/50' : 'text-slate-400 hover:text-white hover:bg-white/5'} block px-4 py-3 rounded-xl transition-all mb-5 font-bold text-[13px] flex items-center tracking-wide">
+                    <i class="fas fa-layer-group w-5 text-center mr-2.5 opacity-80"></i> 전체 자료 보기
                 </a>
             `;
             
             categories.forEach(cat => {
                 const isActiveMain = currentFilterMain === cat.name && currentFilterSub === null;
-                const activeClassMain = isActiveMain ? 'bg-amber-500 text-white shadow-md' : 'text-slate-400 hover:bg-white/5 hover:text-slate-200';
+                const activeClassMain = isActiveMain ? 'bg-[#1e293b] text-white shadow-inner border border-white/10' : 'text-slate-400 hover:bg-white/5 hover:text-white';
                 
                 const subs = getSubCatsByMainCat(cat.name);
                 const hasSubCats = subs.length > 0;
                 
-                // ★ 마우스 호버(Hover) 시 화살표 회전 애니메이션 적용
-                let chevronHtml = hasSubCats ? `<i class="fas fa-chevron-right ml-auto text-[10px] opacity-50 transition-transform duration-300 group-hover:rotate-90"></i>` : '';
+                // Hover 화살표
+                let chevronHtml = hasSubCats ? `<i class="fas fa-chevron-right ml-auto text-[10px] opacity-40 transition-transform duration-300 group-hover:rotate-90"></i>` : '';
 
-                // ★ group 클래스를 추가하여 마우스가 영역에 들어올 때만 하위 폴더가 표시되도록 변경
-                html += `<div class="mb-1 group relative">
-                            <a href="#" onclick="filterByCategory('${cat.name.replace(/'/g, "\\'")}')" class="${activeClassMain} block px-4 py-2.5 rounded-xl transition-all text-[13px] font-medium flex items-center" title="${cat.name}">
-                                <i class="far fa-folder w-5 text-center mr-2 opacity-70"></i> 
-                                <span class="truncate flex-1">${cat.name}</span>
+                // Hover 폴더 전개 (group & group-hover)
+                html += `<div class="mb-1.5 group relative">
+                            <a href="#" onclick="filterByCategory('${cat.name.replace(/'/g, "\\'")}')" class="${activeClassMain} block px-4 py-3 rounded-xl transition-all text-[13px] font-bold flex items-center" title="${cat.name}">
+                                <i class="far fa-folder w-5 text-center mr-2.5 opacity-70"></i> 
+                                <span class="truncate flex-1 tracking-wide">${cat.name}</span>
                                 ${chevronHtml}
                             </a>
                 `;
 
-                // ★ hidden group-hover:block 클래스를 추가하여 마우스 오버 시에만 하위 폴더 표시
                 if (hasSubCats) {
-                    html += `<div class="ml-6 mt-1 mb-2 space-y-1 border-l-2 border-white/10 pl-2 hidden group-hover:block fade-in">`;
+                    html += `<div class="ml-6 mt-1.5 mb-3 space-y-1 border-l border-white/10 pl-3 hidden group-hover:block fade-in">`;
                     subs.forEach(sub => {
                         const isActiveSub = currentFilterMain === cat.name && currentFilterSub === sub.name;
-                        const activeClassSub = isActiveSub ? 'bg-amber-500/20 text-amber-300 font-bold' : 'text-slate-400 hover:text-amber-200 hover:bg-white/5';
+                        const activeClassSub = isActiveSub ? 'text-teal-400 font-extrabold bg-white/5' : 'text-slate-400 font-medium hover:text-teal-300 hover:bg-white/5';
                         html += `
-                            <a href="#" onclick="filterByCategory('${cat.name.replace(/'/g, "\\'")}', '${sub.name.replace(/'/g, "\\'")}')" class="${activeClassSub} block px-3 py-2 rounded-lg transition-all text-[12px] flex items-center truncate" title="${sub.name}">
-                                <i class="fas fa-level-up-alt transform rotate-90 mr-2 opacity-50 text-[10px]"></i> <span class="truncate">${sub.name}</span>
+                            <a href="#" onclick="filterByCategory('${cat.name.replace(/'/g, "\\'")}', '${sub.name.replace(/'/g, "\\'")}')" class="${activeClassSub} block px-3 py-2.5 rounded-lg transition-all text-[12px] flex items-center truncate" title="${sub.name}">
+                                <span class="w-1.5 h-1.5 rounded-full bg-current opacity-40 mr-2.5"></span> <span class="truncate tracking-wide">${sub.name}</span>
                             </a>
                         `;
                     });
@@ -1753,9 +1960,7 @@
             const select = document.getElementById('uploadMainCat');
             if(!select) return;
             select.innerHTML = '';
-            categories.forEach(cat => {
-                select.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
-            });
+            categories.forEach(cat => { select.innerHTML += `<option value="${cat.name}">${cat.name}</option>`; });
             updateUploadSubCategoryList();
         }
 
@@ -1765,8 +1970,6 @@
             if(!select || !datalist) return;
             
             const mainCat = select.value;
-            
-            // ★ 렌더링 최적화: 메모리 상에서 옵션 문자열 조립
             let htmlContent = '';
             if (mainCat) {
                 const subs = getSubCatsByMainCat(mainCat);
@@ -1799,17 +2002,16 @@
             } else {
                 if(emptyState) { emptyState.classList.add('hidden'); emptyState.classList.remove('flex'); }
                 
-                // ★ 렌더링 최적화: 테이블 행(tr)을 미리 모두 생성하여 한 번만 삽입
                 let tableHtml = '';
                 filteredFiles.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)).forEach(file => {
                     let actionBtn = '';
                     if(currentUser && currentUser.role === 'admin') {
                         actionBtn = `
-                            <button onclick="openMoveFileModal('${file.id}', '${file.mainCat.replace(/'/g, "\\'")}', '${(file.subCat || '').replace(/'/g, "\\'")}', '${file.name.replace(/'/g, "\\'")}')" class="flex-1 bg-blue-50 text-blue-600 py-1.5 px-3 rounded-lg hover:bg-blue-500 hover:text-white transition font-semibold text-xs border border-blue-100 whitespace-nowrap">이동</button>
-                            <button onclick="deleteFile('${file.id}', '${file.storagePath}')" class="flex-1 bg-red-50 text-red-600 py-1.5 px-3 rounded-lg hover:bg-red-500 hover:text-white transition font-semibold text-xs border border-red-100 whitespace-nowrap">삭제</button>
+                            <button onclick="openMoveFileModal('${file.id}', '${file.mainCat.replace(/'/g, "\\'")}', '${(file.subCat || '').replace(/'/g, "\\'")}', '${file.name.replace(/'/g, "\\'")}')" class="flex-1 bg-blue-50 text-blue-600 py-1.5 px-3 rounded-lg hover:bg-blue-600 hover:text-white transition font-bold text-[11px] border border-blue-100 whitespace-nowrap shadow-sm">이동</button>
+                            <button onclick="deleteFile('${file.id}', '${file.storagePath}')" class="flex-1 bg-red-50 text-red-600 py-1.5 px-3 rounded-lg hover:bg-red-500 hover:text-white transition font-bold text-[11px] border border-red-100 whitespace-nowrap shadow-sm">삭제</button>
                         `;
                     } else {
-                        actionBtn = `<button onclick="downloadFile('${file.fileUrl}')" class="flex-1 bg-amber-50 text-amber-600 py-1.5 px-3 rounded-lg hover:bg-amber-500 hover:text-white transition font-semibold text-xs border border-amber-100 flex items-center justify-center gap-1 whitespace-nowrap"><i class="fas fa-download"></i> 다운로드</button>`;
+                        actionBtn = `<button onclick="downloadFile('${file.fileUrl}')" class="flex-1 bg-blue-50 text-blue-600 py-1.5 px-4 rounded-lg hover:bg-blue-600 hover:text-white transition font-bold text-[12px] border border-blue-100 flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm"><i class="fas fa-download"></i> 다운로드</button>`;
                     }
 
                     let catShort = file.mainCat;
@@ -1820,24 +2022,24 @@
                     let iconClass = "fa-file-alt text-slate-400";
                     if(file.name.endsWith('.pdf')) iconClass = "fa-file-pdf text-red-500";
                     else if(file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) iconClass = "fa-file-excel text-green-600";
-                    else if(file.name.endsWith('.doc') || file.name.endsWith('.docx') || file.name.endsWith('.hwp')) iconClass = "fa-file-word text-blue-500";
-                    else if(file.name.endsWith('.zip')) iconClass = "fa-file-archive text-yellow-600";
+                    else if(file.name.endsWith('.doc') || file.name.endsWith('.docx') || file.name.endsWith('.hwp')) iconClass = "fa-file-word text-blue-600";
+                    else if(file.name.endsWith('.zip')) iconClass = "fa-file-archive text-yellow-500";
 
                     const isNew = file.date === new Date().toISOString().split('T')[0];
-                    const newBadge = isNew ? `<span class="ml-2 px-1.5 py-0.5 bg-red-100 text-red-600 text-[10px] font-bold rounded uppercase">New</span>` : '';
+                    const newBadge = isNew ? `<span class="ml-2.5 px-1.5 py-0.5 bg-red-100 text-red-600 text-[9px] font-extrabold rounded-md uppercase tracking-wider">New</span>` : '';
 
                     tableHtml += `
-                        <tr class="hover:bg-slate-50/80 transition-colors group border-b border-slate-50 last:border-0">
-                            <td class="px-6 py-4"><span class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-md text-xs font-bold border border-slate-200 truncate block max-w-full" title="${file.mainCat}">${catShort}</span></td>
-                            <td class="px-6 py-4">${file.subCat ? `<span class="text-[11px] font-bold text-amber-600 bg-amber-50 border border-amber-100 px-2 py-1 rounded-md whitespace-nowrap"><i class="fas fa-hashtag mr-1 opacity-70"></i>${file.subCat}</span>` : '<span class="text-slate-300">-</span>'}</td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center font-bold text-slate-700">
-                                    <i class="fas ${iconClass} text-xl w-6 text-center mr-3 opacity-90"></i> 
-                                    <span class="truncate cursor-default" title="${file.name}">${file.name}</span>${newBadge}
+                        <tr class="hover:bg-[#F8FAFC]/50 transition-colors group">
+                            <td class="px-7 py-4"><span class="bg-[#F8FAFC] text-slate-600 px-3 py-1.5 rounded-lg text-[11px] font-bold border border-slate-200/60 truncate block max-w-full shadow-sm" title="${file.mainCat}">${catShort}</span></td>
+                            <td class="px-7 py-4">${file.subCat ? `<span class="text-[11px] font-bold text-teal-700 bg-teal-50 border border-teal-100/60 px-2.5 py-1 rounded-md whitespace-nowrap shadow-sm"><i class="fas fa-hashtag mr-1 opacity-50"></i>${file.subCat}</span>` : '<span class="text-slate-300 font-bold">-</span>'}</td>
+                            <td class="px-7 py-4">
+                                <div class="flex items-center font-extrabold text-slate-700 text-[14px]">
+                                    <i class="fas ${iconClass} text-xl w-6 text-center mr-3.5 opacity-90"></i> 
+                                    <span class="truncate cursor-default hover:text-blue-600 transition-colors" title="${file.name}">${file.name}</span>${newBadge}
                                 </div>
                             </td>
-                            <td class="px-6 py-4 text-center"><span class="text-slate-500 font-medium text-xs">${file.date.replace(/-/g, '.')}</span></td>
-                            <td class="px-6 py-4"><div class="flex gap-2 justify-center">${actionBtn}</div></td>
+                            <td class="px-7 py-4 text-center"><span class="text-slate-500 font-semibold text-[12px] tracking-wide">${file.date.replace(/-/g, '.')}</span></td>
+                            <td class="px-7 py-4"><div class="flex gap-2 justify-center">${actionBtn}</div></td>
                         </tr>
                     `;
                 });
@@ -1845,7 +2047,6 @@
             }
         }
 
-        // 업로드 시 하위폴더 자동 추가 + 파일 생성
         window.handleUpload = async function() {
             const mainCatInput = document.getElementById('uploadMainCat');
             const subCatInput = document.getElementById('uploadSubCat');
@@ -1858,32 +2059,17 @@
             if(!fileInput || fileInput.files.length === 0) return showToast('업로드할 파일을 드롭하거나 선택해주세요.', 'error');
 
             const file = fileInput.files[0];
-            showLoader('업로드 중입니다...');
+            showLoader('보안 서버로 업로드 중입니다...');
 
-            // 없는 하위폴더면 자동 생성 연동
             await checkAndAddSubCategory(mainCat, subCat);
 
             if (isLocalMode) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    files.unshift({
-                        id: Date.now().toString(),
-                        mainCat: mainCat,
-                        subCat: subCat,
-                        name: file.name,
-                        date: new Date().toISOString().split('T')[0],
-                        timestamp: Date.now(),
-                        fileUrl: e.target.result,
-                        storagePath: null
-                    });
-                    updateDashboardStats();
-                    updateUploadSubCategoryList();
-                    renderSidebarCategories(); 
-                    renderTable();
+                    files.unshift({ id: Date.now().toString(), mainCat: mainCat, subCat: subCat, name: file.name, date: new Date().toISOString().split('T')[0], timestamp: Date.now(), fileUrl: e.target.result, storagePath: null });
+                    updateDashboardStats(); updateUploadSubCategoryList(); renderSidebarCategories(); renderTable();
                     if(subCatInput) subCatInput.value = '';
-                    clearFileInput(new Event('clear'));
-                    filterByCategory(mainCat, subCat || null);
-                    hideLoader();
+                    clearFileInput(new Event('clear')); filterByCategory(mainCat, subCat || null); hideLoader();
                     showToast('자료가 업로드 되었습니다. (테스트용 데모 모드)');
                 };
                 reader.readAsDataURL(file);
@@ -1896,20 +2082,9 @@
                 await uploadBytes(fileRef, file);
                 const downloadUrl = await getDownloadURL(fileRef);
 
-                await addDoc(collection(db, 'health_files'), {
-                    mainCat: mainCat,
-                    subCat: subCat,
-                    name: file.name,
-                    date: new Date().toISOString().split('T')[0],
-                    timestamp: Date.now(),
-                    fileUrl: downloadUrl,
-                    storagePath: path
-                });
-
+                await addDoc(collection(db, 'health_files'), { mainCat: mainCat, subCat: subCat, name: file.name, date: new Date().toISOString().split('T')[0], timestamp: Date.now(), fileUrl: downloadUrl, storagePath: path });
                 showToast('자료가 성공적으로 업로드 되었습니다.');
-            } catch(error) {
-                showToast("업로드 실패: Firebase 권한이 막혀있습니다.", 'error');
-            }
+            } catch(error) { showToast("업로드 실패: Firebase 권한이 막혀있습니다.", 'error'); }
             
             if(subCatInput) subCatInput.value = '';
             clearFileInput(new Event('clear'));
@@ -1917,7 +2092,6 @@
             hideLoader();
         }
 
-        // 파일 이동 로직
         window.openMoveFileModal = function(id, mainCat, subCat, fileName) {
             const moveFileId = document.getElementById('moveFileId');
             const moveFileName = document.getElementById('moveFileName');
@@ -1927,19 +2101,14 @@
             
             if(!moveFileId || !moveFileName || !moveMainCat || !moveSubCat || !modal) return;
 
-            moveFileId.value = id;
-            moveFileName.innerText = fileName;
+            moveFileId.value = id; moveFileName.innerText = fileName;
             
-            // ★ 렌더링 최적화
             let catOptionsHtml = '';
-            categories.forEach(cat => {
-                catOptionsHtml += `<option value="${cat.name}" ${cat.name === mainCat ? 'selected' : ''}>${cat.name}</option>`;
-            });
+            categories.forEach(cat => { catOptionsHtml += `<option value="${cat.name}" ${cat.name === mainCat ? 'selected' : ''}>${cat.name}</option>`; });
             moveMainCat.innerHTML = catOptionsHtml;
             
             moveSubCat.value = (!subCat || subCat === 'null') ? '' : subCat;
             updateMoveSubCategoryList();
-            
             modal.classList.remove('hidden');
         };
 
@@ -1954,8 +2123,6 @@
             if(!mainCatInput || !datalist) return;
 
             const mainCat = mainCatInput.value;
-            
-            // ★ 렌더링 최적화
             let subOptionsHtml = '';
             if (mainCat) {
                 const subs = getSubCatsByMainCat(mainCat);
@@ -1971,55 +2138,34 @@
             
             if (!newMainCat) return showToast('이동할 대분류를 선택해주세요.', 'error');
             
-            closeMoveFileModal();
-            showLoader('자료 이동 중...');
-            
+            closeMoveFileModal(); showLoader('자료 이동 중...');
             await checkAndAddSubCategory(newMainCat, newSubCat);
 
             if (isLocalMode) {
                 const fileIndex = files.findIndex(f => f.id === id);
-                if (fileIndex !== -1) {
-                    files[fileIndex].mainCat = newMainCat;
-                    files[fileIndex].subCat = newSubCat;
-                }
-                updateUploadSubCategoryList();
-                renderSidebarCategories();
-                renderTable();
-                hideLoader();
-                showToast('자료가 이동되었습니다. (로컬)');
-                return;
+                if (fileIndex !== -1) { files[fileIndex].mainCat = newMainCat; files[fileIndex].subCat = newSubCat; }
+                updateUploadSubCategoryList(); renderSidebarCategories(); renderTable(); hideLoader();
+                return showToast('자료가 이동되었습니다. (로컬)');
             }
 
             try {
-                await updateDoc(doc(db, 'health_files', id), {
-                    mainCat: newMainCat,
-                    subCat: newSubCat
-                });
+                await updateDoc(doc(db, 'health_files', id), { mainCat: newMainCat, subCat: newSubCat });
                 showToast('자료가 성공적으로 이동되었습니다.');
-            } catch(error) {
-                showToast("이동 중 오류가 발생했습니다.", 'error');
-            }
+            } catch(error) { showToast("이동 중 오류가 발생했습니다.", 'error'); }
             hideLoader();
         };
 
         window.deleteFile = async function(id, storagePath) {
-            if(confirm('이 자료를 삭제하시겠습니까?')) {
+            if(confirm('이 자료를 완전히 삭제하시겠습니까?')) {
                 if (isLocalMode) {
                     files = files.filter(f => f.id !== id);
-                    updateDashboardStats();
-                    updateUploadSubCategoryList();
-                    renderSidebarCategories(); 
-                    renderTable();
-                    showToast('자료가 삭제되었습니다. (로컬)');
-                    return;
+                    updateDashboardStats(); updateUploadSubCategoryList(); renderSidebarCategories(); renderTable();
+                    return showToast('자료가 삭제되었습니다. (로컬)');
                 }
 
                 showLoader('자료 삭제 중...');
                 try {
-                    if (storagePath && storagePath !== 'null') {
-                        const fileRef = ref(storage, storagePath);
-                        await deleteObject(fileRef);
-                    }
+                    if (storagePath && storagePath !== 'null') { await deleteObject(ref(storage, storagePath)); }
                     await deleteDoc(doc(db, 'health_files', id));
                     showToast('자료가 완전히 삭제되었습니다.');
                 } catch(error) { showToast("삭제 중 오류가 발생했습니다.", 'error'); }
@@ -2030,18 +2176,10 @@
         window.downloadFile = function(url) {
             if(url) {
                 if (url.startsWith('data:')) {
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = "downloaded_file";
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                } else {
-                    window.open(url, '_blank');
-                }
-            } else {
-                showToast('다운로드 링크를 찾을 수 없습니다.', 'error');
-            }
+                    const a = document.createElement('a'); a.href = url; a.download = "downloaded_file";
+                    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                } else { window.open(url, '_blank'); }
+            } else { showToast('다운로드 링크를 찾을 수 없습니다.', 'error'); }
         }
     </script>
 </body>
