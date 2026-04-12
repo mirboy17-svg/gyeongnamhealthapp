@@ -453,9 +453,14 @@
                                         <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mr-2.5 border border-emerald-100"><i class="fas fa-history"></i></div>
                                         회원사 접속 기록 (Log)
                                     </h3>
-                                    <button onclick="clearAccessLogs()" class="text-[10px] bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 px-2.5 py-1.5 rounded-md transition-colors flex items-center gap-1 font-bold shadow-sm">
-                                        <i class="fas fa-trash-alt"></i> 기록 초기화
-                                    </button>
+                                    <div class="flex gap-2">
+                                        <button onclick="exportAccessLogsToExcel()" class="text-[10px] bg-green-50 text-green-600 hover:bg-green-600 hover:text-white border border-green-100 px-2.5 py-1.5 rounded-md transition-colors flex items-center gap-1 font-bold shadow-sm">
+                                            <i class="fas fa-file-excel"></i> 엑셀 저장
+                                        </button>
+                                        <button onclick="clearAccessLogs()" class="text-[10px] bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 px-2.5 py-1.5 rounded-md transition-colors flex items-center gap-1 font-bold shadow-sm">
+                                            <i class="fas fa-trash-alt"></i> 기록 초기화
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="flex-1 overflow-y-auto pr-1 custom-scrollbar">
                                     <ul id="adminAccessLogList" class="space-y-2"></ul>
@@ -1382,6 +1387,50 @@
                 `;
             });
             list.innerHTML = htmlContent;
+        };
+
+        // ★ 접속 기록 엑셀(CSV) 내보내기 로직
+        window.exportAccessLogsToExcel = function() {
+            if(accessLogs.length === 0) return showToast('다운로드할 접속 기록이 없습니다.', 'info');
+
+            // 엑셀에서 한글이 깨지지 않도록 BOM 추가
+            let csvContent = '\uFEFF'; 
+            csvContent += "사업자등록번호,이메일,접속일시\n";
+
+            let exportLogs = [...accessLogs].sort((a, b) => b.timestamp - a.timestamp);
+
+            exportLogs.forEach(log => {
+                let formatNum = log.bizNumber || '';
+                if(formatNum.length === 10) formatNum = formatNum.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
+
+                let dateObj = new Date(log.timestamp);
+                let dateStr = dateObj.getFullYear() + '-' + 
+                              String(dateObj.getMonth() + 1).padStart(2, '0') + '-' + 
+                              String(dateObj.getDate()).padStart(2, '0') + ' ' + 
+                              String(dateObj.getHours()).padStart(2, '0') + ':' + 
+                              String(dateObj.getMinutes()).padStart(2, '0') + ':' + 
+                              String(dateObj.getSeconds()).padStart(2, '0');
+
+                // CSV 데이터 안전 처리 (쉼표나 따옴표 오류 방지)
+                let safeNum = `"${formatNum}"`;
+                let safeEmail = `"${log.email || ''}"`;
+                let safeDate = `"${dateStr}"`;
+
+                csvContent += `${safeNum},${safeEmail},${safeDate}\n`;
+            });
+
+            // Blob 생성 및 다운로드 트리거
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `접속기록_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showToast('접속 기록 엑셀 파일이 다운로드되었습니다.');
         };
 
         window.clearAccessLogs = async function() {
