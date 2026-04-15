@@ -73,7 +73,8 @@
                                class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white outline-none transition-all font-medium text-[14px]"
                                onkeypress="if(event.key === 'Enter') loginAsClient()">
                     </div>
-                    <p class="text-[11px] text-slate-400 mt-2 ml-1"><i class="fas fa-info-circle mr-1"></i>정확한 이메일 형식을 입력해야 접속이 가능합니다.</p>
+                    <!-- ★ 안내 문구 수정 (선택사항 강조) -->
+                    <p class="text-[11px] text-blue-500 mt-2 ml-1 font-bold"><i class="fas fa-info-circle mr-1"></i>담당자 이메일 주소는 선택사항입니다.</p>
                 </div>
 
                 <button onclick="loginAsClient()" class="w-full bg-[#1e293b] text-white py-3.5 rounded-xl font-bold text-lg hover:bg-blue-600 transition-colors shadow-lg shadow-slate-200/50 flex items-center justify-center gap-2 mt-4">
@@ -1124,7 +1125,7 @@
             if(ui) ui.classList.add('hidden');
         }
 
-        // --- [★ 로그인 처리 로직 (이메일 및 검증 추가)] ---
+        // --- [★ 로그인 처리 로직 (이메일 선택사항 및 검증 수정)] ---
         window.loginAsClient = async function() {
             const bizEl = document.getElementById('clientBizNumber');
             const emailEl = document.getElementById('clientEmail');
@@ -1134,12 +1135,13 @@
             const emailInput = emailEl.value.trim();
 
             if(!bizNumInput) return showToast('사업자등록번호를 입력해주세요.', 'error');
-            if(!emailInput) return showToast('이메일 주소를 입력해주세요.', 'error');
 
-            // 이메일 정규식 검증
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if(!emailRegex.test(emailInput)) {
-                return showToast('올바른 이메일 주소 형식이 아닙니다.', 'error');
+            // ★ 이메일은 선택사항이므로, 입력값이 있을 때만 정규식 검증 수행
+            if(emailInput !== '') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if(!emailRegex.test(emailInput)) {
+                    return showToast('올바른 이메일 주소 형식이 아닙니다.', 'error');
+                }
             }
 
             if (isLocalMode) {
@@ -1191,7 +1193,11 @@
             const id = idInput ? idInput.value : '';
             const pw = pwInput ? pwInput.value : '';
 
-            if(id === ADMIN_ID && pw === ADMIN_PW) {
+            // ★ 기존 계정 또는 추가 계정으로 관리자 로그인 허용
+            const isAdmin1 = (id === ADMIN_ID && pw === ADMIN_PW);
+            const isAdmin2 = (id === '2023147' && pw === '0000');
+
+            if(isAdmin1 || isAdmin2) {
                 hideAdminModal();
                 currentUser = { role: 'admin', name: '시스템 관리자' };
                 enterDashboard();
