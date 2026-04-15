@@ -489,10 +489,11 @@
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <!-- ★ 테이블 헤더 변경 (순번 추가, 분류 삭제) -->
-                                    <tr class="bg-[#F8FAFC] border-b border-slate-200/60 text-slate-500 text-[11px] font-extrabold uppercase tracking-wider">
+                                    <!-- ★ 테이블 헤더 스타일 강화 (글자 크기 확대 및 검정색 진하게) -->
+                                    <tr class="bg-[#F8FAFC] border-b-2 border-slate-200/80 text-black text-[14px] font-extrabold tracking-wider">
                                         <th class="px-7 py-4 text-center w-20">순번</th>
-                                        <th class="px-7 py-4">자료명</th>
+                                        <!-- ★ 자료명 헤더 가운데 정렬 추가 -->
+                                        <th class="px-7 py-4 text-center">자료명</th>
                                         <th class="px-7 py-4 text-center w-32">업데이트 일자</th>
                                         <th class="px-7 py-4 text-center w-32">액션</th>
                                     </tr>
@@ -2248,6 +2249,7 @@
                     // 예: 총 10개일 때, 첫 번째 항목(최신, index 0)은 10번, 마지막 항목(오래된, index 9)은 1번
                     const seqNum = totalCount - index;
 
+                    // ★ 자료명 실제 데이터는 왼쪽 정렬(justify-center 제거)로 수정
                     tableHtml += `
                         <tr class="hover:bg-[#F8FAFC]/50 transition-colors group">
                             <td class="px-7 py-4 text-center font-bold text-slate-400">${seqNum}</td>
