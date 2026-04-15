@@ -489,12 +489,12 @@
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
+                                    <!-- ★ 테이블 헤더 변경 (순번 추가, 분류 삭제) -->
                                     <tr class="bg-[#F8FAFC] border-b border-slate-200/60 text-slate-500 text-[11px] font-extrabold uppercase tracking-wider">
-                                        <th class="px-7 py-4 w-1/4">대분류 카테고리</th>
-                                        <th class="px-7 py-4 w-1/6">하위 폴더</th>
+                                        <th class="px-7 py-4 text-center w-20">순번</th>
                                         <th class="px-7 py-4">자료명</th>
                                         <th class="px-7 py-4 text-center w-32">업데이트 일자</th>
-                                        <th class="px-7 py-4 text-center w-28">액션</th>
+                                        <th class="px-7 py-4 text-center w-32">액션</th>
                                     </tr>
                                 </thead>
                                 <tbody id="fileTableBody" class="divide-y divide-slate-100/60 text-[13px] bg-white"></tbody>
@@ -2221,7 +2221,10 @@
                 if(emptyState) { emptyState.classList.add('hidden'); emptyState.classList.remove('flex'); }
                 
                 let tableHtml = '';
-                filteredFiles.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)).forEach(file => {
+                // ★ 전체 자료 개수를 미리 저장
+                const totalCount = filteredFiles.length;
+                
+                filteredFiles.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)).forEach((file, index) => {
                     let actionBtn = '';
                     if(currentUser && currentUser.role === 'admin') {
                         actionBtn = `
@@ -2232,11 +2235,6 @@
                         actionBtn = `<button onclick="downloadFile('${file.fileUrl}')" class="flex-1 bg-blue-50 text-blue-600 py-1.5 px-4 rounded-lg hover:bg-blue-600 hover:text-white transition font-bold text-[12px] border border-blue-100 flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm"><i class="fas fa-download"></i> 다운로드</button>`;
                     }
 
-                    let catShort = file.mainCat;
-                    if(file.mainCat && file.mainCat.includes('.')) {
-                        catShort = file.mainCat.split('.')[0] + '. ' + (file.mainCat.split(' ')[1] || '');
-                    }
-
                     let iconClass = "fa-file-alt text-slate-400";
                     if(file.name.endsWith('.pdf')) iconClass = "fa-file-pdf text-red-500";
                     else if(file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) iconClass = "fa-file-excel text-green-600";
@@ -2245,11 +2243,14 @@
 
                     const isNew = file.date === new Date().toISOString().split('T')[0];
                     const newBadge = isNew ? `<span class="ml-2.5 px-1.5 py-0.5 bg-red-100 text-red-600 text-[9px] font-extrabold rounded-md uppercase tracking-wider">New</span>` : '';
+                    
+                    // ★ 순번 역순 계산 로직 적용: (전체 개수 - 현재 인덱스)
+                    // 예: 총 10개일 때, 첫 번째 항목(최신, index 0)은 10번, 마지막 항목(오래된, index 9)은 1번
+                    const seqNum = totalCount - index;
 
                     tableHtml += `
                         <tr class="hover:bg-[#F8FAFC]/50 transition-colors group">
-                            <td class="px-7 py-4"><span class="bg-[#F8FAFC] text-slate-600 px-3 py-1.5 rounded-lg text-[11px] font-bold border border-slate-200/60 truncate block max-w-full shadow-sm" title="${file.mainCat}">${catShort}</span></td>
-                            <td class="px-7 py-4">${file.subCat ? `<span class="text-[11px] font-bold text-teal-700 bg-teal-50 border border-teal-100/60 px-2.5 py-1 rounded-md whitespace-nowrap shadow-sm"><i class="fas fa-hashtag mr-1 opacity-50"></i>${file.subCat}</span>` : '<span class="text-slate-300 font-bold">-</span>'}</td>
+                            <td class="px-7 py-4 text-center font-bold text-slate-400">${seqNum}</td>
                             <td class="px-7 py-4">
                                 <div class="flex items-center font-extrabold text-slate-700 text-[14px]">
                                     <i class="fas ${iconClass} text-xl w-6 text-center mr-3.5 opacity-90"></i> 
@@ -2257,7 +2258,7 @@
                                 </div>
                             </td>
                             <td class="px-7 py-4 text-center"><span class="text-slate-500 font-semibold text-[12px] tracking-wide">${file.date.replace(/-/g, '.')}</span></td>
-                            <td class="px-7 py-4"><div class="flex gap-2 justify-center">${actionBtn}</div></td>
+                            <td class="px-7 py-4"><div class="flex gap-2 justify-center w-full max-w-[140px] mx-auto">${actionBtn}</div></td>
                         </tr>
                     `;
                 });
