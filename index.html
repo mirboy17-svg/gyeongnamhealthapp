@@ -466,8 +466,15 @@
                         </div>
                     </div>
 
+                    <!-- ★ 하위 폴더 선택 탭 영역 (신규 추가) -->
+                    <div id="subCategoryNavWrapper" class="hidden mb-4 fade-in">
+                        <div class="flex flex-wrap gap-2 items-center" id="subCategoryTabs">
+                            <!-- JS에서 동적 렌더링 -->
+                        </div>
+                    </div>
+
                     <!-- 자료 목록 테이블 -->
-                    <section class="glass-card flex flex-col mt-4 overflow-hidden">
+                    <section class="glass-card flex flex-col mt-2 overflow-hidden">
                         <div class="p-6 border-b border-slate-100/80 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white">
                             <div class="flex items-center gap-3">
                                 <span class="bg-blue-50 border border-blue-100/60 text-blue-700 text-[12px] font-bold px-3 py-1.5 rounded-lg shadow-sm">
@@ -1660,6 +1667,7 @@
             renderUploadCategorySelect();
             renderAdminCategoryManager();
             updateSubtitleSelectOptions();
+            renderSubCategoryTabs(); // ★ 신규: 하위 폴더 탭 갱신 호출
         }
 
         // --- 1. 대분류 CRUD ---
@@ -1982,6 +1990,7 @@
                 
                 updateCurrentSubtitleDisplay();
                 renderTable();
+                renderSubCategoryTabs(); // ★ 신규: 메인화면 하위 폴더 탭 렌더링
             }
             renderSidebarCategories();
         }
@@ -2061,7 +2070,52 @@
             hideLoader();
         };
 
-        // ★ [메뉴 렌더링: 참고 이미지처럼 흰 바탕, 가로 선, 부드러운 슬라이드 전개 적용]
+        // ★ [신규 추가: 본문 영역 상단에 하위 폴더(서브 카테고리) 탭 버튼 렌더링 로직]
+        window.renderSubCategoryTabs = function() {
+            const wrapper = document.getElementById('subCategoryNavWrapper');
+            const tabsContainer = document.getElementById('subCategoryTabs');
+            if(!wrapper || !tabsContainer) return;
+
+            // 소개 화면이거나 전체보기 화면이면 탭 숨김
+            if (currentFilterMain === 'intro' || currentFilterMain === 'all') {
+                wrapper.classList.add('hidden');
+                return;
+            }
+
+            const subs = getSubCatsByMainCat(currentFilterMain);
+            
+            // 해당 대분류에 하위 폴더가 하나도 없으면 숨김
+            if (subs.length === 0) {
+                wrapper.classList.add('hidden');
+                return;
+            }
+
+            wrapper.classList.remove('hidden');
+            
+            let html = '';
+            
+            // 1. '전체보기' 탭
+            const isAllActive = currentFilterSub === null;
+            const allBtnClass = isAllActive 
+                ? 'bg-blue-600 text-white font-extrabold shadow-md border-blue-600' 
+                : 'bg-white text-slate-600 hover:bg-blue-50 border-slate-200 hover:border-blue-300 font-bold shadow-sm';
+            
+            html += `<button onclick="filterByCategory('${currentFilterMain.replace(/'/g, "\\'")}', null)" class="px-4 py-2.5 rounded-xl border text-[13px] transition-all flex items-center ${allBtnClass}"><i class="fas fa-layer-group mr-1.5 opacity-70"></i>전체보기</button>`;
+
+            // 2. 개별 하위 폴더 탭들
+            subs.forEach(sub => {
+                const isActive = currentFilterSub === sub.name;
+                const btnClass = isActive 
+                    ? 'bg-teal-500 text-white font-extrabold shadow-md border-teal-500' 
+                    : 'bg-white text-slate-600 hover:bg-teal-50 border-slate-200 hover:border-teal-300 font-bold shadow-sm';
+                
+                html += `<button onclick="filterByCategory('${currentFilterMain.replace(/'/g, "\\'")}', '${sub.name.replace(/'/g, "\\'")}')" class="px-4 py-2.5 rounded-xl border text-[13px] transition-all flex items-center ${btnClass}"><i class="fas fa-folder-open mr-1.5 opacity-70"></i>${sub.name}</button>`;
+            });
+
+            tabsContainer.innerHTML = html;
+        };
+
+        // ★ [메뉴 렌더링: 마우스를 올리거나 클릭할 때만 열리고, 치우면 부드럽게 닫히도록(Hover) 최적화]
         function renderSidebarCategories() {
             const nav = document.getElementById('categoryNav');
             if(!nav) return;
@@ -2082,16 +2136,19 @@
             `;
             
             categories.forEach(cat => {
-                const isActiveMain = currentFilterMain === cat.name && currentFilterSub === null;
+                const isExpanded = currentFilterMain === cat.name;
+                const isActiveMain = isExpanded && currentFilterSub === null;
                 const activeClassMain = isActiveMain ? 'text-blue-800 font-extrabold bg-blue-50/30' : 'text-slate-800 font-bold hover:text-blue-600 hover:bg-slate-50';
                 
                 const subs = getSubCatsByMainCat(cat.name);
                 const hasSubCats = subs.length > 0;
                 
-                // Hover 화살표
-                let chevronHtml = `<i class="fas fa-caret-right text-[13px] opacity-30 transition-transform duration-300 group-hover:rotate-90"></i>`;
+                // ★ 화살표: 마우스 올렸을 때만 아래로 회전
+                let chevronHtml = hasSubCats ? `<i class="fas fa-caret-right text-[13px] opacity-30 transition-transform duration-300 group-hover:rotate-90"></i>` : '';
 
-                // Hover 폴더 전개 (부드러운 슬라이드 다운 효과 추가)
+                // ★ 폴더 높이: 평소엔 0, 마우스 올릴 때(또는 모바일에서 탭했을 때)만 열리고 치우면 닫힘
+                const expandClass = 'max-h-0 group-hover:max-h-[800px]';
+
                 html += `<div class="group relative border-b border-slate-100 bg-white">
                             <a href="#" onclick="filterByCategory('${cat.name.replace(/'/g, "\\'")}')" class="${activeClassMain} block px-6 py-4 transition-colors text-[14px] flex items-center justify-between" title="${cat.name}">
                                 <span class="truncate pr-2 tracking-wide">${cat.name}</span>
@@ -2100,10 +2157,10 @@
                 `;
 
                 if (hasSubCats) {
-                    html += `<div class="max-h-0 overflow-hidden group-hover:max-h-[800px] transition-all duration-500 ease-in-out">
+                    html += `<div class="${expandClass} overflow-hidden transition-all duration-500 ease-in-out">
                                 <div class="bg-white pb-3 pt-1">`;
                     subs.forEach(sub => {
-                        const isActiveSub = currentFilterMain === cat.name && currentFilterSub === sub.name;
+                        const isActiveSub = isExpanded && currentFilterSub === sub.name;
                         const activeClassSub = isActiveSub ? 'text-blue-700 font-extrabold bg-slate-50' : 'text-slate-600 font-medium hover:text-blue-600 hover:bg-slate-50';
                         html += `
                             <a href="#" onclick="filterByCategory('${cat.name.replace(/'/g, "\\'")}', '${sub.name.replace(/'/g, "\\'")}')" class="${activeClassSub} block px-6 py-2.5 transition-colors text-[13px] flex items-center justify-between truncate" title="${sub.name}">
