@@ -402,47 +402,90 @@
                         <!-- ★ 3. 팝업 설정 및 접속 로그 관리 -->
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                             
-                            <!-- 팝업 이미지 설정 -->
-                            <section class="glass-card p-7 flex flex-col h-[360px]">
+                            <!-- ★ 팝업 이미지 및 클릭 이동 링크 설정 -->
+                            <section class="glass-card p-7 flex flex-col h-auto lg:col-span-3">
                                 <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center mb-5 tracking-tight">
                                     <div class="w-8 h-8 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center mr-2.5 border border-pink-100"><i class="fas fa-images"></i></div>
-                                    로그인 팝업 설정 (우측 상단, 최대 2개)
+                                    로그인 팝업 및 링크 설정 (최대 3개)
                                 </h3>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-1">
+                                    <!-- 팝업 1 설정 -->
                                     <div class="flex flex-col gap-2">
-                                        <div class="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-slate-300/80 rounded-xl bg-[#F8FAFC] p-2 relative group cursor-pointer hover:bg-pink-50/50 hover:border-pink-300 transition-all duration-300 min-h-[140px]" id="popupDropZone1">
+                                        <div class="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-slate-300/80 rounded-xl bg-[#F8FAFC] p-2 relative group cursor-pointer hover:bg-pink-50/50 hover:border-pink-300 transition-all duration-300 min-h-[120px]" id="popupDropZone1">
                                             <input type="file" id="popupUploadFile1" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" onchange="previewPopupImage(this, 1)">
                                             <div id="popupPrompt1" class="text-center w-full">
-                                                <i class="fas fa-file-image text-2xl text-slate-300 group-hover:text-pink-400 mb-2 transition-colors"></i>
+                                                <i class="fas fa-file-image text-2xl text-slate-300 group-hover:text-pink-400 mb-1 transition-colors"></i>
                                                 <p class="text-[11px] font-bold text-slate-600">첫 번째 팝업</p>
                                             </div>
                                             <div id="popupPreviewContainer1" class="hidden w-full h-full flex flex-col items-center justify-center relative bg-black/5 rounded-lg p-1">
-                                                <img id="popupPreviewImage1" src="" class="max-h-[120px] max-w-full object-contain rounded-md drop-shadow-sm">
+                                                <img id="popupPreviewImage1" src="" class="max-h-[100px] max-w-full object-contain rounded-md drop-shadow-sm">
                                             </div>
                                         </div>
-                                        <button onclick="clearPopupImageSlot(1)" class="w-full bg-red-50 text-red-500 py-2 rounded-lg text-[10px] font-bold border border-red-100 hover:bg-red-500 hover:text-white transition-colors">1번 삭제</button>
+                                        <!-- 클릭 이동 설정 메뉴 -->
+                                        <div class="flex flex-col gap-1.5 mt-1">
+                                            <select id="popupLinkMain1" onchange="updatePopupLinkSubSelect(1)" class="w-full p-2 bg-white border border-slate-200/60 rounded-lg text-[11px] font-medium outline-none focus:ring-2 focus:ring-pink-300">
+                                                <option value="">이동할 메뉴 선택 (클릭 시 이동 없음)</option>
+                                            </select>
+                                            <select id="popupLinkSub1" class="w-full p-2 bg-white border border-slate-200/60 rounded-lg text-[11px] font-medium outline-none focus:ring-2 focus:ring-pink-300">
+                                                <option value="">하위 폴더 선택 (전체보기)</option>
+                                            </select>
+                                        </div>
+                                        <button onclick="clearPopupImageSlot(1)" class="w-full bg-red-50 text-red-500 py-2 mt-1 rounded-lg text-[10px] font-bold border border-red-100 hover:bg-red-500 hover:text-white transition-colors">1번 설정 삭제</button>
                                     </div>
+                                    <!-- 팝업 2 설정 -->
                                     <div class="flex flex-col gap-2">
-                                        <div class="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-slate-300/80 rounded-xl bg-[#F8FAFC] p-2 relative group cursor-pointer hover:bg-pink-50/50 hover:border-pink-300 transition-all duration-300 min-h-[140px]" id="popupDropZone2">
+                                        <div class="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-slate-300/80 rounded-xl bg-[#F8FAFC] p-2 relative group cursor-pointer hover:bg-pink-50/50 hover:border-pink-300 transition-all duration-300 min-h-[120px]" id="popupDropZone2">
                                             <input type="file" id="popupUploadFile2" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" onchange="previewPopupImage(this, 2)">
                                             <div id="popupPrompt2" class="text-center w-full">
-                                                <i class="fas fa-file-image text-2xl text-slate-300 group-hover:text-pink-400 mb-2 transition-colors"></i>
+                                                <i class="fas fa-file-image text-2xl text-slate-300 group-hover:text-pink-400 mb-1 transition-colors"></i>
                                                 <p class="text-[11px] font-bold text-slate-600">두 번째 팝업</p>
                                             </div>
                                             <div id="popupPreviewContainer2" class="hidden w-full h-full flex flex-col items-center justify-center relative bg-black/5 rounded-lg p-1">
-                                                <img id="popupPreviewImage2" src="" class="max-h-[120px] max-w-full object-contain rounded-md drop-shadow-sm">
+                                                <img id="popupPreviewImage2" src="" class="max-h-[100px] max-w-full object-contain rounded-md drop-shadow-sm">
                                             </div>
                                         </div>
-                                        <button onclick="clearPopupImageSlot(2)" class="w-full bg-red-50 text-red-500 py-2 rounded-lg text-[10px] font-bold border border-red-100 hover:bg-red-500 hover:text-white transition-colors">2번 삭제</button>
+                                        <!-- 클릭 이동 설정 메뉴 -->
+                                        <div class="flex flex-col gap-1.5 mt-1">
+                                            <select id="popupLinkMain2" onchange="updatePopupLinkSubSelect(2)" class="w-full p-2 bg-white border border-slate-200/60 rounded-lg text-[11px] font-medium outline-none focus:ring-2 focus:ring-pink-300">
+                                                <option value="">이동할 메뉴 선택 (클릭 시 이동 없음)</option>
+                                            </select>
+                                            <select id="popupLinkSub2" class="w-full p-2 bg-white border border-slate-200/60 rounded-lg text-[11px] font-medium outline-none focus:ring-2 focus:ring-pink-300">
+                                                <option value="">하위 폴더 선택 (전체보기)</option>
+                                            </select>
+                                        </div>
+                                        <button onclick="clearPopupImageSlot(2)" class="w-full bg-red-50 text-red-500 py-2 mt-1 rounded-lg text-[10px] font-bold border border-red-100 hover:bg-red-500 hover:text-white transition-colors">2번 설정 삭제</button>
+                                    </div>
+                                    <!-- 팝업 3 설정 -->
+                                    <div class="flex flex-col gap-2">
+                                        <div class="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-slate-300/80 rounded-xl bg-[#F8FAFC] p-2 relative group cursor-pointer hover:bg-pink-50/50 hover:border-pink-300 transition-all duration-300 min-h-[120px]" id="popupDropZone3">
+                                            <input type="file" id="popupUploadFile3" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" onchange="previewPopupImage(this, 3)">
+                                            <div id="popupPrompt3" class="text-center w-full">
+                                                <i class="fas fa-file-image text-2xl text-slate-300 group-hover:text-pink-400 mb-1 transition-colors"></i>
+                                                <p class="text-[11px] font-bold text-slate-600">세 번째 팝업</p>
+                                            </div>
+                                            <div id="popupPreviewContainer3" class="hidden w-full h-full flex flex-col items-center justify-center relative bg-black/5 rounded-lg p-1">
+                                                <img id="popupPreviewImage3" src="" class="max-h-[100px] max-w-full object-contain rounded-md drop-shadow-sm">
+                                            </div>
+                                        </div>
+                                        <!-- 클릭 이동 설정 메뉴 -->
+                                        <div class="flex flex-col gap-1.5 mt-1">
+                                            <select id="popupLinkMain3" onchange="updatePopupLinkSubSelect(3)" class="w-full p-2 bg-white border border-slate-200/60 rounded-lg text-[11px] font-medium outline-none focus:ring-2 focus:ring-pink-300">
+                                                <option value="">이동할 메뉴 선택 (클릭 시 이동 없음)</option>
+                                            </select>
+                                            <select id="popupLinkSub3" class="w-full p-2 bg-white border border-slate-200/60 rounded-lg text-[11px] font-medium outline-none focus:ring-2 focus:ring-pink-300">
+                                                <option value="">하위 폴더 선택 (전체보기)</option>
+                                            </select>
+                                        </div>
+                                        <button onclick="clearPopupImageSlot(3)" class="w-full bg-red-50 text-red-500 py-2 mt-1 rounded-lg text-[10px] font-bold border border-red-100 hover:bg-red-500 hover:text-white transition-colors">3번 설정 삭제</button>
                                     </div>
                                 </div>
                                 <div class="mt-4 flex gap-2 shrink-0">
-                                    <button onclick="savePopupImages()" class="w-full bg-[#1e293b] text-white py-3.5 rounded-xl text-[13px] font-bold hover:bg-pink-600 transition-colors shadow-md">현재 구성 배포하기</button>
+                                    <button onclick="savePopupImages()" class="w-full bg-[#1e293b] text-white py-3.5 rounded-xl text-[13px] font-bold hover:bg-pink-600 transition-colors shadow-md">현재 구성으로 배포하기</button>
                                 </div>
                             </section>
                             
                             <!-- ★ 회원사 접속 기록 (Log) 관리 -->
-                            <section class="lg:col-span-2 glass-card p-7 flex flex-col h-[360px]">
+                            <section class="glass-card p-7 flex flex-col h-[380px] lg:col-span-3">
                                 <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100/80">
                                     <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center tracking-tight">
                                         <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mr-2.5 border border-emerald-100"><i class="fas fa-history"></i></div>
@@ -465,7 +508,7 @@
                         </div>
                     </div>
 
-                    <!-- ★ 하위 폴더 선택 탭 영역 (신규 추가) -->
+                    <!-- ★ 하위 폴더 선택 탭 영역 -->
                     <div id="subCategoryNavWrapper" class="hidden mb-4 fade-in">
                         <div class="flex flex-wrap gap-2 items-center" id="subCategoryTabs">
                             <!-- JS에서 동적 렌더링 -->
@@ -491,13 +534,10 @@
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <!-- ★ 테이블 헤더 스타일 강화 (글자 크기 확대 및 검정색 진하게) -->
                                     <tr class="bg-[#F8FAFC] border-b-2 border-slate-200/80 text-black text-[14px] font-extrabold tracking-wider">
                                         <th class="px-4 py-4 text-center w-24 whitespace-nowrap">순번</th>
-                                        <!-- ★ 자료명 헤더 가운데 정렬 추가 -->
                                         <th class="px-4 py-4 text-center">자료명</th>
                                         <th class="px-4 py-4 text-center w-40 whitespace-nowrap">업데이트 일자</th>
-                                        <!-- ★ 3개의 버튼이 들어가도록 액션 열의 가로 길이 확보 (w-48) -->
                                         <th class="px-4 py-4 text-center w-48 whitespace-nowrap">액션</th>
                                     </tr>
                                 </thead>
@@ -578,17 +618,18 @@
         </div>
     </div>
 
-    <!-- ★ 개별 이미지 팝업창 (우측 상단 플로팅, 독립적 나열 방식) -->
+    <!-- ★ 개별 이미지 팝업창 (우측 상단 플로팅) -->
     <div id="popupWrapper" class="fixed top-4 right-4 sm:top-8 sm:right-8 z-[120] flex flex-col sm:flex-row-reverse gap-4 pointer-events-none w-[calc(100%-2rem)] sm:w-auto items-end">
         
-        <!-- 팝업 1 (가장 우측) -->
+        <!-- 팝업 1 -->
         <div id="noticePopup1" class="pointer-events-auto transition-all duration-500 transform translate-x-20 opacity-0 hidden w-full sm:w-[380px] shrink-0">
             <div class="relative w-full bg-white/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)] border border-white/50 overflow-hidden flex flex-col">
                 <button onclick="closeNoticePopup(1)" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-black/10 hover:bg-black/20 text-slate-700 hover:text-slate-900 rounded-full focus:outline-none z-20 transition-colors backdrop-blur-sm shadow-sm">
                     <i class="fas fa-times text-[14px]"></i>
                 </button>
+                <!-- 이미지 클릭 이벤트 연결 (handlePopupClick) -->
                 <div class="w-full flex items-center justify-center relative max-h-[70vh] overflow-y-auto bg-transparent p-1.5 custom-scrollbar">
-                    <img id="popupImage1" src="" alt="공지사항1" class="w-full h-auto object-contain rounded-lg shadow-sm border border-slate-100/50">
+                    <img id="popupImage1" src="" alt="공지사항1" class="w-full h-auto object-contain rounded-lg shadow-sm border border-slate-100/50 transition-transform hover:scale-[1.02]" onclick="handlePopupClick(1)">
                 </div>
                 <div class="bg-white/90 backdrop-blur-md px-5 py-3.5 border-t border-slate-100 flex justify-between items-center z-10 shrink-0">
                     <label class="flex items-center cursor-pointer group">
@@ -600,14 +641,15 @@
             </div>
         </div>
 
-        <!-- 팝업 2 (팝업1의 바로 왼쪽) -->
+        <!-- 팝업 2 -->
         <div id="noticePopup2" class="pointer-events-auto transition-all duration-500 transform translate-x-20 opacity-0 hidden w-full sm:w-[380px] shrink-0">
             <div class="relative w-full bg-white/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)] border border-white/50 overflow-hidden flex flex-col">
                 <button onclick="closeNoticePopup(2)" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-black/10 hover:bg-black/20 text-slate-700 hover:text-slate-900 rounded-full focus:outline-none z-20 transition-colors backdrop-blur-sm shadow-sm">
                     <i class="fas fa-times text-[14px]"></i>
                 </button>
+                <!-- 이미지 클릭 이벤트 연결 (handlePopupClick) -->
                 <div class="w-full flex items-center justify-center relative max-h-[70vh] overflow-y-auto bg-transparent p-1.5 custom-scrollbar">
-                    <img id="popupImage2" src="" alt="공지사항2" class="w-full h-auto object-contain rounded-lg shadow-sm border border-slate-100/50">
+                    <img id="popupImage2" src="" alt="공지사항2" class="w-full h-auto object-contain rounded-lg shadow-sm border border-slate-100/50 transition-transform hover:scale-[1.02]" onclick="handlePopupClick(2)">
                 </div>
                 <div class="bg-white/90 backdrop-blur-md px-5 py-3.5 border-t border-slate-100 flex justify-between items-center z-10 shrink-0">
                     <label class="flex items-center cursor-pointer group">
@@ -615,6 +657,26 @@
                         <span class="ml-2.5 text-[12px] font-bold text-slate-500 group-hover:text-slate-700 transition-colors">오늘 하루 보지 않음</span>
                     </label>
                     <button onclick="closeNoticePopup(2)" class="text-[12px] font-bold text-slate-400 hover:text-slate-600 transition-colors px-2 py-1">닫기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 팝업 3 -->
+        <div id="noticePopup3" class="pointer-events-auto transition-all duration-500 transform translate-x-20 opacity-0 hidden w-full sm:w-[380px] shrink-0">
+            <div class="relative w-full bg-white/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)] border border-white/50 overflow-hidden flex flex-col">
+                <button onclick="closeNoticePopup(3)" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-black/10 hover:bg-black/20 text-slate-700 hover:text-slate-900 rounded-full focus:outline-none z-20 transition-colors backdrop-blur-sm shadow-sm">
+                    <i class="fas fa-times text-[14px]"></i>
+                </button>
+                <!-- 이미지 클릭 이벤트 연결 (handlePopupClick) -->
+                <div class="w-full flex items-center justify-center relative max-h-[70vh] overflow-y-auto bg-transparent p-1.5 custom-scrollbar">
+                    <img id="popupImage3" src="" alt="공지사항3" class="w-full h-auto object-contain rounded-lg shadow-sm border border-slate-100/50 transition-transform hover:scale-[1.02]" onclick="handlePopupClick(3)">
+                </div>
+                <div class="bg-white/90 backdrop-blur-md px-5 py-3.5 border-t border-slate-100 flex justify-between items-center z-10 shrink-0">
+                    <label class="flex items-center cursor-pointer group">
+                        <input type="checkbox" id="hideNoticeToday3" class="w-4 h-4 rounded text-blue-500 border-slate-300 focus:ring-blue-500 focus:ring-offset-white cursor-pointer shadow-sm transition-colors">
+                        <span class="ml-2.5 text-[12px] font-bold text-slate-500 group-hover:text-slate-700 transition-colors">오늘 하루 보지 않음</span>
+                    </label>
+                    <button onclick="closeNoticePopup(3)" class="text-[12px] font-bold text-slate-400 hover:text-slate-600 transition-colors px-2 py-1">닫기</button>
                 </div>
             </div>
         </div>
@@ -657,15 +719,16 @@
         let subCategories = [];
         let files = []; 
         let allowedMembers = []; 
-        let accessLogs = []; // ★ 접속 로그 전역 변수
+        let accessLogs = []; 
         let currentFilterMain = 'intro'; 
         let currentFilterSub = null;
         let isLocalMode = false;
         let expandedCategories = new Set(); 
         let customSubtitles = {};
         
-        let popupConfig = { img1: null, img2: null }; 
-        let currentPopupFiles = { file1: null, file2: null };
+        // ★ 팝업 전역 상태 (이미지 URL 및 연결될 메뉴 링크 정보)
+        let popupConfig = { img1: null, img2: null, img3: null, linkMain1: '', linkSub1: '', linkMain2: '', linkSub2: '', linkMain3: '', linkSub3: '' }; 
+        let currentPopupFiles = { file1: null, file2: null, file3: null };
 
         // --- [동적 모달 데이터 객체] ---
         const bizModalData = {
@@ -916,8 +979,8 @@
             ];
             
             customSubtitles = {};
-            popupConfig = { img1: null, img2: null };
-            currentPopupFiles = { file1: null, file2: null };
+            popupConfig = { img1: null, img2: null, img3: null, linkMain1: '', linkSub1: '', linkMain2: '', linkSub2: '', linkMain3: '', linkSub3: '' };
+            currentPopupFiles = { file1: null, file2: null, file3: null };
             accessLogs = []; // 로컬 모드용
 
             updateAllCategoryViews();
@@ -984,8 +1047,6 @@
                     if (isLocalMode) return;
                     categories = [];
                     snapshot.forEach(doc => { categories.push({ id: doc.id, ...doc.data() }); });
-                    
-                    // ★ 원인 해결: 비어있을 때 강제로 기본 카테고리를 추가하던 로직 제거
                     categories.sort((a, b) => a.timestamp - b.timestamp);
                     updateAllCategoryViews();
                 }, (error) => { console.error("카테고리 에러:", error); });
@@ -1021,20 +1082,28 @@
                     });
                 }, (error) => { console.error("시스템 설정 에러:", error); });
 
+                // ★ 팝업 링크 설정 동기화 추가
                 const popupRef = doc(db, 'system_settings', 'popup');
                 onSnapshot(popupRef, (doc) => {
                     if (isLocalMode) return;
                     if (doc.exists()) {
                         popupConfig.img1 = doc.data().img1 || null;
                         popupConfig.img2 = doc.data().img2 || null;
+                        popupConfig.img3 = doc.data().img3 || null;
+                        popupConfig.linkMain1 = doc.data().linkMain1 || '';
+                        popupConfig.linkSub1 = doc.data().linkSub1 || '';
+                        popupConfig.linkMain2 = doc.data().linkMain2 || '';
+                        popupConfig.linkSub2 = doc.data().linkSub2 || '';
+                        popupConfig.linkMain3 = doc.data().linkMain3 || '';
+                        popupConfig.linkSub3 = doc.data().linkSub3 || '';
                     } else {
-                        popupConfig = { img1: null, img2: null };
+                        popupConfig = { img1: null, img2: null, img3: null, linkMain1: '', linkSub1: '', linkMain2: '', linkSub2: '', linkMain3: '', linkSub3: '' };
                     }
                     updateAdminPopupUI(1, popupConfig.img1);
                     updateAdminPopupUI(2, popupConfig.img2);
+                    updateAdminPopupUI(3, popupConfig.img3);
                 }, (error) => { console.error("팝업 설정 에러:", error); });
 
-                // ★ 접속 기록(Log) 동기화 추가
                 const logsRef = collection(db, 'access_logs');
                 onSnapshot(logsRef, (snapshot) => {
                     if (isLocalMode) return;
@@ -1117,7 +1186,6 @@
             if(ui) ui.classList.add('hidden');
         }
 
-        // --- [★ 로그인 처리 로직 (이메일 선택사항 및 검증 수정)] ---
         window.loginAsClient = async function() {
             const bizEl = document.getElementById('clientBizNumber');
             const emailEl = document.getElementById('clientEmail');
@@ -1128,7 +1196,6 @@
 
             if(!bizNumInput) return showToast('사업자등록번호를 입력해주세요.', 'error');
 
-            // ★ 이메일은 선택사항이므로, 입력값이 있을 때만 정규식 검증 수행
             if(emailInput !== '') {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if(!emailRegex.test(emailInput)) {
@@ -1140,7 +1207,6 @@
                 currentUser = { role: 'client', name: '회원사 (' + bizNumInput + ')', bizNumber: bizNumInput, email: emailInput };
                 bizEl.value = ''; emailEl.value = '';
                 
-                // 로컬 모드 접속 기록
                 accessLogs.push({ id: Date.now().toString(), bizNumber: bizNumInput, email: emailInput, timestamp: Date.now() });
                 renderAccessLogs();
 
@@ -1158,7 +1224,6 @@
                 currentUser = { role: 'client', name: `사업장 (${formatNum})`, bizNumber: member.bizNumber, email: emailInput };
                 bizEl.value = ''; emailEl.value = '';
 
-                // ★ Firebase에 접속 로그 저장
                 try {
                     await addDoc(collection(db, 'access_logs'), {
                         bizNumber: member.bizNumber,
@@ -1185,7 +1250,6 @@
             const id = idInput ? idInput.value : '';
             const pw = pwInput ? pwInput.value : '';
 
-            // ★ 기존 계정 또는 추가 계정으로 관리자 로그인 허용
             const isAdmin1 = (id === ADMIN_ID && pw === ADMIN_PW);
             const isAdmin2 = (id === '2023147' && pw === '0000');
 
@@ -1215,7 +1279,6 @@
             const uiSpan = document.getElementById('userInfo');
             const adminPanel = document.getElementById('adminPanel');
 
-            // ★ 사이드바 흰색 테마에 맞게 유저 정보 색상 변경
             if(currentUser.role === 'admin') {
                 if(uiSpan) uiSpan.innerHTML = '<div class="w-6 h-6 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center mr-2.5 shadow-sm"><i class="fas fa-crown text-[10px]"></i></div> 시스템 관리자';
                 if(adminPanel) adminPanel.classList.remove('hidden');
@@ -1231,21 +1294,40 @@
             showNoticePopup();
         }
 
-        // ★ [안내 이미지 개별 팝업 및 오늘하루 보지않음 로직]
+        // ★ [팝업 클릭 시 지정된 메뉴로 이동하는 함수]
+        window.handlePopupClick = function(index) {
+            const mainCat = popupConfig[`linkMain${index}`];
+            const subCat = popupConfig[`linkSub${index}`];
+            
+            // 링크가 설정되어 있는 경우에만 이동
+            if (mainCat) {
+                closeNoticePopup(index);
+                filterByCategory(mainCat, subCat || null);
+            }
+        };
+
+        // ★ [안내 이미지 개별 팝업 렌더링 로직]
         window.showNoticePopup = function() {
             const now = new Date().getTime();
             
             const hideUntil1 = localStorage.getItem('hideNoticePopup_1_v3');
             const hideUntil2 = localStorage.getItem('hideNoticePopup_2_v3');
+            const hideUntil3 = localStorage.getItem('hideNoticePopup_3_v3');
 
             const show1 = popupConfig.img1 && (!hideUntil1 || now > parseInt(hideUntil1));
             const show2 = popupConfig.img2 && (!hideUntil2 || now > parseInt(hideUntil2));
+            const show3 = popupConfig.img3 && (!hideUntil3 || now > parseInt(hideUntil3));
 
             const modal1 = document.getElementById('noticePopup1');
             const modal2 = document.getElementById('noticePopup2');
+            const modal3 = document.getElementById('noticePopup3');
             
             if(show1 && modal1) {
-                document.getElementById('popupImage1').src = popupConfig.img1;
+                const img1 = document.getElementById('popupImage1');
+                img1.src = popupConfig.img1;
+                // 링크가 있으면 마우스 커서를 손가락(Pointer)으로 변경
+                img1.style.cursor = popupConfig.linkMain1 ? 'pointer' : 'default';
+
                 const check1 = document.getElementById('hideNoticeToday1');
                 if(check1) check1.checked = false;
                 
@@ -1254,12 +1336,27 @@
             }
 
             if(show2 && modal2) {
-                document.getElementById('popupImage2').src = popupConfig.img2;
+                const img2 = document.getElementById('popupImage2');
+                img2.src = popupConfig.img2;
+                img2.style.cursor = popupConfig.linkMain2 ? 'pointer' : 'default';
+
                 const check2 = document.getElementById('hideNoticeToday2');
                 if(check2) check2.checked = false;
                 
                 modal2.classList.remove('hidden');
                 setTimeout(() => { modal2.classList.remove('translate-x-20', 'opacity-0'); }, show1 ? 150 : 50);
+            }
+
+            if(show3 && modal3) {
+                const img3 = document.getElementById('popupImage3');
+                img3.src = popupConfig.img3;
+                img3.style.cursor = popupConfig.linkMain3 ? 'pointer' : 'default';
+
+                const check3 = document.getElementById('hideNoticeToday3');
+                if(check3) check3.checked = false;
+                
+                modal3.classList.remove('hidden');
+                setTimeout(() => { modal3.classList.remove('translate-x-20', 'opacity-0'); }, (show1 || show2) ? 250 : 50);
             }
         };
 
@@ -1278,7 +1375,49 @@
             }
         };
 
-        // ★ [관리자: 팝업 이미지 최대 2개 업로드 관리 로직]
+        // ★ [관리자: 팝업 드롭다운(대분류) 목록 갱신]
+        window.updatePopupLinkMainSelects = function() {
+            [1, 2, 3].forEach(index => {
+                const select = document.getElementById(`popupLinkMain${index}`);
+                if (!select) return;
+                
+                const currentVal = select.value || popupConfig[`linkMain${index}`];
+                let html = `<option value="">이동할 메뉴 선택 (클릭 시 이동 없음)</option>`;
+                html += `<option value="intro">경남지역본부 소개</option>`;
+                html += `<option value="all">전체 자료 보기</option>`;
+                
+                categories.forEach(cat => { html += `<option value="${cat.name}">${cat.name}</option>`; });
+                
+                select.innerHTML = html;
+                select.value = currentVal;
+                updatePopupLinkSubSelect(index); // 연동된 하위 폴더 갱신
+            });
+        };
+
+        // ★ [관리자: 팝업 드롭다운(하위폴더) 목록 갱신]
+        window.updatePopupLinkSubSelect = function(index) {
+            const mainSelect = document.getElementById(`popupLinkMain${index}`);
+            const subSelect = document.getElementById(`popupLinkSub${index}`);
+            if (!mainSelect || !subSelect) return;
+            
+            const mainVal = mainSelect.value;
+            const currentSubVal = popupConfig[`linkSub${index}`];
+            
+            let html = `<option value="">하위 폴더 선택 (전체보기)</option>`;
+            
+            if (mainVal && mainVal !== 'intro' && mainVal !== 'all') {
+                const subs = getSubCatsByMainCat(mainVal);
+                subs.forEach(sub => { html += `<option value="${sub.name}">${sub.name}</option>`; });
+            }
+            
+            subSelect.innerHTML = html;
+            
+            if (Array.from(subSelect.options).some(opt => opt.value === currentSubVal)) {
+                subSelect.value = currentSubVal;
+            }
+        };
+
+        // ★ [관리자: 팝업 이미지 업로드 및 설정 적용 로직]
         window.updateAdminPopupUI = function(index, url) {
             const previewImg = document.getElementById(`popupPreviewImage${index}`);
             const prompt = document.getElementById(`popupPrompt${index}`);
@@ -1293,6 +1432,13 @@
                 if(prompt) prompt.classList.remove('hidden');
                 if(container) container.classList.add('hidden');
             }
+
+            // 파이어베이스에서 불러온 값으로 링크 셀렉트창 상태도 맞춤
+            const mainSelect = document.getElementById(`popupLinkMain${index}`);
+            const subSelect = document.getElementById(`popupLinkSub${index}`);
+            if (mainSelect) mainSelect.value = popupConfig[`linkMain${index}`] || '';
+            updatePopupLinkSubSelect(index);
+            if (subSelect) subSelect.value = popupConfig[`linkSub${index}`] || '';
         };
 
         window.previewPopupImage = function(input, index) {
@@ -1309,18 +1455,30 @@
         window.clearPopupImageSlot = function(index) {
             currentPopupFiles[`file${index}`] = null;
             popupConfig[`img${index}`] = null;
+            popupConfig[`linkMain${index}`] = '';
+            popupConfig[`linkSub${index}`] = '';
+            
             const fileInput = document.getElementById(`popupUploadFile${index}`);
             if(fileInput) fileInput.value = '';
             updateAdminPopupUI(index, null);
         };
 
         window.savePopupImages = async function() {
-            showLoader('팝업 설정 사항을 서버에 반영 중...');
+            showLoader('팝업 및 링크 설정을 반영 중...');
+            
+            const linkMain1 = document.getElementById('popupLinkMain1') ? document.getElementById('popupLinkMain1').value : '';
+            const linkSub1 = document.getElementById('popupLinkSub1') ? document.getElementById('popupLinkSub1').value : '';
+            const linkMain2 = document.getElementById('popupLinkMain2') ? document.getElementById('popupLinkMain2').value : '';
+            const linkSub2 = document.getElementById('popupLinkSub2') ? document.getElementById('popupLinkSub2').value : '';
+            const linkMain3 = document.getElementById('popupLinkMain3') ? document.getElementById('popupLinkMain3').value : '';
+            const linkSub3 = document.getElementById('popupLinkSub3') ? document.getElementById('popupLinkSub3').value : '';
+
             if (isLocalMode) { hideLoader(); return showToast('팝업 설정이 완료되었습니다. (로컬)'); }
 
             try {
                 let finalUrl1 = popupConfig.img1;
                 let finalUrl2 = popupConfig.img2;
+                let finalUrl3 = popupConfig.img3;
                 
                 if (currentPopupFiles.file1) {
                     const path = `system_images/popup_${Date.now()}_1_${currentPopupFiles.file1.name}`;
@@ -1335,22 +1493,35 @@
                     await uploadBytes(fileRef, currentPopupFiles.file2);
                     finalUrl2 = await getDownloadURL(fileRef);
                 }
+
+                if (currentPopupFiles.file3) {
+                    const path = `system_images/popup_${Date.now()}_3_${currentPopupFiles.file3.name}`;
+                    const fileRef = ref(storage, path);
+                    await uploadBytes(fileRef, currentPopupFiles.file3);
+                    finalUrl3 = await getDownloadURL(fileRef);
+                }
                 
                 await setDoc(doc(db, 'system_settings', 'popup'), {
                     img1: finalUrl1,
                     img2: finalUrl2,
+                    img3: finalUrl3,
+                    linkMain1: linkMain1,
+                    linkSub1: linkSub1,
+                    linkMain2: linkMain2,
+                    linkSub2: linkSub2,
+                    linkMain3: linkMain3,
+                    linkSub3: linkSub3,
                     timestamp: Date.now()
                 });
                 
-                currentPopupFiles.file1 = null; currentPopupFiles.file2 = null;
-                showToast('새 팝업 설정이 모든 사용자에게 배포되었습니다.');
+                currentPopupFiles.file1 = null; currentPopupFiles.file2 = null; currentPopupFiles.file3 = null;
+                showToast('새 팝업 및 이동 링크 설정이 모든 사용자에게 배포되었습니다.');
             } catch(e) {
                 showToast('설정 권한 오류가 발생했습니다.', 'error');
             }
             hideLoader();
         };
 
-        // --- [★ 관리자: 접속 로그 관리 렌더링 로직] ---
         window.renderAccessLogs = function() {
             const list = document.getElementById('adminAccessLogList');
             if(!list) return;
@@ -1367,7 +1538,6 @@
                 let formatNum = log.bizNumber;
                 if(formatNum && formatNum.length === 10) formatNum = formatNum.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
                 
-                // 한국 시간으로 변환 포맷팅 (YYYY. MM. DD. HH:MM)
                 let dateObj = new Date(log.timestamp);
                 let dateStr = dateObj.getFullYear() + '.' + 
                               String(dateObj.getMonth() + 1).padStart(2, '0') + '.' + 
@@ -1390,11 +1560,9 @@
             list.innerHTML = htmlContent;
         };
 
-        // ★ 접속 기록 엑셀(CSV) 내보내기 로직
         window.exportAccessLogsToExcel = function() {
             if(accessLogs.length === 0) return showToast('다운로드할 접속 기록이 없습니다.', 'info');
 
-            // 엑셀에서 한글이 깨지지 않도록 BOM 추가
             let csvContent = '\uFEFF'; 
             csvContent += "사업자등록번호,이메일,접속일시\n";
 
@@ -1412,7 +1580,6 @@
                               String(dateObj.getMinutes()).padStart(2, '0') + ':' + 
                               String(dateObj.getSeconds()).padStart(2, '0');
 
-                // CSV 데이터 안전 처리 (쉼표나 따옴표 오류 방지)
                 let safeNum = `"${formatNum}"`;
                 let safeEmail = `"${log.email || ''}"`;
                 let safeDate = `"${dateStr}"`;
@@ -1420,7 +1587,6 @@
                 csvContent += `${safeNum},${safeEmail},${safeDate}\n`;
             });
 
-            // Blob 생성 및 다운로드 트리거
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -1463,7 +1629,6 @@
             }
         };
 
-        // --- [회원사 등록/삭제 로직] ---
         window.addSingleMember = async function() {
             const input = document.getElementById('singleMemberInput');
             if (!input) return;
@@ -1664,7 +1829,8 @@
             renderUploadCategorySelect();
             renderAdminCategoryManager();
             updateSubtitleSelectOptions();
-            renderSubCategoryTabs(); // ★ 신규: 하위 폴더 탭 갱신 호출
+            renderSubCategoryTabs(); 
+            updatePopupLinkMainSelects(); // ★ 신규: 팝업 링크 드롭다운(대분류) 갱신
         }
 
         // --- 1. 대분류 CRUD ---
@@ -1921,7 +2087,7 @@
                         <button onclick="moveSubCategoryUp('${sub.id}')" class="w-6 h-6 flex items-center justify-center bg-white text-slate-400 border border-slate-200 rounded-md hover:bg-slate-200 hover:text-slate-700" title="위로"><i class="fas fa-arrow-up text-[10px]"></i></button>
                         <button onclick="moveSubCategoryDown('${sub.id}')" class="w-6 h-6 flex items-center justify-center bg-white text-slate-400 border border-slate-200 rounded-md hover:bg-slate-200 hover:text-slate-700" title="아래로"><i class="fas fa-arrow-down text-[10px]"></i></button>
                         <button onclick="editSubCategory('${sub.id}', '${sub.name.replace(/'/g, "\\'")}', '${cat.name.replace(/'/g, "\\'")}')" class="w-6 h-6 flex items-center justify-center bg-blue-50 text-blue-600 rounded-md hover:bg-blue-600 hover:text-white transition" title="수정"><i class="fas fa-pen text-[10px]"></i></button>
-                        <button onclick="deleteSubCategory('${sub.id}', '${sub.name.replace(/'/g, "\\'")}', '${cat.name.replace(/'/g, "\\'")}')" class="w-6 h-6 flex items-center justify-center bg-red-50 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition" title="삭제"><i class="fas fa-trash text-[10px]"></i></button>
+                        <button onclick="deleteSubCategory('${sub.id}', '${sub.name.replace(/'/g, "\\'")}', '${cat.name.replace(/'/g, "\\'")}')" class="w-6 h-6 flex items-center justify-center bg-red-50 text-red-500 rounded-md hover:bg-red-50 hover:text-white transition" title="삭제"><i class="fas fa-trash text-[10px]"></i></button>
                     ` : `
                         <span class="text-[10px] font-bold text-orange-500 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-100 whitespace-nowrap">미등록</span>
                         <button onclick="registerLegacySubCat('${cat.name.replace(/'/g, "\\'")}', '${sub.name.replace(/'/g, "\\'")}')" class="w-6 h-6 flex items-center justify-center bg-green-50 text-green-600 rounded-md hover:bg-green-600 hover:text-white" title="정식 폴더로 추가"><i class="fas fa-plus text-[10px]"></i></button>
@@ -1987,7 +2153,7 @@
                 
                 updateCurrentSubtitleDisplay();
                 renderTable();
-                renderSubCategoryTabs(); // ★ 신규: 메인화면 하위 폴더 탭 렌더링
+                renderSubCategoryTabs(); 
             }
             renderSidebarCategories();
         }
@@ -2067,13 +2233,11 @@
             hideLoader();
         };
 
-        // ★ [신규 추가: 본문 영역 상단에 하위 폴더(서브 카테고리) 탭 버튼 렌더링 로직]
         window.renderSubCategoryTabs = function() {
             const wrapper = document.getElementById('subCategoryNavWrapper');
             const tabsContainer = document.getElementById('subCategoryTabs');
             if(!wrapper || !tabsContainer) return;
 
-            // 소개 화면이거나 전체보기 화면이면 탭 숨김
             if (currentFilterMain === 'intro' || currentFilterMain === 'all') {
                 wrapper.classList.add('hidden');
                 return;
@@ -2081,7 +2245,6 @@
 
             const subs = getSubCatsByMainCat(currentFilterMain);
             
-            // 해당 대분류에 하위 폴더가 하나도 없으면 숨김
             if (subs.length === 0) {
                 wrapper.classList.add('hidden');
                 return;
@@ -2091,7 +2254,6 @@
             
             let html = '';
             
-            // 1. '전체보기' 탭
             const isAllActive = currentFilterSub === null;
             const allBtnClass = isAllActive 
                 ? 'bg-blue-600 text-white font-extrabold shadow-md border-blue-600' 
@@ -2099,7 +2261,6 @@
             
             html += `<button onclick="filterByCategory('${currentFilterMain.replace(/'/g, "\\'")}', null)" class="px-4 py-2.5 rounded-xl border text-[13px] transition-all flex items-center ${allBtnClass}"><i class="fas fa-layer-group mr-1.5 opacity-70"></i>전체보기</button>`;
 
-            // 2. 개별 하위 폴더 탭들
             subs.forEach(sub => {
                 const isActive = currentFilterSub === sub.name;
                 const btnClass = isActive 
@@ -2112,7 +2273,6 @@
             tabsContainer.innerHTML = html;
         };
 
-        // ★ [메뉴 렌더링: 마우스를 올리거나 클릭할 때만 열리고, 치우면 부드럽게 닫히도록(Hover) 최적화]
         function renderSidebarCategories() {
             const nav = document.getElementById('categoryNav');
             if(!nav) return;
@@ -2140,10 +2300,8 @@
                 const subs = getSubCatsByMainCat(cat.name);
                 const hasSubCats = subs.length > 0;
                 
-                // ★ 화살표: 마우스 올렸을 때만 아래로 회전
                 let chevronHtml = hasSubCats ? `<i class="fas fa-caret-right text-[13px] opacity-30 transition-transform duration-300 group-hover:rotate-90"></i>` : '';
 
-                // ★ 폴더 높이: 평소엔 0, 마우스 올릴 때(또는 모바일에서 탭했을 때)만 열리고 치우면 닫힘
                 const expandClass = 'max-h-0 group-hover:max-h-[800px]';
 
                 html += `<div class="group relative border-b border-slate-100 bg-white">
@@ -2221,20 +2379,17 @@
                 if(emptyState) { emptyState.classList.add('hidden'); emptyState.classList.remove('flex'); }
                 
                 let tableHtml = '';
-                // ★ 전체 자료 개수를 미리 저장
                 const totalCount = filteredFiles.length;
                 
                 filteredFiles.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)).forEach((file, index) => {
                     let actionBtn = '';
 
-                    // ★ 특수문자(따옴표, 백슬래시 등)로 인한 버튼 클릭 오류 방지를 위한 이스케이프 처리
                     const safeName = file.name ? file.name.replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/"/g, '&quot;') : '';
                     const safeMainCat = file.mainCat ? file.mainCat.replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/"/g, '&quot;') : '';
                     const safeSubCat = file.subCat ? file.subCat.replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/"/g, '&quot;') : '';
 
                     if(currentUser && currentUser.role === 'admin') {
                         actionBtn = `
-                            <!-- ★ 자료명 수정 버튼에 이스케이프 처리된 변수 적용 -->
                             <button onclick="renameFile('${file.id}', '${safeName}')" class="flex-1 bg-teal-50 text-teal-600 py-1.5 px-2.5 rounded-lg hover:bg-teal-600 hover:text-white transition font-bold text-[11px] border border-teal-100 whitespace-nowrap shadow-sm">수정</button>
                             <button onclick="openMoveFileModal('${file.id}', '${safeMainCat}', '${safeSubCat}', '${safeName}')" class="flex-1 bg-blue-50 text-blue-600 py-1.5 px-2.5 rounded-lg hover:bg-blue-600 hover:text-white transition font-bold text-[11px] border border-blue-100 whitespace-nowrap shadow-sm">이동</button>
                             <button onclick="deleteFile('${file.id}', '${file.storagePath}')" class="flex-1 bg-red-50 text-red-600 py-1.5 px-2.5 rounded-lg hover:bg-red-500 hover:text-white transition font-bold text-[11px] border border-red-100 whitespace-nowrap shadow-sm">삭제</button>
@@ -2252,11 +2407,8 @@
                     const isNew = file.date === new Date().toISOString().split('T')[0];
                     const newBadge = isNew ? `<span class="ml-2.5 px-1.5 py-0.5 bg-red-100 text-red-600 text-[9px] font-extrabold rounded-md uppercase tracking-wider">New</span>` : '';
                     
-                    // ★ 순번 역순 계산 로직 적용: (전체 개수 - 현재 인덱스)
-                    // 예: 총 10개일 때, 첫 번째 항목(최신, index 0)은 10번, 마지막 항목(오래된, index 9)은 1번
                     const seqNum = totalCount - index;
 
-                    // ★ 버튼 3개가 넉넉히 들어가도록 max-w-[180px]로 확장
                     tableHtml += `
                         <tr class="hover:bg-[#F8FAFC]/50 transition-colors group">
                             <td class="px-4 py-4 text-center font-bold text-slate-400 whitespace-nowrap">${seqNum}</td>
@@ -2383,9 +2535,7 @@
             hideLoader();
         };
 
-        // ★ 자료명 변경 함수 로직 강화
         window.renameFile = async function(id, currentName) {
-            // HTML 특수문자 복원 (프롬프트 창에서 깨지지 않도록)
             const displayCurrentName = currentName.replace(/&quot;/g, '"');
             const newName = prompt('수정할 자료명을 입력하세요:\n(확장자명(.pdf, .xlsx 등)을 함께 적어주시면 아이콘이 유지됩니다.)', displayCurrentName);
             
@@ -2402,10 +2552,8 @@
             }
 
             try {
-                // 파이어베이스 DB 업데이트
                 await updateDoc(doc(db, 'health_files', id), { name: newName.trim() });
                 
-                // ★ onSnapshot(실시간 동기화)가 네트워크 상황에 따라 지연될 경우를 대비해 로컬 화면을 즉시 갱신
                 const fileIndex = files.findIndex(f => f.id === id);
                 if (fileIndex !== -1) { 
                     files[fileIndex].name = newName.trim(); 
