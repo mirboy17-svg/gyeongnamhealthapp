@@ -985,18 +985,9 @@
                     categories = [];
                     snapshot.forEach(doc => { categories.push({ id: doc.id, ...doc.data() }); });
                     
-                    if (categories.length === 0) {
-                        const defaultCats = [
-                            "1. 정기안전보건교육자료", "2. 특별관리물질 취급고지및일지", 
-                            "3. CMR물질 유해성 정보", "4. 초과공정개선보고서", "5. 프로그램(청력, 밀폐, 호흡기)", "6. 안전보건표지"
-                        ];
-                        defaultCats.forEach(async (name, idx) => {
-                            try { await addDoc(catRef, { name: name, timestamp: (idx + 1) * 10 }); } catch (err) {}
-                        });
-                    } else {
-                        categories.sort((a, b) => a.timestamp - b.timestamp);
-                        updateAllCategoryViews();
-                    }
+                    // ★ 원인 해결: 비어있을 때 강제로 기본 카테고리를 추가하던 로직 제거
+                    categories.sort((a, b) => a.timestamp - b.timestamp);
+                    updateAllCategoryViews();
                 }, (error) => { console.error("카테고리 에러:", error); });
 
                 const subCatRef = collection(db, 'health_subcategories');
