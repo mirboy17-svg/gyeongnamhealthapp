@@ -125,8 +125,8 @@
         <aside class="w-72 bg-white text-slate-800 flex flex-col flex-shrink-0 shadow-[4px_0_24px_rgba(0,0,0,0.03)] z-20 border-r border-slate-200">
             <!-- 로고 및 유저 정보 영역 -->
             <div class="p-6 border-b border-slate-200 flex flex-col items-center justify-center bg-white">
-                <!-- ★ 로고 클릭 시 소개 화면으로 이동하도록 링크(onclick) 및 커서 포인터 추가 -->
-                <img src="./logo.png" alt="대한산업보건협회" class="h-11 w-auto mb-4 object-contain cursor-pointer hover:opacity-80 transition-opacity" onclick="filterByCategory('intro')">
+                <!-- ★ 로고 클릭 시 '오늘 하루 보지 않음' 상태를 존중하여 팝업을 띄우도록(showNoticePopup()) 수정 -->
+                <img src="./logo.png" alt="대한산업보건협회" class="h-11 w-auto mb-4 object-contain cursor-pointer hover:opacity-80 transition-opacity" onclick="filterByCategory('intro'); showNoticePopup();">
                 
                 <div id="userInfo" class="w-full text-[12px] px-3 py-2.5 bg-[#F8FAFC] rounded-lg border border-slate-200 text-slate-600 font-bold flex items-center justify-center shadow-sm">
                     <!-- 유저 정보 표시 -->
@@ -1306,7 +1306,7 @@
             }
         };
 
-        // ★ [안내 이미지 개별 팝업 렌더링 로직]
+        // ★ [안내 이미지 개별 팝업 렌더링 로직 ('오늘하루 보지않음' 체크 여부 존중하도록 로직 수정)]
         window.showNoticePopup = function() {
             const now = new Date().getTime();
             
@@ -1314,6 +1314,7 @@
             const hideUntil2 = localStorage.getItem('hideNoticePopup_2_v3');
             const hideUntil3 = localStorage.getItem('hideNoticePopup_3_v3');
 
+            // '오늘 하루 보지 않음'이 설정되어 있지 않은(또는 기간이 지난) 경우에만 팝업 표시
             const show1 = popupConfig.img1 && (!hideUntil1 || now > parseInt(hideUntil1));
             const show2 = popupConfig.img2 && (!hideUntil2 || now > parseInt(hideUntil2));
             const show3 = popupConfig.img3 && (!hideUntil3 || now > parseInt(hideUntil3));
