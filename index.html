@@ -207,9 +207,9 @@
                 
                 <!-- [2-1] 경남지역본부 소개 화면 -->
                 <div id="introSection" class="fade-in max-w-5xl mx-auto space-y-8">
-                    <!-- 환영 배너 -->
-                    <div class="bg-gradient-to-br from-[#0f172a] to-[#1e1b4b] rounded-2xl p-10 text-white shadow-xl relative overflow-hidden border border-slate-800">
-                        <div class="relative z-10">
+                    <!-- ★ 환영 배너 (우측에 S등급 이미지가 들어가도록 flex 레이아웃 수정) -->
+                    <div class="bg-gradient-to-br from-[#0f172a] to-[#1e1b4b] rounded-2xl p-10 text-white shadow-xl relative overflow-hidden border border-slate-800 flex flex-col lg:flex-row gap-10 items-center">
+                        <div class="relative z-10 flex-1">
                             <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-300 rounded-full text-xs font-bold tracking-wider mb-5 border border-teal-500/30">Korean Industrial Health Association</span>
                             <h2 class="text-3xl sm:text-4xl font-extrabold mb-6 leading-tight tracking-tight">일터를 넘어 국민의 삶 속으로,<br><span class="text-blue-400">대한산업보건협회 경남지역본부</span>가 함께합니다.</h2>
                             
@@ -219,6 +219,13 @@
 
                             <p class="text-slate-300 text-sm sm:text-[15px] max-w-2xl leading-relaxed font-light">본 홈페이지는 <b class="font-bold text-white">"대한산업보건협회 경남지역본부" 고객사업장 전용 서비스</b>로, 사업장별 맞춤형 자료를 공유 및 제공합니다.<br><br>언제 어디서든 간편하게 보건 관리 현황을 점검하고, 협회 전문가와 긴밀하게 소통하십시오. 귀사의 든든한 보건 파트너로서 최적의 솔루션을 약속드립니다.</p>
                         </div>
+                        
+                        <!-- ★ S등급 평가 결과 이미지 영역 추가 -->
+                        <div class="relative z-10 w-full lg:w-[45%] max-w-[450px] flex-shrink-0">
+                            <!-- ※ 중요: 깃허브에 첫 번째 이미지를 's_grade.jpg' 라는 이름으로 업로드해주세요! -->
+                            <img src="./s_grade.jpg" alt="작업환경측정기관 평가 결과 S등급" class="w-full h-auto object-contain rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/10 transition-transform duration-500 hover:scale-[1.02]">
+                        </div>
+
                         <i class="fas fa-shield-virus absolute -right-10 -bottom-10 text-[180px] text-white/5 transform rotate-12"></i>
                     </div>
 
