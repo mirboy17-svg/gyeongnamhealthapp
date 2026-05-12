@@ -54,7 +54,6 @@
             </div>
             
             <div class="space-y-4">
-                <!-- 회원사 전용 로그인 (사업자등록번호) -->
                 <div>
                     <label class="block text-[13px] font-bold text-slate-700 mb-1.5">사업자등록번호</label>
                     <div class="relative">
@@ -64,12 +63,10 @@
                     </div>
                 </div>
 
-                <!-- 회원사 전용 로그인 (이메일 주소 추가) -->
                 <div>
                     <label class="block text-[13px] font-bold text-slate-700 mb-1.5">담당자 이메일 주소</label>
                     <div class="relative">
                         <i class="fas fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
-                        <!-- ★ 이메일 입력 시 권한을 체크하는 oninput="checkHygieneAuth()" 이벤트 추가 -->
                         <input type="email" id="clientEmail" placeholder="이메일 입력 (예: user@company.com)" 
                                class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white outline-none transition-all font-medium text-[14px]"
                                onkeypress="if(event.key === 'Enter') loginAsClient()"
@@ -85,9 +82,7 @@
             </div>
         </div>
         
-        <!-- 산업위생국 전용 메뉴, 관리자 메뉴, 저작권 표시 배치 -->
         <div class="mt-8 flex flex-col items-center gap-3">
-            <!-- ★ 기본적으로 숨김(hidden) 처리 - 권한 있는 이메일 입력 시에만 나타남 -->
             <button id="hygieneLoginBtn" onclick="showHygieneModal()" class="hidden text-xs font-semibold text-emerald-600 hover:text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition flex items-center gap-1.5 px-4 py-2 rounded-full border border-emerald-100/50">
                 <i class="fas fa-briefcase-medical"></i> 산업위생국 전용 메뉴
             </button>
@@ -155,22 +150,14 @@
     <!-- [2] 대시보드 화면 -->
     <div id="dashboardView" class="hidden flex-1 flex overflow-hidden fade-in bg-[#F3F4F6]">
         
-        <!-- 사이드바: 참고 이미지에 맞춘 화이트(밝은색) 테마로 변경 -->
+        <!-- 사이드바 -->
         <aside class="w-72 bg-white text-slate-800 flex flex-col flex-shrink-0 shadow-[4px_0_24px_rgba(0,0,0,0.03)] z-20 border-r border-slate-200">
-            <!-- 로고 및 유저 정보 영역 -->
             <div class="p-6 border-b border-slate-200 flex flex-col items-center justify-center bg-white">
-                <!-- 로고 클릭 시 '오늘 하루 보지 않음' 상태를 존중하여 팝업을 띄우도록(showNoticePopup()) 수정 -->
                 <img src="./logo.png" alt="대한산업보건협회" class="h-11 w-auto mb-4 object-contain cursor-pointer hover:opacity-80 transition-opacity" onclick="filterByCategory('intro'); showNoticePopup();">
-                
-                <div id="userInfo" class="w-full text-[12px] px-3 py-2.5 bg-[#F8FAFC] rounded-lg border border-slate-200 text-slate-600 font-bold flex items-center justify-center shadow-sm">
-                    <!-- 유저 정보 표시 -->
-                </div>
+                <div id="userInfo" class="w-full text-[12px] px-3 py-2.5 bg-[#F8FAFC] rounded-lg border border-slate-200 text-slate-600 font-bold flex items-center justify-center shadow-sm"></div>
             </div>
             
-            <!-- 카테고리 메뉴 영역 -->
-            <nav class="flex-1 overflow-y-auto bg-white custom-scrollbar pb-6" id="categoryNav">
-                <!-- 메뉴 및 카테고리 트리 렌더링 영역 -->
-            </nav>
+            <nav class="flex-1 overflow-y-auto bg-white custom-scrollbar pb-6" id="categoryNav"></nav>
             
             <div class="p-5 border-t border-slate-200 bg-[#F8FAFC]">
                 <button onclick="logout()" class="w-full flex items-center justify-center gap-2 py-3 text-[13px] font-bold text-slate-500 hover:text-slate-800 hover:bg-slate-200/50 rounded-xl transition-all">
@@ -182,7 +169,6 @@
         <!-- 메인 콘텐츠 영역 -->
         <main class="flex-1 flex flex-col h-full overflow-hidden relative">
             
-            <!-- 상단 헤더 -->
             <header class="bg-white px-8 py-5 border-b border-slate-200/60 flex flex-col sm:flex-row justify-between items-start sm:items-center flex-shrink-0 z-10 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)] gap-4">
                 <div class="flex-1 pr-4">
                     <h2 class="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight break-keep" id="currentCategoryTitle">경남지역본부 맞춤형 통합 산업보건 Hub</h2>
@@ -202,12 +188,11 @@
                 </div>
             </header>
 
-            <!-- 본문 영역 -->
             <div class="flex-1 overflow-y-auto p-8 scroll-smooth relative">
                 
                 <!-- [2-1] 경남지역본부 소개 화면 -->
                 <div id="introSection" class="fade-in max-w-5xl mx-auto space-y-8">
-                    <!-- ★ 환영 배너 (우측에 S등급 이미지가 들어가도록 flex 레이아웃 수정) -->
+                    <!-- 환영 배너 -->
                     <div class="bg-gradient-to-br from-[#0f172a] to-[#1e1b4b] rounded-2xl p-10 text-white shadow-xl relative overflow-hidden border border-slate-800 flex flex-col lg:flex-row gap-10 items-center">
                         <div class="relative z-10 flex-1">
                             <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-300 rounded-full text-xs font-bold tracking-wider mb-5 border border-teal-500/30">Korean Industrial Health Association</span>
@@ -220,9 +205,7 @@
                             <p class="text-slate-300 text-sm sm:text-[15px] max-w-2xl leading-relaxed font-light">본 홈페이지는 <b class="font-bold text-white">"대한산업보건협회 경남지역본부" 고객사업장 전용 서비스</b>로, 사업장별 맞춤형 자료를 공유 및 제공합니다.<br><br>언제 어디서든 간편하게 보건 관리 현황을 점검하고, 협회 전문가와 긴밀하게 소통하십시오. 귀사의 든든한 보건 파트너로서 최적의 솔루션을 약속드립니다.</p>
                         </div>
                         
-                        <!-- ★ S등급 평가 결과 이미지 영역 추가 -->
                         <div class="relative z-10 w-full lg:w-[45%] max-w-[450px] flex-shrink-0">
-                            <!-- ※ 중요: 깃허브에 첫 번째 이미지를 's_grade.jpg' 라는 이름으로 업로드해주세요! -->
                             <img src="./s_grade.jpg" alt="작업환경측정기관 평가 결과 S등급" class="w-full h-auto object-contain rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/10 transition-transform duration-500 hover:scale-[1.02]">
                         </div>
 
@@ -269,6 +252,37 @@
                                 </h4>
                                 <p class="text-[13px] text-slate-500 leading-relaxed">일반, 특수, 배치전 등 근로자 맞춤형 건강진단과 유소견자에 대한 철저한 사후관리를 실시합니다.</p>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- ★ 상담문의 등록 폼 (주요 사업안내 밑으로 위치 이동 및 옵션 변경) -->
+                    <div class="glass-card p-8 border-l-4 border-l-blue-600">
+                        <h3 class="text-lg font-extrabold text-slate-800 mb-6 flex items-center tracking-tight"><i class="fas fa-headset text-blue-600 mr-2.5"></i>상담문의(견적 등)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-[12px] font-bold text-slate-600 mb-2">상담 희망 분야</label>
+                                <select id="consultType" class="w-full p-3.5 bg-[#F8FAFC] border border-slate-200/80 rounded-xl text-[13px] focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition cursor-pointer">
+                                    <option value="작업환경측정">작업환경측정</option>
+                                    <option value="근골격계부담작업유해요인조사">근골격계부담작업유해요인조사</option>
+                                    <option value="위험성평가">위험성평가</option>
+                                    <option value="밀폐공간">밀폐공간</option>
+                                    <option value="직무스트레스">직무스트레스</option>
+                                    <option value="기타">기타</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[12px] font-bold text-slate-600 mb-2">연락처 (전화번호 또는 이메일)</label>
+                                <input type="text" id="consultContact" placeholder="담당자가 답변드릴 연락처를 남겨주세요" class="w-full p-3.5 bg-[#F8FAFC] border border-slate-200/80 rounded-xl text-[13px] focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-[12px] font-bold text-slate-600 mb-2">문의 상세 내용</label>
+                                <textarea id="consultContent" rows="4" placeholder="궁금하신 내용이나 필요한 자료를 상세히 적어주시면, 담당 전문가가 확인 후 신속하게 연락드리겠습니다." class="w-full p-3.5 bg-[#F8FAFC] border border-slate-200/80 rounded-xl text-[13px] focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition resize-none custom-scrollbar leading-relaxed"></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-5 flex justify-end">
+                            <button onclick="submitConsultation()" class="w-full md:w-auto bg-[#1e293b] text-white px-8 py-3.5 rounded-xl font-bold text-[14px] hover:bg-blue-600 transition shadow-md shadow-blue-500/20 flex items-center justify-center gap-2">
+                                <i class="fas fa-paper-plane"></i> 상담 문의 등록하기
+                            </button>
                         </div>
                     </div>
 
@@ -327,7 +341,7 @@
                             <hr class="flex-1 border-slate-200/60">
                         </div>
                         
-                        <!-- ★ 1. 회원사 관리 -->
+                        <!-- 1. 회원사 관리 -->
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                             <section class="lg:col-span-2 glass-card p-7 flex flex-col h-[360px]">
                                 <div class="flex justify-between items-center mb-5">
@@ -367,7 +381,7 @@
                             </section>
                         </div>
 
-                        <!-- ★ 2. 클라우드 대용량 파일 배포 -->
+                        <!-- 2. 클라우드 대용량 파일 배포 -->
                         <div class="mb-6">
                             <section class="glass-card p-7 flex flex-col h-auto">
                                 <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center mb-5 tracking-tight">
@@ -414,7 +428,7 @@
                             </section>
                         </div>
 
-                        <!-- ★ 3. 산업위생국 전용 계정 관리 -->
+                        <!-- 3. 산업위생국 전용 계정 관리 -->
                         <div class="mb-6">
                             <section class="glass-card p-7 flex flex-col h-auto">
                                 <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center mb-5 tracking-tight">
@@ -435,7 +449,7 @@
                             </section>
                         </div>
 
-                        <!-- ★ 4. 폴더(카테고리) 통합 관리 -->
+                        <!-- 4. 폴더(카테고리) 통합 관리 -->
                         <div class="mb-6">
                             <section class="glass-card p-7 flex flex-col h-auto min-h-[450px]">
                                 <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center mb-5 tracking-tight">
@@ -464,10 +478,10 @@
                             </section>
                         </div>
 
-                        <!-- ★ 5. 팝업 설정 및 접속 로그 관리 -->
+                        <!-- 5. 팝업 설정, 접속 로그, 그리고 [상담 문의 관리] -->
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                             
-                            <!-- 팝업 이미지 및 클릭 이동 링크 설정 -->
+                            <!-- 팝업 이미지 및 링크 설정 -->
                             <section class="glass-card p-7 flex flex-col h-auto lg:col-span-3">
                                 <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center mb-5 tracking-tight">
                                     <div class="w-8 h-8 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center mr-2.5 border border-pink-100"><i class="fas fa-images"></i></div>
@@ -486,7 +500,6 @@
                                                 <img id="popupPreviewImage1" src="" class="max-h-[100px] max-w-full object-contain rounded-md drop-shadow-sm">
                                             </div>
                                         </div>
-                                        <!-- 클릭 이동 설정 메뉴 -->
                                         <div class="flex flex-col gap-1.5 mt-1">
                                             <select id="popupLinkMain1" onchange="updatePopupLinkSubSelect(1)" class="w-full p-2 bg-white border border-slate-200/60 rounded-lg text-[11px] font-medium outline-none focus:ring-2 focus:ring-pink-300">
                                                 <option value="">이동할 메뉴 선택 (클릭 시 이동 없음)</option>
@@ -509,7 +522,6 @@
                                                 <img id="popupPreviewImage2" src="" class="max-h-[100px] max-w-full object-contain rounded-md drop-shadow-sm">
                                             </div>
                                         </div>
-                                        <!-- 클릭 이동 설정 메뉴 -->
                                         <div class="flex flex-col gap-1.5 mt-1">
                                             <select id="popupLinkMain2" onchange="updatePopupLinkSubSelect(2)" class="w-full p-2 bg-white border border-slate-200/60 rounded-lg text-[11px] font-medium outline-none focus:ring-2 focus:ring-pink-300">
                                                 <option value="">이동할 메뉴 선택 (클릭 시 이동 없음)</option>
@@ -532,7 +544,6 @@
                                                 <img id="popupPreviewImage3" src="" class="max-h-[100px] max-w-full object-contain rounded-md drop-shadow-sm">
                                             </div>
                                         </div>
-                                        <!-- 클릭 이동 설정 메뉴 -->
                                         <div class="flex flex-col gap-1.5 mt-1">
                                             <select id="popupLinkMain3" onchange="updatePopupLinkSubSelect(3)" class="w-full p-2 bg-white border border-slate-200/60 rounded-lg text-[11px] font-medium outline-none focus:ring-2 focus:ring-pink-300">
                                                 <option value="">이동할 메뉴 선택 (클릭 시 이동 없음)</option>
@@ -550,7 +561,7 @@
                             </section>
                             
                             <!-- 회원사 접속 기록 (Log) 관리 -->
-                            <section class="glass-card p-7 flex flex-col h-[380px] lg:col-span-3">
+                            <section class="glass-card p-7 flex flex-col h-[380px] lg:col-span-2">
                                 <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100/80">
                                     <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center tracking-tight">
                                         <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mr-2.5 border border-emerald-100"><i class="fas fa-history"></i></div>
@@ -567,6 +578,17 @@
                                 </div>
                                 <div class="flex-1 overflow-y-auto pr-1 custom-scrollbar">
                                     <ul id="adminAccessLogList" class="space-y-2"></ul>
+                                </div>
+                            </section>
+
+                            <!-- ★ 1:1 상담 문의 접수 내역 (관리자 확인용) -->
+                            <section class="glass-card p-7 flex flex-col h-[380px]">
+                                <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center mb-4 pb-3 border-b border-slate-100/80 tracking-tight">
+                                    <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center mr-2.5 border border-orange-100"><i class="fas fa-headset"></i></div>
+                                    상담 문의 접수 내역
+                                </h3>
+                                <div class="flex-1 overflow-y-auto pr-1 custom-scrollbar">
+                                    <ul id="adminConsultList" class="space-y-3"></ul>
                                 </div>
                             </section>
 
@@ -596,7 +618,7 @@
                             </div>
                         </div>
 
-                        <!-- ★ 산업위생국 전용 폴더 클릭 시에만 노출되는 시스템 이동 배너 목록 -->
+                        <!-- 산업위생국 전용 폴더 클릭 시에만 노출되는 시스템 이동 배너 목록 -->
                         <div id="hygieneSpecialLinkContainer" class="hidden flex-col gap-3 p-5 bg-gradient-to-r from-emerald-50 to-teal-50/30 border-b border-emerald-100 transition-all">
                             
                             <!-- 1. 작업환경측정 위험성평가 -->
@@ -839,6 +861,7 @@
         let allowedMembers = []; 
         let accessLogs = []; 
         let hygieneUsers = []; 
+        let consultations = []; // ★ 신규: 상담 접수 데이터 배열
         let currentFilterMain = 'intro'; 
         let currentFilterSub = null;
         let isLocalMode = false;
@@ -1076,12 +1099,14 @@
             files = [];
             customSubtitles = {};
             hygieneUsers = [{ id: 'test_hygiene', username: 'test', password: '123', name: '테스트위생국팀', timestamp: Date.now() }];
+            consultations = []; 
             updateAllCategoryViews();
             updateDashboardStats();
             renderTable();
             renderAdminMemberManager();
             renderAdminHygieneManager();
             renderAccessLogs();
+            renderAdminConsults();
             if(typeof window.checkHygieneAuth === 'function') window.checkHygieneAuth();
         }
 
@@ -1175,6 +1200,15 @@
                     renderAdminHygieneManager();
                     if(typeof window.checkHygieneAuth === 'function') window.checkHygieneAuth();
                 }, (error) => { console.error("위생국 계정 에러:", error); });
+
+                // ★ 신규: 실시간 상담 접수 내역 동기화
+                const consultRef = collection(db, 'consultations');
+                onSnapshot(consultRef, (snapshot) => {
+                    if (isLocalMode) return;
+                    consultations = [];
+                    snapshot.forEach(doc => { consultations.push({ id: doc.id, ...doc.data() }); });
+                    renderAdminConsults();
+                }, (error) => { console.error("상담문의 에러:", error); });
 
                 const settingsRef = collection(db, 'system_settings');
                 onSnapshot(settingsRef, (snapshot) => {
@@ -1298,7 +1332,6 @@
         window.showAdminModal = () => { document.getElementById('adminModal').classList.remove('hidden'); };
         window.hideAdminModal = () => { document.getElementById('adminModal').classList.add('hidden'); };
         
-        // ★ 산업위생국 로그인 모달 오픈 시, 이메일 칸에 적은 주소를 자동으로 채워넣어줌
         window.showHygieneModal = () => { 
             document.getElementById('hygieneModal').classList.remove('hidden'); 
             const emailInput = document.getElementById('clientEmail').value.trim();
@@ -1310,7 +1343,6 @@
         };
         window.hideHygieneModal = () => { document.getElementById('hygieneModal').classList.add('hidden'); };
 
-        // ★ 실시간으로 이메일 칸을 감시해서 산업위생국 계정이 맞으면 버튼을 보여주는 함수
         window.checkHygieneAuth = function() {
             const emailInput = document.getElementById('clientEmail');
             const btn = document.getElementById('hygieneLoginBtn');
@@ -1468,6 +1500,12 @@
             
             const uiSpan = document.getElementById('userInfo');
             const adminPanel = document.getElementById('adminPanel');
+            
+            // ★ 로그인 성공 시 1:1 상담 연락처 칸에 등록된 이메일 자동 채우기
+            const consultContact = document.getElementById('consultContact');
+            if(consultContact && currentUser && currentUser.email) {
+                consultContact.value = currentUser.email;
+            }
 
             if(currentUser.role === 'admin') {
                 if(uiSpan) {
@@ -1576,6 +1614,95 @@
                 setTimeout(() => { modal.classList.add('hidden'); }, 500); 
             }
         };
+
+        // --- ★ 1:1 상담 문의 등록 및 관리 로직 ---
+        window.submitConsultation = async function() {
+            const type = document.getElementById('consultType').value;
+            const contact = document.getElementById('consultContact').value.trim();
+            const content = document.getElementById('consultContent').value.trim();
+
+            if(!contact || !content) return showToast('연락처와 문의 내용을 모두 입력해주세요.', 'error');
+
+            showLoader('문의 등록 중...');
+
+            const consultData = {
+                bizNumber: currentUser ? currentUser.bizNumber : '비회원',
+                authorName: currentUser ? currentUser.name : '비회원',
+                type: type,
+                contact: contact,
+                content: content,
+                timestamp: Date.now(),
+                status: 'pending' 
+            };
+
+            if (isLocalMode) {
+                consultations.push({ id: Date.now().toString(), ...consultData });
+                renderAdminConsults();
+                document.getElementById('consultContent').value = '';
+                hideLoader();
+                return showToast('상담 문의가 등록되었습니다. (로컬)');
+            }
+
+            try {
+                await addDoc(collection(db, 'consultations'), consultData);
+                showToast('상담 문의가 성공적으로 등록되었습니다. 담당자가 확인 후 연락드리겠습니다.');
+                document.getElementById('consultContent').value = '';
+            } catch(e) {
+                showToast('문의 등록 중 오류가 발생했습니다.', 'error');
+            }
+            hideLoader();
+        };
+
+        window.deleteConsultation = async function(id) {
+            if(!confirm('이 상담 문의 내역을 삭제하시겠습니까?')) return;
+            showLoader('삭제 중...');
+            if (isLocalMode) {
+                consultations = consultations.filter(c => c.id !== id);
+                renderAdminConsults();
+                hideLoader();
+                return showToast('삭제되었습니다. (로컬)');
+            }
+            try {
+                await deleteDoc(doc(db, 'consultations', id));
+                showToast('상담 문의 내역이 삭제되었습니다.');
+            } catch(e) { showToast('삭제 중 오류가 발생했습니다.', 'error'); }
+            hideLoader();
+        };
+
+        window.renderAdminConsults = function() {
+            const list = document.getElementById('adminConsultList');
+            if(!list) return;
+
+            let html = '';
+            if(consultations.length === 0) {
+                html = `<li class="p-5 text-center text-slate-400 text-[12px] bg-[#F8FAFC] rounded-lg border border-slate-100">접수된 상담 문의가 없습니다.</li>`;
+            } else {
+                [...consultations].sort((a,b) => b.timestamp - a.timestamp).forEach(c => {
+                    let dateObj = new Date(c.timestamp);
+                    let dateStr = dateObj.getFullYear() + '.' + String(dateObj.getMonth() + 1).padStart(2, '0') + '.' + String(dateObj.getDate()).padStart(2, '0') + ' ' + String(dateObj.getHours()).padStart(2, '0') + ':' + String(dateObj.getMinutes()).padStart(2, '0');
+
+                    html += `
+                    <li class="p-4 bg-[#F8FAFC] border border-slate-100/80 rounded-xl flex flex-col gap-3 hover:bg-white hover:border-orange-200 transition-colors shadow-sm">
+                        <div class="flex justify-between items-start border-b border-slate-100 pb-2">
+                            <div class="flex flex-col gap-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-orange-100 text-orange-700 text-[10px] font-extrabold px-2 py-0.5 rounded uppercase">${escapeJS(c.type)}</span>
+                                    <span class="font-bold text-slate-800 text-[13px]">${escapeJS(c.authorName)}</span>
+                                </div>
+                                <span class="text-[11px] text-slate-500 font-medium"><i class="fas fa-phone-alt opacity-40 mr-1"></i> ${escapeJS(c.contact)}</span>
+                            </div>
+                            <div class="flex flex-col items-end gap-2">
+                                <span class="text-[10px] text-slate-400">${dateStr}</span>
+                                <button onclick="deleteConsultation('${escapeJS(c.id)}')" class="text-[11px] text-red-500 hover:text-red-700 font-bold bg-red-50 px-2 py-1 rounded border border-red-100 transition-colors">삭제</button>
+                            </div>
+                        </div>
+                        <div class="text-[13px] text-slate-600 leading-relaxed whitespace-pre-wrap">${escapeJS(c.content)}</div>
+                    </li>`;
+                });
+            }
+            list.innerHTML = html;
+        };
+
 
         // --- 산업위생국 전용 계정 CRUD (관리자 전용) ---
         window.addHygieneUser = async function() {
