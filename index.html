@@ -485,9 +485,9 @@
                             <section class="glass-card p-7 flex flex-col h-auto lg:col-span-3">
                                 <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center mb-5 tracking-tight">
                                     <div class="w-8 h-8 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center mr-2.5 border border-pink-100"><i class="fas fa-images"></i></div>
-                                    로그인 팝업 및 링크 설정 (최대 3개)
+                                    로그인 팝업 및 링크 설정 (최대 4개)
                                 </h3>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-1">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 flex-1">
                                     <!-- 팝업 1 설정 -->
                                     <div class="flex flex-col gap-2">
                                         <div class="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-slate-300/80 rounded-xl bg-[#F8FAFC] p-2 relative group cursor-pointer hover:bg-pink-50/50 hover:border-pink-300 transition-all duration-300 min-h-[120px]" id="popupDropZone1">
@@ -553,6 +553,28 @@
                                             </select>
                                         </div>
                                         <button onclick="clearPopupImageSlot(3)" class="w-full bg-red-50 text-red-500 py-2 mt-1 rounded-lg text-[10px] font-bold border border-red-100 hover:bg-red-500 hover:text-white transition-colors">3번 설정 삭제</button>
+                                    </div>
+                                    <!-- 팝업 4 설정 -->
+                                    <div class="flex flex-col gap-2">
+                                        <div class="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-slate-300/80 rounded-xl bg-[#F8FAFC] p-2 relative group cursor-pointer hover:bg-pink-50/50 hover:border-pink-300 transition-all duration-300 min-h-[120px]" id="popupDropZone4">
+                                            <input type="file" id="popupUploadFile4" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" onchange="previewPopupImage(this, 4)">
+                                            <div id="popupPrompt4" class="text-center w-full">
+                                                <i class="fas fa-file-image text-2xl text-slate-300 group-hover:text-pink-400 mb-1 transition-colors"></i>
+                                                <p class="text-[11px] font-bold text-slate-600">네 번째 팝업</p>
+                                            </div>
+                                            <div id="popupPreviewContainer4" class="hidden w-full h-full flex flex-col items-center justify-center relative bg-black/5 rounded-lg p-1">
+                                                <img id="popupPreviewImage4" src="" class="max-h-[100px] max-w-full object-contain rounded-md drop-shadow-sm">
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col gap-1.5 mt-1">
+                                            <select id="popupLinkMain4" onchange="updatePopupLinkSubSelect(4)" class="w-full p-2 bg-white border border-slate-200/60 rounded-lg text-[11px] font-medium outline-none focus:ring-2 focus:ring-pink-300">
+                                                <option value="">이동할 메뉴 선택 (클릭 시 이동 없음)</option>
+                                            </select>
+                                            <select id="popupLinkSub4" class="w-full p-2 bg-white border border-slate-200/60 rounded-lg text-[11px] font-medium outline-none focus:ring-2 focus:ring-pink-300">
+                                                <option value="">하위 폴더 선택 (전체보기)</option>
+                                            </select>
+                                        </div>
+                                        <button onclick="clearPopupImageSlot(4)" class="w-full bg-red-50 text-red-500 py-2 mt-1 rounded-lg text-[10px] font-bold border border-red-100 hover:bg-red-500 hover:text-white transition-colors">4번 설정 삭제</button>
                                     </div>
                                 </div>
                                 <div class="mt-4 flex gap-2 shrink-0">
@@ -767,7 +789,7 @@
     </div>
 
     <!-- 개별 이미지 팝업창 -->
-    <div id="popupWrapper" class="fixed top-4 right-4 sm:top-8 sm:right-8 z-[120] flex flex-col sm:flex-row-reverse gap-4 pointer-events-none w-[calc(100%-2rem)] sm:w-auto items-end">
+    <div id="popupWrapper" class="fixed top-4 right-4 sm:top-8 sm:right-8 z-[120] flex flex-col sm:flex-row-reverse sm:flex-wrap-reverse justify-start gap-4 pointer-events-none w-[calc(100%-2rem)] sm:max-w-[calc(100vw-4rem)] items-end">
         
         <!-- 팝업 1 -->
         <div id="noticePopup1" class="pointer-events-auto transition-all duration-500 transform translate-x-20 opacity-0 hidden w-full sm:w-[380px] shrink-0">
@@ -826,6 +848,25 @@
             </div>
         </div>
 
+        <!-- 팝업 4 -->
+        <div id="noticePopup4" class="pointer-events-auto transition-all duration-500 transform translate-x-20 opacity-0 hidden w-full sm:w-[380px] shrink-0">
+            <div class="relative w-full bg-white/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)] border border-white/50 overflow-hidden flex flex-col">
+                <button onclick="closeNoticePopup(4)" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-black/10 hover:bg-black/20 text-slate-700 hover:text-slate-900 rounded-full focus:outline-none z-20 transition-colors backdrop-blur-sm shadow-sm">
+                    <i class="fas fa-times text-[14px]"></i>
+                </button>
+                <div class="w-full flex items-center justify-center relative h-[420px] bg-transparent p-2.5">
+                    <img id="popupImage4" src="" alt="공지사항4" class="w-full h-full object-contain rounded-lg shadow-sm border border-slate-100/50 transition-transform hover:scale-[1.02]" onclick="handlePopupClick(4)">
+                </div>
+                <div class="bg-white/90 backdrop-blur-md px-5 py-3.5 border-t border-slate-100 flex justify-between items-center z-10 shrink-0">
+                    <label class="flex items-center cursor-pointer group">
+                        <input type="checkbox" id="hideNoticeToday4" class="w-4 h-4 rounded text-blue-500 border-slate-300 focus:ring-blue-500 focus:ring-offset-white cursor-pointer shadow-sm transition-colors">
+                        <span class="ml-2.5 text-[12px] font-bold text-slate-500 group-hover:text-slate-700 transition-colors">오늘 하루 보지 않음</span>
+                    </label>
+                    <button onclick="closeNoticePopup(4)" class="text-[12px] font-bold text-slate-400 hover:text-slate-600 transition-colors px-2 py-1">닫기</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- 토스트 알림 -->
@@ -873,8 +914,8 @@
         let expandedCategories = new Set(); 
         let customSubtitles = {};
         
-        let popupConfig = { img1: null, img2: null, img3: null, linkMain1: '', linkSub1: '', linkMain2: '', linkSub2: '', linkMain3: '', linkSub3: '' }; 
-        let currentPopupFiles = { file1: null, file2: null, file3: null };
+        let popupConfig = { img1: null, img2: null, img3: null, img4: null, linkMain1: '', linkSub1: '', linkMain2: '', linkSub2: '', linkMain3: '', linkSub3: '', linkMain4: '', linkSub4: '' }; 
+        let currentPopupFiles = { file1: null, file2: null, file3: null, file4: null };
 
         function escapeJS(str) {
             if (!str) return '';
@@ -1237,18 +1278,22 @@
                         popupConfig.img1 = doc.data().img1 || null;
                         popupConfig.img2 = doc.data().img2 || null;
                         popupConfig.img3 = doc.data().img3 || null;
+                        popupConfig.img4 = doc.data().img4 || null;
                         popupConfig.linkMain1 = doc.data().linkMain1 || '';
                         popupConfig.linkSub1 = doc.data().linkSub1 || '';
                         popupConfig.linkMain2 = doc.data().linkMain2 || '';
                         popupConfig.linkSub2 = doc.data().linkSub2 || '';
                         popupConfig.linkMain3 = doc.data().linkMain3 || '';
                         popupConfig.linkSub3 = doc.data().linkSub3 || '';
+                        popupConfig.linkMain4 = doc.data().linkMain4 || '';
+                        popupConfig.linkSub4 = doc.data().linkSub4 || '';
                     } else {
-                        popupConfig = { img1: null, img2: null, img3: null, linkMain1: '', linkSub1: '', linkMain2: '', linkSub2: '', linkMain3: '', linkSub3: '' };
+                        popupConfig = { img1: null, img2: null, img3: null, img4: null, linkMain1: '', linkSub1: '', linkMain2: '', linkSub2: '', linkMain3: '', linkSub3: '', linkMain4: '', linkSub4: '' };
                     }
                     updateAdminPopupUI(1, popupConfig.img1);
                     updateAdminPopupUI(2, popupConfig.img2);
                     updateAdminPopupUI(3, popupConfig.img3);
+                    updateAdminPopupUI(4, popupConfig.img4);
                 }, (error) => { console.error("팝업 설정 에러:", error); });
 
                 const logsRef = collection(db, 'access_logs');
@@ -1560,14 +1605,17 @@
             const hideUntil1 = localStorage.getItem('hideNoticePopup_1_v3');
             const hideUntil2 = localStorage.getItem('hideNoticePopup_2_v3');
             const hideUntil3 = localStorage.getItem('hideNoticePopup_3_v3');
+            const hideUntil4 = localStorage.getItem('hideNoticePopup_4_v3');
 
             const show1 = popupConfig.img1 && (forceShow || !hideUntil1 || now > parseInt(hideUntil1));
             const show2 = popupConfig.img2 && (forceShow || !hideUntil2 || now > parseInt(hideUntil2));
             const show3 = popupConfig.img3 && (forceShow || !hideUntil3 || now > parseInt(hideUntil3));
+            const show4 = popupConfig.img4 && (forceShow || !hideUntil4 || now > parseInt(hideUntil4));
 
             const modal1 = document.getElementById('noticePopup1');
             const modal2 = document.getElementById('noticePopup2');
             const modal3 = document.getElementById('noticePopup3');
+            const modal4 = document.getElementById('noticePopup4');
             
             if(show1 && modal1) {
                 const img1 = document.getElementById('popupImage1');
@@ -1603,6 +1651,18 @@
                 
                 modal3.classList.remove('hidden');
                 setTimeout(() => { modal3.classList.remove('translate-x-20', 'opacity-0'); }, (show1 || show2) ? 250 : 50);
+            }
+
+            if(show4 && modal4) {
+                const img4 = document.getElementById('popupImage4');
+                img4.src = popupConfig.img4;
+                img4.style.cursor = popupConfig.linkMain4 ? 'pointer' : 'default';
+
+                const check4 = document.getElementById('hideNoticeToday4');
+                if(check4) check4.checked = false;
+                
+                modal4.classList.remove('hidden');
+                setTimeout(() => { modal4.classList.remove('translate-x-20', 'opacity-0'); }, (show1 || show2 || show3) ? 350 : 50);
             }
         };
 
@@ -1823,7 +1883,7 @@
 
         // --- [팝업 관리 관련] ---
         window.updatePopupLinkMainSelects = function() {
-            [1, 2, 3].forEach(index => {
+            [1, 2, 3, 4].forEach(index => {
                 const select = document.getElementById(`popupLinkMain${index}`);
                 if (!select) return;
                 
@@ -1915,6 +1975,8 @@
             const linkSub2 = document.getElementById('popupLinkSub2') ? document.getElementById('popupLinkSub2').value : '';
             const linkMain3 = document.getElementById('popupLinkMain3') ? document.getElementById('popupLinkMain3').value : '';
             const linkSub3 = document.getElementById('popupLinkSub3') ? document.getElementById('popupLinkSub3').value : '';
+            const linkMain4 = document.getElementById('popupLinkMain4') ? document.getElementById('popupLinkMain4').value : '';
+            const linkSub4 = document.getElementById('popupLinkSub4') ? document.getElementById('popupLinkSub4').value : '';
 
             if (isLocalMode) { hideLoader(); return showToast('팝업 설정이 완료되었습니다. (로컬)'); }
 
@@ -1922,6 +1984,7 @@
                 let finalUrl1 = popupConfig.img1;
                 let finalUrl2 = popupConfig.img2;
                 let finalUrl3 = popupConfig.img3;
+                let finalUrl4 = popupConfig.img4;
                 
                 if (currentPopupFiles.file1) {
                     const path = `system_images/popup_${Date.now()}_1_${currentPopupFiles.file1.name}`;
@@ -1941,14 +2004,20 @@
                     await uploadBytes(fileRef, currentPopupFiles.file3);
                     finalUrl3 = await getDownloadURL(fileRef);
                 }
+                if (currentPopupFiles.file4) {
+                    const path = `system_images/popup_${Date.now()}_4_${currentPopupFiles.file4.name}`;
+                    const fileRef = ref(storage, path);
+                    await uploadBytes(fileRef, currentPopupFiles.file4);
+                    finalUrl4 = await getDownloadURL(fileRef);
+                }
                 
                 await setDoc(doc(db, 'system_settings', 'popup'), {
-                    img1: finalUrl1, img2: finalUrl2, img3: finalUrl3,
-                    linkMain1: linkMain1, linkSub1: linkSub1, linkMain2: linkMain2, linkSub2: linkSub2, linkMain3: linkMain3, linkSub3: linkSub3,
+                    img1: finalUrl1, img2: finalUrl2, img3: finalUrl3, img4: finalUrl4,
+                    linkMain1: linkMain1, linkSub1: linkSub1, linkMain2: linkMain2, linkSub2: linkSub2, linkMain3: linkMain3, linkSub3: linkSub3, linkMain4: linkMain4, linkSub4: linkSub4,
                     timestamp: Date.now()
                 });
                 
-                currentPopupFiles.file1 = null; currentPopupFiles.file2 = null; currentPopupFiles.file3 = null;
+                currentPopupFiles.file1 = null; currentPopupFiles.file2 = null; currentPopupFiles.file3 = null; currentPopupFiles.file4 = null;
                 showToast('새 팝업 및 이동 링크 설정이 모든 사용자에게 배포되었습니다.');
             } catch(e) { showToast('설정 권한 오류가 발생했습니다.', 'error'); }
             hideLoader();
