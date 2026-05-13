@@ -2906,6 +2906,7 @@
 
                     if(currentUser && (currentUser.role === 'admin' || (currentUser.role === 'hygiene' && file.mainCat === '산업위생국 전용'))) {
                         actionBtn = `
+                            <button onclick="downloadFile('${escapeJS(file.fileUrl)}')" class="flex-1 bg-indigo-50 text-indigo-600 py-1.5 px-2.5 rounded-lg hover:bg-indigo-600 hover:text-white transition font-bold text-[11px] border border-indigo-100 whitespace-nowrap shadow-sm" title="다운로드"><i class="fas fa-download"></i></button>
                             <button onclick="renameFile('${file.id}', '${escapeJS(file.name)}')" class="flex-1 bg-teal-50 text-teal-600 py-1.5 px-2.5 rounded-lg hover:bg-teal-600 hover:text-white transition font-bold text-[11px] border border-teal-100 whitespace-nowrap shadow-sm">수정</button>
                             <button onclick="openMoveFileModal('${file.id}', '${escapeJS(file.mainCat)}', '${escapeJS(file.subCat)}', '${escapeJS(file.name)}')" class="flex-1 bg-blue-50 text-blue-600 py-1.5 px-2.5 rounded-lg hover:bg-blue-600 hover:text-white transition font-bold text-[11px] border border-blue-100 whitespace-nowrap shadow-sm">이동</button>
                             <button onclick="deleteFile('${file.id}', '${escapeJS(file.storagePath)}')" class="flex-1 bg-red-50 text-red-600 py-1.5 px-2.5 rounded-lg hover:bg-red-500 hover:text-white transition font-bold text-[11px] border border-red-100 whitespace-nowrap shadow-sm">삭제</button>
@@ -2935,7 +2936,7 @@
                                 </div>
                             </td>
                             <td class="px-4 py-4 text-center whitespace-nowrap"><span class="text-slate-500 font-semibold text-[12px] tracking-wide">${file.date.replace(/-/g, '.')}</span></td>
-                            <td class="px-4 py-4 whitespace-nowrap"><div class="flex gap-1.5 justify-center w-full max-w-[180px] mx-auto">${actionBtn}</div></td>
+                            <td class="px-4 py-4 whitespace-nowrap"><div class="flex gap-1.5 justify-center w-full max-w-[220px] mx-auto">${actionBtn}</div></td>
                         </tr>
                     `;
                 });
