@@ -255,9 +255,9 @@
                         </div>
                     </div>
 
-                    <!-- ★ 상담문의 등록 폼 (주요 사업안내 밑으로 위치 이동 및 옵션 변경) -->
+                    <!-- ★ 상담문의 등록 폼 (제목 변경) -->
                     <div class="glass-card p-8 border-l-4 border-l-blue-600">
-                        <h3 class="text-lg font-extrabold text-slate-800 mb-6 flex items-center tracking-tight"><i class="fas fa-headset text-blue-600 mr-2.5"></i>상담문의(견적 등)</h3>
+                        <h3 class="text-lg font-extrabold text-slate-800 mb-6 flex items-center tracking-tight"><i class="fas fa-headset text-blue-600 mr-2.5"></i>상담문의(견적요청 등)</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-[12px] font-bold text-slate-600 mb-2">상담 희망 분야</label>
@@ -581,12 +581,17 @@
                                 </div>
                             </section>
 
-                            <!-- ★ 1:1 상담 문의 접수 내역 (관리자 확인용) -->
+                            <!-- ★ 1:1 상담 문의 접수 내역 (관리자 확인용 및 엑셀 저장 버튼 추가) -->
                             <section class="glass-card p-7 flex flex-col h-[380px]">
-                                <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center mb-4 pb-3 border-b border-slate-100/80 tracking-tight">
-                                    <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center mr-2.5 border border-orange-100"><i class="fas fa-headset"></i></div>
-                                    상담 문의 접수 내역
-                                </h3>
+                                <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100/80">
+                                    <h3 class="text-[15px] font-extrabold text-slate-800 flex items-center tracking-tight">
+                                        <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center mr-2.5 border border-orange-100"><i class="fas fa-headset"></i></div>
+                                        상담 문의 접수 내역
+                                    </h3>
+                                    <button onclick="exportConsultationsToExcel()" class="text-[10px] bg-green-50 text-green-600 hover:bg-green-600 hover:text-white border border-green-100 px-2.5 py-1.5 rounded-md transition-colors flex items-center gap-1 font-bold shadow-sm">
+                                        <i class="fas fa-file-excel"></i> 엑셀 저장
+                                    </button>
+                                </div>
                                 <div class="flex-1 overflow-y-auto pr-1 custom-scrollbar">
                                     <ul id="adminConsultList" class="space-y-3"></ul>
                                 </div>
@@ -1703,6 +1708,38 @@
             list.innerHTML = html;
         };
 
+        // ★ 신규: 상담 문의 내역 엑셀 다운로드 함수
+        window.exportConsultationsToExcel = function() {
+            if(consultations.length === 0) return showToast('다운로드할 상담 문의 내역이 없습니다.', 'info');
+
+            let csvContent = '\uFEFF'; 
+            csvContent += "접수일시,상담분야,요청자명(회원사),연락처,상세내용\n";
+
+            let exportData = [...consultations].sort((a, b) => b.timestamp - a.timestamp);
+            exportData.forEach(c => {
+                let dateObj = new Date(c.timestamp);
+                let dateStr = dateObj.getFullYear() + '-' + String(dateObj.getMonth() + 1).padStart(2, '0') + '-' + String(dateObj.getDate()).padStart(2, '0') + ' ' + String(dateObj.getHours()).padStart(2, '0') + ':' + String(dateObj.getMinutes()).padStart(2, '0') + ':' + String(dateObj.getSeconds()).padStart(2, '0');
+
+                // 엑셀에서 줄바꿈이 깨지지 않도록 쌍따옴표로 감싸고 내부 따옴표 처리
+                let safeType = `"${(c.type || '').replace(/"/g, '""')}"`;
+                let safeAuthor = `"${(c.authorName || '').replace(/"/g, '""')}"`;
+                let safeContact = `"${(c.contact || '').replace(/"/g, '""')}"`;
+                let safeContent = `"${(c.content || '').replace(/"/g, '""')}"`;
+
+                csvContent += `${dateStr},${safeType},${safeAuthor},${safeContact},${safeContent}\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `상담문의_접수내역_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('상담 문의 내역 엑셀 파일이 다운로드되었습니다.');
+        };
 
         // --- 산업위생국 전용 계정 CRUD (관리자 전용) ---
         window.addHygieneUser = async function() {
